@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using FirMath;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEngine.Serialization;
 
 public class FindObjectManager : MonoBehaviour
 {
@@ -13,10 +12,9 @@ public class FindObjectManager : MonoBehaviour
 
     [SerializeField]
     private Image box;
+    
     [SerializeField]
-    private Gem ingredientPrefab;
-    [SerializeField]
-    private Transform ingredientParent;
+    private GemPool pool;
     
     private List<Gem> allIngredients;
     [SerializeField]
@@ -56,7 +54,7 @@ public class FindObjectManager : MonoBehaviour
         int gemsCount = puzzleConfig.GemsSprites.Length;
         int gemsColors = puzzleConfig.GemsColors.Length;
         
-        ingredientInBoxCount = gemsCount * gemsColors;
+        //ingredientInBoxCount = gemsCount * gemsColors;
         List<int> recipeIntList = GenerateNewRecipe(recipeIngredientCount, ingredientInBoxCount);
 
         foreach (int i in recipeIntList)
@@ -73,8 +71,10 @@ public class FindObjectManager : MonoBehaviour
         //recipe.SetResipe(recipeList);
     }
 
+    [ContextMenu("StartPuzzle")]
     public void StartPuzzle()
     {
+        pool.ClearAll();
         //OpenBox();
 
         allIngredients = new List<Gem>();
@@ -82,12 +82,13 @@ public class FindObjectManager : MonoBehaviour
         int gemsCount = puzzleConfig.GemsSprites.Length;
         int gemsColors = puzzleConfig.GemsColors.Length;
         
-        ingredientInBoxCount = gemsCount * gemsColors;
+        //ingredientInBoxCount = gemsCount * gemsColors;
         
         for (int i=0; i<ingredientInBoxCount; i++)
         {
-            Gem newGem
-                = Instantiate(ingredientPrefab, ingredientParent);
+            Gem newGem = pool.Get();
+
+            newGem.transform.localPosition = Vector3.zero;
             
             int spriteIndex = i / gemsColors;
             int colorIndex = i % gemsColors;
@@ -96,7 +97,7 @@ public class FindObjectManager : MonoBehaviour
             newGem.SetRandomImpulse(forceToIngredient);
         }
     }
-
+    
     public async void SuccessfullySolvePuzzle()
     {
         await HarvestAllIngredients();

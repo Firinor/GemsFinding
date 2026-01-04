@@ -37,6 +37,16 @@ IBeginDragHandler, IDragHandler, IEndDragHandler
         if (ingredientDrag && EveryFifthSec())
             CheckLastPosition();
     }
+
+    public void ResetPhysics()
+    {
+        drag = false;
+        ingredientDrag = false;
+        impulse = Vector3.zero;
+        lastPosition = Vector3.zero;
+        timer = 0;
+    }
+
     private bool EveryFifthSec()
     {
         timer += Time.deltaTime;
@@ -95,8 +105,10 @@ IBeginDragHandler, IDragHandler, IEndDragHandler
     private void ForseToIngredient()
     {
         Vector3 pos = transform.localPosition;
-        pos += impulse * Time.fixedTime;
-        Vector3 brakingVector = Vector3.one * (brakingFactor * Time.fixedTime);
+        pos += impulse * Time.fixedDeltaTime;
+
+        Vector3 brakingVector = impulse.normalized * brakingFactor * Time.fixedDeltaTime;
+        
         if (impulse.magnitude > brakingVector.magnitude)
         {
             impulse -= brakingVector;
@@ -106,7 +118,6 @@ IBeginDragHandler, IDragHandler, IEndDragHandler
             impulse = Vector3.zero;
         }
         
-
         transform.localPosition = pos;
     }
     

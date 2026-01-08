@@ -6,6 +6,8 @@ using Unity.Mathematics;
 public class Gem : MonoBehaviour,
 IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    private static Bounds bounds;
+    
     [SerializeField]
     private float mass;
     [SerializeField] 
@@ -105,19 +107,28 @@ IBeginDragHandler, IDragHandler, IEndDragHandler
     private void ForseToIngredient()
     {
         Vector3 pos = transform.localPosition;
+
+        Vector3 afterPos = pos + impulse * Time.fixedDeltaTime;
+        if (afterPos.x < bounds.min.x || afterPos.x > bounds.max.x)
+        {
+            impulse.x = -impulse.x;
+            //afterPos.x = Mathf.Clamp(afterPos.x, bounds.min.x, bounds.max.x);
+        }
+        if (afterPos.y < bounds.min.y || afterPos.y > bounds.max.y)
+        {
+            impulse.y = -impulse.y;
+            //afterPos.y = Mathf.Clamp(afterPos.y, bounds.min.y, bounds.max.y);
+        }
+        
         pos += impulse * Time.fixedDeltaTime;
 
         Vector3 brakingVector = impulse.normalized * brakingFactor * Time.fixedDeltaTime;
-        
+
         if (impulse.magnitude > brakingVector.magnitude)
-        {
             impulse -= brakingVector;
-        }
         else
-        {
             impulse = Vector3.zero;
-        }
-        
+
         transform.localPosition = pos;
     }
     
@@ -166,5 +177,10 @@ IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         Vector3 pos = transform.localPosition;
         return Mathf.Abs(pos.x) < border && Mathf.Abs(pos.y) < border;
+    }
+
+    public void SetBounds(Bounds gemZoneBounds)
+    {
+        bounds = gemZoneBounds; 
     }
 }

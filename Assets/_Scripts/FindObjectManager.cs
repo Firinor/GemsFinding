@@ -25,6 +25,8 @@ public class FindObjectManager : MonoBehaviour
     private Recipe recipe;
     [SerializeField]
     private int recipeIngredientCount = 5;
+    [SerializeField] 
+    private BoxCollider2D GemZone;
     [SerializeField]
     private int ingredientInBoxCount = 250; 
     [SerializeField]
@@ -95,7 +97,10 @@ public class FindObjectManager : MonoBehaviour
             
             newGem.SetView(puzzleConfig.GemsSprites[spriteIndex], puzzleConfig.GemsColors[colorIndex]);
             newGem.SetRandomImpulse(forceToIngredient);
+            
+            allIngredients.Add(newGem);
         }
+        allIngredients[0].SetBounds(GemZone.bounds);
     }
     
     public async void SuccessfullySolvePuzzle()

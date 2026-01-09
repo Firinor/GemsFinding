@@ -10,6 +10,8 @@ IBeginDragHandler, IDragHandler, IEndDragHandler
     
     [SerializeField]
     private float mass;
+    [SerializeField]
+    private float rotationSpeed;
     [SerializeField] 
     private float brakingFactor;
     [SerializeField]
@@ -23,6 +25,8 @@ IBeginDragHandler, IDragHandler, IEndDragHandler
     private const int ERROR_FORCE = 10;
 
     private Vector3 impulse;
+    private float rotation;
+    private float rotationFromSpeedCoefficient;
     private Vector3 lastPosition;
     private bool ingredientDrag = false;
 
@@ -112,11 +116,13 @@ IBeginDragHandler, IDragHandler, IEndDragHandler
         if (afterPos.x < bounds.min.x || afterPos.x > bounds.max.x)
         {
             impulse.x = -impulse.x;
+            NewRotation();
             //afterPos.x = Mathf.Clamp(afterPos.x, bounds.min.x, bounds.max.x);
         }
         if (afterPos.y < bounds.min.y || afterPos.y > bounds.max.y)
         {
             impulse.y = -impulse.y;
+            NewRotation();
             //afterPos.y = Mathf.Clamp(afterPos.y, bounds.min.y, bounds.max.y);
         }
         
@@ -130,6 +136,10 @@ IBeginDragHandler, IDragHandler, IEndDragHandler
             impulse = Vector3.zero;
 
         transform.localPosition = pos;
+        
+        rotation = impulse.magnitude / rotationFromSpeedCoefficient;
+        
+        transform.rotation *= Quaternion.Euler(0,0, rotation); 
     }
     
     public void SetRandomImpulse(float forse, bool randomForse = true)
@@ -138,7 +148,18 @@ IBeginDragHandler, IDragHandler, IEndDragHandler
         float randomDirection = Random.value * 360 * Mathf.Deg2Rad;
 
         impulse = new Vector3(math.cos(randomDirection), math.sin(randomDirection), 0) * forse;
+        
+        NewRotation();
     }
+
+    private void NewRotation()
+    {
+        rotation = rotationSpeed * Random.value;
+        rotation *= FirMath.GameMath.HeadsOrTails() ? 1 : -1;
+        
+        rotationFromSpeedCoefficient = impulse.magnitude / rotation;
+    }
+
     public void SetImpulse(Vector3 impulse)
     {
         this.impulse = impulse;

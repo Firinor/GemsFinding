@@ -105,6 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mass: 10
+  rotationSpeed: 50
   brakingFactor: 3
   spriteRenderer: {fileID: 3929304121011744850}
   id: 0

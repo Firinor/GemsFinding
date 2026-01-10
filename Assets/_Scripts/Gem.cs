@@ -3,8 +3,7 @@ using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 using Unity.Mathematics;
 
-public class Gem : MonoBehaviour,
-IBeginDragHandler, IDragHandler, IEndDragHandler
+public class Gem : MonoBehaviour
 {
     private static Bounds bounds;
     
@@ -16,6 +15,7 @@ IBeginDragHandler, IDragHandler, IEndDragHandler
     private float brakingFactor;
     [SerializeField]
     private SpriteRenderer spriteRenderer;
+    public SpriteRenderer Sprite => spriteRenderer;
     [SerializeField]
     private int id;
 

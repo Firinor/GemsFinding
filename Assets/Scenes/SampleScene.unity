@@ -2033,6 +2033,7 @@ MonoBehaviour:
   GemZone: {fileID: 1264233802}
   ingredientInBoxCount: 100
   forceToIngredient: 20
+  spawnDistance: 20
   PointerOnRecipe: 0
 --- !u!114 &403798199
 MonoBehaviour:

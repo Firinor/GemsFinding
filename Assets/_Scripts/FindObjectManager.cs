@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using FirMath;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.Mathematics;
+using Random = UnityEngine.Random;
 
 public class FindObjectManager : MonoBehaviour
 {
@@ -31,6 +33,8 @@ public class FindObjectManager : MonoBehaviour
     private int ingredientInBoxCount = 250; 
     [SerializeField]
     private float forceToIngredient;
+    [SerializeField]
+    private float spawnDistance;
     private float acceleration = 0.025f;
 
     //public ParticleSystem successParticleSystem;
@@ -90,7 +94,8 @@ public class FindObjectManager : MonoBehaviour
         {
             Gem newGem = pool.Get();
 
-            newGem.transform.localPosition = Vector3.zero;
+            float direction = Random.value * 360 * Mathf.Deg2Rad;
+            newGem.transform.localPosition = new Vector3(math.cos(direction), math.sin(direction), 0) * spawnDistance;
             
             int spriteIndex = i / gemsColors;
             int colorIndex = i % gemsColors;

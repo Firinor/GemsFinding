@@ -32,12 +32,21 @@ IBeginDragHandler, IDragHandler, IEndDragHandler
 
     void FixedUpdate()
     {
-        if (!ingredientDrag)
-        {
-            if (impulse != Vector3.zero)
-                ForseToIngredient();
-        }
+        if (ingredientDrag)
+            return;
+
+        if (!bounds.Contains(transform.localPosition))
+            GravityForce();
+        
+        if (impulse != Vector3.zero)
+            ForceToIngredient();
     }
+
+    private void GravityForce()
+    {
+        impulse += (bounds.center - transform.localPosition).normalized * (Physics2D.gravity.magnitude * Time.fixedDeltaTime);
+    }
+
     void Update()
     {
         if (ingredientDrag && EveryFifthSec())
@@ -108,24 +117,27 @@ IBeginDragHandler, IDragHandler, IEndDragHandler
         impulse = (transform.localPosition - lastPosition) / mass;
         //Debug.Log(impulse + " " + impulse.x + " " + impulse.y);
     }
-    private void ForseToIngredient()
+    private void ForceToIngredient()
     {
         Vector3 pos = transform.localPosition;
 
-        Vector3 afterPos = pos + impulse * Time.fixedDeltaTime;
-        if (afterPos.x < bounds.min.x || afterPos.x > bounds.max.x)
+        if (bounds.Contains(pos))
         {
-            impulse.x = -impulse.x;
-            NewRotation();
-            //afterPos.x = Mathf.Clamp(afterPos.x, bounds.min.x, bounds.max.x);
+            Vector3 afterPos = pos + impulse * Time.fixedDeltaTime;
+            if (afterPos.x < bounds.min.x || afterPos.x > bounds.max.x)
+            {
+                impulse.x = -impulse.x;
+                NewRotation();
+                //afterPos.x = Mathf.Clamp(afterPos.x, bounds.min.x, bounds.max.x);
+            }
+            if (afterPos.y < bounds.min.y || afterPos.y > bounds.max.y)
+            {
+                impulse.y = -impulse.y;
+                NewRotation();
+                //afterPos.y = Mathf.Clamp(afterPos.y, bounds.min.y, bounds.max.y);
+            }
         }
-        if (afterPos.y < bounds.min.y || afterPos.y > bounds.max.y)
-        {
-            impulse.y = -impulse.y;
-            NewRotation();
-            //afterPos.y = Mathf.Clamp(afterPos.y, bounds.min.y, bounds.max.y);
-        }
-        
+
         pos += impulse * Time.fixedDeltaTime;
 
         Vector3 brakingVector = impulse.normalized * brakingFactor * Time.fixedDeltaTime;

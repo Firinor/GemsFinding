@@ -149,6 +149,9 @@ public class Gem : MonoBehaviour
 
         transform.localPosition = pos;
         
+        if(rotationFromSpeedCoefficient == 0)
+            return;
+        
         rotation = impulse.magnitude / rotationFromSpeedCoefficient;
         
         transform.rotation *= Quaternion.Euler(0,0, rotation); 

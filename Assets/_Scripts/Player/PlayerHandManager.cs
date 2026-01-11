@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -12,10 +13,10 @@ public class PlayerHandManager : MonoBehaviour
     private GemPool pool;
     [SerializeField] 
     private Image inHandGem;
-    [SerializeField, Range(0,1)] 
-    private float alfaEdge;
+    [SerializeField] 
+    private Color backgroundColor;
 
-    public Image Indicator;
+    public GameObject SpriteScreen;
     
     private void Start()
     {
@@ -35,52 +36,59 @@ public class PlayerHandManager : MonoBehaviour
         if (!obj.control.IsPressed())
             return;
 
-        Indicator.color = Color.clear;
+        StartCoroutine(FindGemCoroutine());
+    }
+
+    private IEnumerator FindGemCoroutine()
+    {
+        SpriteScreen.SetActive(true);
+        inHandGem.gameObject.SetActive(true);
+        
+        yield return new WaitForEndOfFrame();
         
         Vector2 mousePosition = Mouse.current.position.ReadValue();
         Vector2 worldMousePosition = Camera.main!.ScreenToWorldPoint(mousePosition);
 
-        Gem firstGem = pool.Gems
-            .Where(g => g.gameObject.activeSelf)
-            .LastOrDefault(
-                g => g.Sprite.bounds.Contains(worldMousePosition) 
-                         && isGemOnPoint(g, worldMousePosition));
+        Gem firstGem = null;
+
+        var gems = pool.Gems;
+        for (int i = gems.Count - 1; i >= 0; i--)
+        {
+            if(!gems[i].gameObject.activeSelf
+               || !gems[i].Sprite.bounds.Contains(worldMousePosition)
+               || !isGemOnPoint(gems[i], mousePosition))
+                continue;
+
+            firstGem = gems[i];
+            break;
+        }
+        
+        SpriteScreen.SetActive(false);
+        inHandGem.gameObject.SetActive(false);
         
         if(firstGem is null)
-            return;
+            yield break;
 
-        inHandGem.sprite = firstGem.Sprite.sprite;
-        inHandGem.color = firstGem.Sprite.color;
+        inHandGem.gameObject.SetActive(true);
     }
 
     private bool isGemOnPoint(Gem gem, Vector3 mousePosition)
     {
-        float angle = gem.transform.rotation.eulerAngles.z;
-        Vector3 gemCenterPoint = gem.transform.position;
-        //Vector2 pointOnTexture = gem.transform.InverseTransformPoint(mousePosition);
+        inHandGem.sprite = gem.Sprite.sprite;
+        inHandGem.color = gem.Sprite.color;
+        inHandGem.rectTransform.anchoredPosition = Camera.main!.WorldToScreenPoint(gem.transform.position);
+        inHandGem.rectTransform.rotation = gem.transform.rotation;
 
-        float x, y;
-
-        Vector3 mouseDelta = ((mousePosition - gemCenterPoint) * 100) + new Vector3(32,32,0);
-
-        x = mouseDelta.x * Mathf.Cos(angle) + mouseDelta.y * Mathf.Sin(angle);
-        y = mouseDelta.y * Mathf.Cos(angle) + mouseDelta.x * Mathf.Sin(angle);
-
-        Debug.Log($"x:{x}, y:{y}");
-        //pointOnTexture += (Vector2)gem.Sprite.bounds.max;
-        //pointOnTexture *= 100;
-
-        if (gem.Sprite.sprite.texture.GetPixel((int)x, (int)y).a > alfaEdge)
-        {
-            gem.Sprite.sprite.texture.SetPixel((int)x, (int)y, Color.green);
-            Indicator.color = Color.green;
-        }
-        else
-            Indicator.color = Color.red;
+        Texture2D mousePixel = new Texture2D(Screen.width, Screen.height);
+        mousePixel.ReadPixels(new Rect(mousePosition.x, mousePosition.y, 1, 1), 0, 0);
+        //mousePixel.Apply();
+        Color pixelColor = mousePixel.GetPixel(0, 0);
         
-        gem.Sprite.sprite.texture.Apply();
+        Destroy(mousePixel);
         
-        return gem.Sprite.sprite.texture.GetPixel((int)x, (int)y).a > alfaEdge;
+        Debug.Log(pixelColor);
+
+        return pixelColor != backgroundColor;
     }
     
     private void OnDestroy()

@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using System.Linq;
 
 public class PlayerHandManager : MonoBehaviour
 {
@@ -14,9 +12,14 @@ public class PlayerHandManager : MonoBehaviour
     [SerializeField] 
     private Image inHandGem;
     [SerializeField] 
+    private Camera playerHandCamera;
+    [SerializeField] 
     private Color backgroundColor;
 
     public GameObject SpriteScreen;
+    private RenderTexture renderTexture;
+
+    //public Texture2D testTexture;
     
     private void Start()
     {
@@ -24,6 +27,9 @@ public class PlayerHandManager : MonoBehaviour
         action.FindAction("Click").performed += FindGem;
         //action.FindAction("Look").performed += FindGem;
         //action.FindAction("Look").performed += MoveImage;
+        
+        renderTexture = new RenderTexture(Screen.width, Screen.height, 24);
+        playerHandCamera.targetTexture = renderTexture;
     }
 
     private void MoveImage(InputAction.CallbackContext obj)
@@ -44,7 +50,9 @@ public class PlayerHandManager : MonoBehaviour
         SpriteScreen.SetActive(true);
         inHandGem.gameObject.SetActive(true);
         
-        yield return new WaitForEndOfFrame();
+        //yield return new WaitForEndOfFrame();
+        RenderTexture.active = renderTexture;
+        playerHandCamera.Render();
         
         Vector2 mousePosition = Mouse.current.position.ReadValue();
         Vector2 worldMousePosition = Camera.main!.ScreenToWorldPoint(mousePosition);
@@ -65,7 +73,8 @@ public class PlayerHandManager : MonoBehaviour
         
         SpriteScreen.SetActive(false);
         inHandGem.gameObject.SetActive(false);
-        
+        RenderTexture.active = null;
+            
         if(firstGem is null)
             yield break;
 
@@ -79,12 +88,13 @@ public class PlayerHandManager : MonoBehaviour
         inHandGem.rectTransform.anchoredPosition = Camera.main!.WorldToScreenPoint(gem.transform.position);
         inHandGem.rectTransform.rotation = gem.transform.rotation;
 
-        Texture2D mousePixel = new Texture2D(Screen.width, Screen.height);
-        mousePixel.ReadPixels(new Rect(mousePosition.x, mousePosition.y, 1, 1), 0, 0);
-        //mousePixel.Apply();
-        Color pixelColor = mousePixel.GetPixel(0, 0);
+        var testTexture = new Texture2D(Screen.width, Screen.height);
+        testTexture.ReadPixels(new Rect(mousePosition.x, mousePosition.y, 1, 1), 0, 0);
+        //testTexture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
+        testTexture.Apply();
+        Color pixelColor = testTexture.GetPixel(0, 0);
         
-        Destroy(mousePixel);
+        Destroy(testTexture);
         
         Debug.Log(pixelColor);
 

@@ -1,11 +1,10 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 using Unity.Mathematics;
 
 public class Gem : MonoBehaviour
 {
-    private static Bounds bounds;
+    public static Bounds Bounds;
     
     [SerializeField]
     private float mass;
@@ -18,24 +17,16 @@ public class Gem : MonoBehaviour
     public SpriteRenderer Sprite => spriteRenderer;
     [SerializeField]
     private int id;
-
-    private bool drag = false;
-    private float timer;
-    private const float FIFTH_SEC = 0.2f;
+    
     private const int ERROR_FORCE = 10;
 
     private Vector3 impulse;
     private float rotation;
     private float rotationFromSpeedCoefficient;
-    private Vector3 lastPosition;
-    private bool ingredientDrag = false;
 
     void FixedUpdate()
     {
-        if (ingredientDrag)
-            return;
-
-        if (!bounds.Contains(transform.localPosition))
+        if (!Bounds.Contains(transform.localPosition))
             GravityForce();
         
         if (impulse != Vector3.zero)
@@ -44,93 +35,28 @@ public class Gem : MonoBehaviour
 
     private void GravityForce()
     {
-        impulse += (bounds.center - transform.localPosition).normalized * (Physics2D.gravity.magnitude * Time.fixedDeltaTime);
-    }
-
-    void Update()
-    {
-        if (ingredientDrag && EveryFifthSec())
-            CheckLastPosition();
+        impulse += (Bounds.center - transform.localPosition).normalized * (Physics2D.gravity.magnitude * Time.fixedDeltaTime);
     }
 
     public void ResetPhysics()
     {
-        drag = false;
-        ingredientDrag = false;
         impulse = Vector3.zero;
-        lastPosition = Vector3.zero;
-        timer = 0;
     }
-
-    private bool EveryFifthSec()
-    {
-        timer += Time.deltaTime;
-        if (timer > FIFTH_SEC)
-        {
-            timer -= FIFTH_SEC;
-            return true;
-        }
-        return false;
-    }
-    private void CheckLastPosition()
-    {
-        lastPosition = transform.localPosition;
-    }
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        ingredientDrag = true;
-        CheckLastPosition();
-        //startMousePosition = Input.mousePosition/ canvasManager.ScaleFactor - transform.localPosition;
-        if (eventData.button == PointerEventData.InputButton.Left)
-        {
-            drag = true;
-        }
-        else
-        {
-            eventData.pointerDrag = null;
-        }
-    }
-    public void OnDrag(PointerEventData eventData)
-    {
-        if (drag && eventData.button == PointerEventData.InputButton.Left)
-        {
-            //transform.localPosition = Input.mousePosition / canvasManager.ScaleFactor - startMousePosition;
-        }
-    }
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        ingredientDrag = false;
-       
-        if (false)
-        {
-            if (id > 0)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                //puzzleManager.Particles(Input.mousePosition / canvasManager.ScaleFactor, success: false);
-                SetRandomImpulse(ERROR_FORCE, randomForse: false);
-            }
-            return;
-        }
-        impulse = (transform.localPosition - lastPosition) / mass;
-        //Debug.Log(impulse + " " + impulse.x + " " + impulse.y);
-    }
+    
     private void ForceToIngredient()
     {
         Vector3 pos = transform.localPosition;
 
-        if (bounds.Contains(pos))
+        if (Bounds.Contains(pos))
         {
             Vector3 afterPos = pos + impulse * Time.fixedDeltaTime;
-            if (afterPos.x < bounds.min.x || afterPos.x > bounds.max.x)
+            if (afterPos.x < Bounds.min.x || afterPos.x > Bounds.max.x)
             {
                 impulse.x = -impulse.x;
                 NewRotation();
                 //afterPos.x = Mathf.Clamp(afterPos.x, bounds.min.x, bounds.max.x);
             }
-            if (afterPos.y < bounds.min.y || afterPos.y > bounds.max.y)
+            if (afterPos.y < Bounds.min.y || afterPos.y > Bounds.max.y)
             {
                 impulse.y = -impulse.y;
                 NewRotation();
@@ -197,26 +123,5 @@ public class Gem : MonoBehaviour
     {
         spriteRenderer.sprite = sprite;
         spriteRenderer.color = color;
-    }
-    public void AddToRecipe(int number)
-    {
-        id = number;
-    }
-    public void Success()
-    {
-        //puzzleManager.Particles(
-        //    MainCamera.WorldToScreenPoint(transform.position) / canvasManager.ScaleFactor,
-        //    success: true);
-        spriteRenderer.color = Color.white;
-    }
-    public bool OnBox(float border)
-    {
-        Vector3 pos = transform.localPosition;
-        return Mathf.Abs(pos.x) < border && Mathf.Abs(pos.y) < border;
-    }
-
-    public void SetBounds(Bounds gemZoneBounds)
-    {
-        bounds = gemZoneBounds; 
     }
 }

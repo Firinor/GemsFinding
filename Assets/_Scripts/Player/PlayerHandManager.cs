@@ -15,18 +15,22 @@ public class PlayerHandManager : MonoBehaviour
     private Camera playerHandCamera;
     [SerializeField] 
     private Color backgroundColor;
+    [SerializeField] 
+    private Transform spotLight;
 
     public GameObject SpriteScreen;
     private RenderTexture renderTexture;
 
+    private Color gemColor;
+    
     //public Texture2D testTexture;
     
     private void Start()
     {
         action = InputSystem.actions;
-        action.FindAction("Click").performed += FindGem;
+        action.FindAction("Attack").performed += FindGem;
         //action.FindAction("Look").performed += FindGem;
-        //action.FindAction("Look").performed += MoveImage;
+        action.FindAction("Look").performed += MoveImage;
         
         renderTexture = new RenderTexture(Screen.width, Screen.height, 24);
         playerHandCamera.targetTexture = renderTexture;
@@ -34,18 +38,32 @@ public class PlayerHandManager : MonoBehaviour
 
     private void MoveImage(InputAction.CallbackContext obj)
     {
-        inHandGem.rectTransform.anchoredPosition = Mouse.current.position.ReadValue();
+        var mousePosition = Mouse.current.position.ReadValue();
+        inHandGem.rectTransform.anchoredPosition = mousePosition;
+        Vector3 position = Camera.main!.ScreenToWorldPoint(mousePosition);
+        position.z = 0;
+        spotLight.position = position;
     }
 
     private void FindGem(InputAction.CallbackContext obj)
     {
-        if (!obj.control.IsPressed())
-            return;
-
-        StartCoroutine(FindGemCoroutine());
+        if (!inHandGem.gameObject.activeSelf)
+            FindGemCoroutine();
+        else
+            ReleaseGem();
     }
 
-    private IEnumerator FindGemCoroutine()
+    private void ReleaseGem()
+    {
+        Gem releaseGem = pool.Get();
+        releaseGem.SetView(inHandGem.sprite, gemColor);
+        Vector3 pos = Camera.main!.ScreenToWorldPoint(inHandGem.rectTransform.anchoredPosition);
+        pos.z = 0;
+        releaseGem.transform.position = pos;
+        inHandGem.gameObject.SetActive(false);
+    }
+
+    private void FindGemCoroutine()
     {
         SpriteScreen.SetActive(true);
         inHandGem.gameObject.SetActive(true);
@@ -76,15 +94,18 @@ public class PlayerHandManager : MonoBehaviour
         RenderTexture.active = null;
             
         if(firstGem is null)
-            yield break;
+            return;
 
+        pool.Return(firstGem);
+        
         inHandGem.gameObject.SetActive(true);
     }
 
     private bool isGemOnPoint(Gem gem, Vector3 mousePosition)
     {
         inHandGem.sprite = gem.Sprite.sprite;
-        inHandGem.color = gem.Sprite.color;
+        gemColor = gem.Sprite.color;
+        inHandGem.color = new Color(gemColor.r, gemColor.g, gemColor.b, 1);
         inHandGem.rectTransform.anchoredPosition = Camera.main!.WorldToScreenPoint(gem.transform.position);
         inHandGem.rectTransform.rotation = gem.transform.rotation;
 
@@ -96,14 +117,14 @@ public class PlayerHandManager : MonoBehaviour
         
         Destroy(testTexture);
         
-        Debug.Log(pixelColor);
+        //Debug.Log(pixelColor);
 
         return pixelColor != backgroundColor;
     }
     
     private void OnDestroy()
     {
-        action.FindAction("Click").performed -= FindGem;
+        action.FindAction("Attack").performed -= FindGem;
         action.FindAction("Look").performed -= MoveImage;
     }
 }

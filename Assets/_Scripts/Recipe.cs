@@ -39,7 +39,7 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     internal bool ActivateIngredient(int keyIngredientNumber)
     {
         Gem blackIngredient = recipe[keyIngredientNumber - 1];
-        blackIngredient.Success();
+        //blackIngredient.Success();
 
         //recipe.Remove(blackIngredient);
         ingredientCount--;

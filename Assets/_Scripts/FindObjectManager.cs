@@ -105,7 +105,7 @@ public class FindObjectManager : MonoBehaviour
             
             allIngredients.Add(newGem);
         }
-        allIngredients[0].SetBounds(GemZone.bounds);
+        Gem.Bounds = GemZone.bounds;
     }
     
     public async void SuccessfullySolvePuzzle()
@@ -135,30 +135,7 @@ public class FindObjectManager : MonoBehaviour
         float force = 0;
 
         List<Gem> ingredientsToDestroy = new List<Gem>();
-
-        while (allIngredients != null && allIngredients.Count > 0)
-        {
-            for(int i = 0; i < 30 && i < allIngredients.Count; i++)
-            {
-                if (allIngredients[i].OnBox(border))
-                {
-                    allIngredients[i].SetImpulse(0, toZeroPoint: true);
-                    ingredientsToDestroy.Add(allIngredients[i]);
-                }
-                else
-                {
-                    allIngredients[i].SetImpulse(force, toZeroPoint: true);
-                }
-            }
-            foreach (Gem ingredient in ingredientsToDestroy)
-            {
-                allIngredients.Remove(ingredient);
-            }
-            border += acceleration;
-            force += acceleration;
-
-            await Task.Yield();
-        }
+        
         foreach (Gem ingredient in ingredientsToDestroy)
         {
             Destroy(ingredient.gameObject);

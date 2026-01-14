@@ -3361,6 +3361,7 @@ MonoBehaviour:
   playerHandCamera: {fileID: 855208913}
   backgroundColor: {r: 0, g: 0, b: 0, a: 1}
   spotLight: {fileID: 958265190}
+  impulseCoefficient: 0.06
   SpriteScreen: {fileID: 1857650615}
 --- !u!1001 &540473064
 PrefabInstance:

@@ -35,7 +35,6 @@ public class FindObjectManager : MonoBehaviour
     private float forceToIngredient;
     [SerializeField]
     private float spawnDistance;
-    private float acceleration = 0.025f;
 
     //public ParticleSystem successParticleSystem;
     //public ParticleSystem errorParticleSystem;
@@ -110,7 +109,7 @@ public class FindObjectManager : MonoBehaviour
     
     public async void SuccessfullySolvePuzzle()
     {
-        await HarvestAllIngredients();
+        //await HarvestAllIngredients();
         CloseBox();
 
         await Task.Delay(500);
@@ -129,9 +128,9 @@ public class FindObjectManager : MonoBehaviour
         box.GetComponent<Button>().enabled = false;
     }
 
-    private async Task HarvestAllIngredients()
+    private void HarvestAllIngredients()
     {
-        float border = 0;
+        /*float border = 0;
         float force = 0;
 
         List<Gem> ingredientsToDestroy = new List<Gem>();
@@ -139,7 +138,7 @@ public class FindObjectManager : MonoBehaviour
         foreach (Gem ingredient in ingredientsToDestroy)
         {
             Destroy(ingredient.gameObject);
-        }
+        }*/
     }
 
     private List<int> GenerateNewRecipe(int recipeIngredientCount, int length)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,12 +18,17 @@ public class PlayerHandManager : MonoBehaviour
     private Color backgroundColor;
     [SerializeField] 
     private Transform spotLight;
+    [SerializeField] 
+    private float impulseCoefficient;
 
     public GameObject SpriteScreen;
     private RenderTexture renderTexture;
 
     private Color gemColor;
-    
+
+    private int lastPositionIndex;
+    private readonly Vector2[] lastMousePosition = new Vector2[5];
+    private Vector2 mouseImpulse;
     //public Texture2D testTexture;
     
     private void Start()
@@ -53,6 +59,14 @@ public class PlayerHandManager : MonoBehaviour
             ReleaseGem();
     }
 
+    private void FixedUpdate()
+    {
+        Vector2 currentMousePosition = Mouse.current.position.ReadValue();
+        lastMousePosition[lastPositionIndex] = currentMousePosition;
+        lastPositionIndex = (lastPositionIndex+1) % lastMousePosition.Length;
+        mouseImpulse = currentMousePosition - lastMousePosition[lastPositionIndex];
+    }
+
     private void ReleaseGem()
     {
         Gem releaseGem = pool.Get();
@@ -60,7 +74,9 @@ public class PlayerHandManager : MonoBehaviour
         Vector3 pos = Camera.main!.ScreenToWorldPoint(inHandGem.rectTransform.anchoredPosition);
         pos.z = 0;
         releaseGem.transform.position = pos;
+        releaseGem.SetImpulse(mouseImpulse * impulseCoefficient);
         inHandGem.gameObject.SetActive(false);
+        enabled = false;
     }
 
     private void FindGemCoroutine()
@@ -99,6 +115,7 @@ public class PlayerHandManager : MonoBehaviour
         pool.Return(firstGem);
         
         inHandGem.gameObject.SetActive(true);
+        enabled = true;
     }
 
     private bool isGemOnPoint(Gem gem, Vector3 mousePosition)

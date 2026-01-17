@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using FirMath;
@@ -11,18 +12,11 @@ public class FindObjectManager : MonoBehaviour
     #region Fields
     [SerializeField]
     private FindObjectPuzzleConfig puzzleConfig;
-
-    [SerializeField]
-    private Image box;
     
     [SerializeField]
     private GemPool pool;
     
     private List<Gem> allIngredients;
-    [SerializeField]
-    private GemInRecipe recipeIngredientPrefab;
-    [SerializeField]
-    private RectTransform recipeParent;
     [SerializeField]
     private Recipe recipe;
     [SerializeField]
@@ -38,9 +32,7 @@ public class FindObjectManager : MonoBehaviour
 
     //public ParticleSystem successParticleSystem;
     //public ParticleSystem errorParticleSystem;
-
-    [HideInInspector]
-    public bool PointerOnRecipe;
+    
     #endregion
 
     public void RetryPuzzle()
@@ -48,32 +40,27 @@ public class FindObjectManager : MonoBehaviour
         OnEnable();
     }
 
+    private void Start()
+    {
+        recipe.RecipeIsComplete += SuccessfullySolvePuzzle;
+    }
+
     protected void OnEnable()
     {
-        CreateNewRecipe();
         StartPuzzle();
     }
 
     private void CreateNewRecipe()
     {
-        int gemsCount = puzzleConfig.GemsSprites.Length;
-        int gemsColors = puzzleConfig.GemsColors.Length;
+        recipe.Clear();
         
-        //ingredientInBoxCount = gemsCount * gemsColors;
-        List<int> recipeIntList = GenerateNewRecipe(recipeIngredientCount, ingredientInBoxCount);
+        List<int> recipeIntList = GameMath.AFewCardsFromTheDeck(recipeIngredientCount, allIngredients.Count);
 
-        foreach (int i in recipeIntList)
-        {
-            GemInRecipe newRecipeIngridient
-                = Instantiate(recipeIngredientPrefab, recipeParent);
-            int spriteIndex = i / gemsColors;
-            
-            int colorIndex = i % gemsColors;
-            
-            newRecipeIngridient.SetView(puzzleConfig.GemsSprites[spriteIndex], puzzleConfig.GemsColors[colorIndex]);
-            //recipe.Add(newRecipeIngridient);
-        }
-        //recipe.SetResipe(recipeList);
+        List<Gem> recipeGems = new();
+        foreach (var i in recipeIntList)
+            recipeGems.Add(allIngredients[i]);
+        
+        recipe.SetResipe(recipeGems);
     }
 
     [ContextMenu("StartPuzzle")]
@@ -105,27 +92,16 @@ public class FindObjectManager : MonoBehaviour
             allIngredients.Add(newGem);
         }
         Gem.Bounds = GemZone.bounds;
+        
+        CreateNewRecipe();
     }
     
     public async void SuccessfullySolvePuzzle()
     {
         //await HarvestAllIngredients();
-        CloseBox();
 
         await Task.Delay(500);
         //base.SuccessfullySolvePuzzle();
-    }
-
-    private void CloseBox()
-    {
-        box.sprite = puzzleConfig.ClosedChest;
-        box.SetNativeSize();
-    }
-    private void OpenBox()
-    {
-        box.sprite = puzzleConfig.OpenedChest;
-        box.SetNativeSize();
-        box.GetComponent<Button>().enabled = false;
     }
 
     private void HarvestAllIngredients()
@@ -140,25 +116,6 @@ public class FindObjectManager : MonoBehaviour
             Destroy(ingredient.gameObject);
         }*/
     }
-
-    private List<int> GenerateNewRecipe(int recipeIngredientCount, int length)
-    {
-        return GameMath.AFewCardsFromTheDeck(recipeIngredientCount, length);
-    }
-
-    internal void ActivateIngredient(int keyIngredientNumber)
-    {
-        bool TheRecipeIsReady = recipe.ActivateIngredient(keyIngredientNumber);
-        if (TheRecipeIsReady)
-        {
-            SuccessfullySolvePuzzle();
-        }
-    }
-
-    /*private bool BrakingField(ref Vector3 pos)
-    {
-        return pos.y > recipeOffset;
-    }*/
 
     /*internal void Particles(Vector3 position, bool success)
     {
@@ -175,8 +132,8 @@ public class FindObjectManager : MonoBehaviour
         allIngredients.Remove(gem);
     }
 
-    public void SkipPuzzle()
+    private void OnDestroy()
     {
-        SuccessfullySolvePuzzle();
+        recipe.RecipeIsComplete -= SuccessfullySolvePuzzle;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,13 +7,22 @@ using UnityEngine.UI;
 public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField]
-    private FindObjectManager puzzleOperator;
+    private FindObjectManager puzzleManager;
+    
+    [SerializeField]
+    private GemInRecipe recipeIngredientPrefab;
+    [SerializeField]
+    private RectTransform recipeParent;
+    
     [SerializeField]
     private Image image;
     [SerializeField]
     private Color grey;
-    private List<Gem> recipe;
-    private int ingredientCount;
+    private List<GemInRecipe> gems = new();
+
+    private bool isPlayerHandOwerRecipe;
+    
+    public event Action RecipeIsComplete;
 
     void Awake()
     {
@@ -21,28 +31,54 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        //Debug.Log("RecipeOperator pointer enter");
+        isPlayerHandOwerRecipe = true;
         image.color = Color.white;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        //Debug.Log("RecipeOperator pointer exit");
+        isPlayerHandOwerRecipe = false;
         image.color = grey;
-        puzzleOperator.PointerOnRecipe = false;
     }
-    internal void SetResipe(List<Gem> recipe)
+    internal void SetResipe(List<Gem> gems)
     {
-        this.recipe = recipe;
-        ingredientCount = recipe.Count;
-    }
-    internal bool ActivateIngredient(int keyIngredientNumber)
-    {
-        Gem blackIngredient = recipe[keyIngredientNumber - 1];
-        //blackIngredient.Success();
+        foreach (Gem gem in gems)
+        {
+            GemInRecipe newRecipeIngridient
+                = Instantiate(recipeIngredientPrefab, recipeParent);
 
-        //recipe.Remove(blackIngredient);
-        ingredientCount--;
-        return ingredientCount == 0;
+            newRecipeIngridient.SetView(gem.Sprite.sprite, gem.Sprite.color);
+            this.gems.Add(newRecipeIngridient);
+        }
+    }
+    internal bool CheckGem(GemData playerGem)
+    {
+        if (!isPlayerHandOwerRecipe)
+            return false;
+        
+        foreach (var gem in gems)
+        {
+            if (gem != playerGem) 
+                continue;
+            
+            Destroy(gem.gameObject);
+            gems.Remove(gem);
+            if(gems.Count == 0)
+                RecipeIsComplete?.Invoke();
+            return true;
+        }
+        
+        return false;
+    }
+
+    public void Clear()
+    {
+        gems = new();
+        
+        if(recipeParent.childCount == 0)
+            return;
+        
+        for (int i = recipeParent.childCount - 1; i >= 0; i--)
+            Destroy(recipeParent.GetChild(i).gameObject);
     }
 }

@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -10,6 +8,8 @@ public class PlayerHandManager : MonoBehaviour
     private InputActionAsset action;
     [SerializeField] 
     private GemPool pool;
+    [SerializeField] 
+    private Recipe recipe;
     [SerializeField] 
     private Image inHandGem;
     [SerializeField] 
@@ -24,7 +24,7 @@ public class PlayerHandManager : MonoBehaviour
     public GameObject SpriteScreen;
     private RenderTexture renderTexture;
 
-    private Color gemColor;
+    private GemData gemData;
 
     private int lastPositionIndex;
     private readonly Vector2[] lastMousePosition = new Vector2[5];
@@ -69,12 +69,18 @@ public class PlayerHandManager : MonoBehaviour
 
     private void ReleaseGem()
     {
-        Gem releaseGem = pool.Get();
-        releaseGem.SetView(inHandGem.sprite, gemColor);
-        Vector3 pos = Camera.main!.ScreenToWorldPoint(inHandGem.rectTransform.anchoredPosition);
-        pos.z = 0;
-        releaseGem.transform.position = pos;
-        releaseGem.SetImpulse(mouseImpulse * impulseCoefficient);
+        bool isCorrectGem = recipe.CheckGem(gemData);
+
+        if (!isCorrectGem)
+        {
+            Gem releaseGem = pool.Get();
+            releaseGem.SetView(inHandGem.sprite, gemData.Color);
+            Vector3 pos = Camera.main!.ScreenToWorldPoint(inHandGem.rectTransform.anchoredPosition);
+            pos.z = 0;
+            releaseGem.transform.position = pos;
+            releaseGem.SetImpulse(mouseImpulse * impulseCoefficient);
+        }
+        
         inHandGem.gameObject.SetActive(false);
         enabled = false;
     }
@@ -121,8 +127,9 @@ public class PlayerHandManager : MonoBehaviour
     private bool isGemOnPoint(Gem gem, Vector3 mousePosition)
     {
         inHandGem.sprite = gem.Sprite.sprite;
-        gemColor = gem.Sprite.color;
-        inHandGem.color = new Color(gemColor.r, gemColor.g, gemColor.b, 1);
+        gemData.Sprite = inHandGem.sprite;
+        gemData.Color = gem.Sprite.color;
+        inHandGem.color = new Color(gemData.Color.r, gemData.Color.g, gemData.Color.b, 1);
         inHandGem.rectTransform.anchoredPosition = Camera.main!.WorldToScreenPoint(gem.transform.position);
         inHandGem.rectTransform.rotation = gem.transform.rotation;
 

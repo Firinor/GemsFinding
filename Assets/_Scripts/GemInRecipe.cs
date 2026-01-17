@@ -1,34 +1,37 @@
+using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
-using Unity.Mathematics;
-using UnityEngine.Serialization;
 
 public class GemInRecipe : MonoBehaviour
 {
-    [SerializeField]
-    private Image image; 
-    [SerializeField]
-    private int gemID;
-    
-    public void SetView(Sprite sprite, Color color)
+    [SerializeField] private Image image;
+
+    public void SetView(Sprite sprite, Color color, Material material = null)
     {
         image.sprite = sprite;
         image.SetNativeSize();
         image.color = color;
         image.raycastTarget = false;
+
+        if (material is not null)
+            image.material = material;
+
         enabled = false;
     }
-    public void AddToRecipe(int id)
+    
+    public static bool operator ==(GemInRecipe gemInRecipe, GemData gem)
     {
-        gemID = id;
+        if (gemInRecipe is null)
+            return false;
+
+        bool isSprite = gemInRecipe.image.sprite == gem.Sprite;
+        bool isColor = gemInRecipe.image.color == gem.Color;
+        bool isMaterial = gemInRecipe.image.material == gem.Material;
+        
+        return isSprite && isColor;
     }
-    public void Success()
-    {
-        //puzzleManager.Particles(
-        //    MainCamera.WorldToScreenPoint(transform.position) / canvasManager.ScaleFactor,
-        //    success: true);
-        image.color = Color.white;
-    }
+    public static bool operator !=(GemInRecipe gemInRecipe, GemData gem) => !(gemInRecipe == gem);
+    private bool Equals(GemInRecipe other) => Equals(image.sprite, other.image.sprite) && image.color.Equals(other.image.color) && Equals(image.material, other.image.material);
+    public override bool Equals(object obj) => Equals((GemInRecipe)obj);
+    public override int GetHashCode() => HashCode.Combine(image.sprite, image.color, image.material);
 }

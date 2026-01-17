@@ -1316,7 +1316,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f9dc5d4ef522884a9e217092dfb2c99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puzzleOperator: {fileID: 403798198}
+  puzzleManager: {fileID: 403798198}
+  recipeIngredientPrefab: {fileID: 3925426803893761953, guid: dfddb6a70b7ebc242a64d1d61e7bcf4d, type: 3}
+  recipeParent: {fileID: 160472095}
   image: {fileID: 160472098}
   grey: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 1}
 --- !u!114 &160472097
@@ -2176,17 +2178,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   puzzleConfig: {fileID: 403798199}
-  box: {fileID: 0}
   pool: {fileID: 376978070}
-  recipeIngredientPrefab: {fileID: 3925426803893761953, guid: dfddb6a70b7ebc242a64d1d61e7bcf4d, type: 3}
-  recipeParent: {fileID: 160472095}
   recipe: {fileID: 160472096}
-  recipeIngredientCount: 1
+  recipeIngredientCount: 3
   GemZone: {fileID: 1264233802}
   ingredientInBoxCount: 100
   forceToIngredient: 20
   spawnDistance: 20
-  PointerOnRecipe: 0
 --- !u!114 &403798199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3357,6 +3355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHandManager
   pool: {fileID: 376978070}
+  recipe: {fileID: 160472096}
   inHandGem: {fileID: 1576020000}
   playerHandCamera: {fileID: 855208913}
   backgroundColor: {r: 0, g: 0, b: 0, a: 1}

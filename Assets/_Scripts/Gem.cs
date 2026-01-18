@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using Unity.Mathematics;
@@ -5,6 +6,8 @@ using Unity.Mathematics;
 public class Gem : MonoBehaviour
 {
     public static Bounds Bounds;
+
+    public event Action<Vector3> OnBoundTink;
     
     [SerializeField]
     private float mass;
@@ -54,12 +57,14 @@ public class Gem : MonoBehaviour
             {
                 impulse.x = -impulse.x;
                 NewRotation();
+                OnBoundTink?.Invoke(pos);
                 //afterPos.x = Mathf.Clamp(afterPos.x, bounds.min.x, bounds.max.x);
             }
             if (afterPos.y < Bounds.min.y || afterPos.y > Bounds.max.y)
             {
                 impulse.y = -impulse.y;
                 NewRotation();
+                OnBoundTink?.Invoke(pos);
                 //afterPos.y = Mathf.Clamp(afterPos.y, bounds.min.y, bounds.max.y);
             }
         }

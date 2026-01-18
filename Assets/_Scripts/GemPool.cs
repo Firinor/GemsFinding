@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using UnityEngine;
 
 public class GemPool : MonoBehaviour
@@ -8,6 +7,9 @@ public class GemPool : MonoBehaviour
     private Gem ingredientPrefab;
     [SerializeField]
     private Transform ingredientParent;
+    
+    [SerializeField]
+    private SoundManager sound;
 
     [SerializeField]
     private int startLayer;
@@ -15,14 +17,13 @@ public class GemPool : MonoBehaviour
     
     public Transform GemParent => ingredientParent;
     
-    
-
     private void Start()
     {
         for (int i = 0; i < ingredientParent.childCount - 1; i++)
         {
             ingredientParent.GetChild(i).GetComponent<SpriteRenderer>().sortingOrder = startLayer + currentLayerStep;
             currentLayerStep++;
+            ingredientParent.GetChild(i).GetComponent<Gem>().OnBoundTink += sound.PlayGemTink;
         }
     }
 
@@ -62,6 +63,14 @@ public class GemPool : MonoBehaviour
         for (int i = ingredientParent.childCount - 1; i >= 0; i--)
         {
             ingredientParent.GetChild(i).gameObject.SetActive(false);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        for (int i = ingredientParent.childCount - 1; i >= 0; i--)
+        {
+            ingredientParent.GetChild(i).GetComponent<Gem>().OnBoundTink -= sound.PlayGemTink;
         }
     }
 }

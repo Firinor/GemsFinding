@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -9,21 +8,45 @@ public class GemPool : MonoBehaviour
     private Gem ingredientPrefab;
     [SerializeField]
     private Transform ingredientParent;
+
+    [SerializeField]
+    private int startLayer;
+    private int currentLayerStep;
     
-    public List<Gem> Gems;
+    public Transform GemParent => ingredientParent;
+    
+    
+
+    private void Start()
+    {
+        for (int i = 0; i < ingredientParent.childCount - 1; i++)
+        {
+            ingredientParent.GetChild(i).GetComponent<SpriteRenderer>().sortingOrder = startLayer + currentLayerStep;
+            currentLayerStep++;
+        }
+    }
 
     public Gem Get()
     {
-        Gem result =
-           Gems.FirstOrDefault(gem => !gem.gameObject.activeSelf);
+        Gem result = null;
+        for (int i = 0; i < ingredientParent.childCount - 1; i++)
+        {
+            if(ingredientParent.GetChild(i).gameObject.activeSelf)
+               continue;
 
+            result = ingredientParent.GetChild(i).GetComponent<Gem>();
+            break;
+        }
+        
         if (result is null)
         {
             result = Instantiate(ingredientPrefab, ingredientParent);
-            Gems.Add(result);
+            result.GetComponent<SpriteRenderer>().sortingOrder = startLayer + currentLayerStep;
+            currentLayerStep++;
         }
 
         result.ResetPhysics();
+        result.enabled = true;
         result.gameObject.SetActive(true);
         
         return result;
@@ -36,9 +59,9 @@ public class GemPool : MonoBehaviour
 
     public void ClearAll()
     {
-        foreach (var gem in Gems)
+        for (int i = ingredientParent.childCount - 1; i >= 0; i--)
         {
-            Return(gem);
+            ingredientParent.GetChild(i).gameObject.SetActive(false);
         }
     }
 }

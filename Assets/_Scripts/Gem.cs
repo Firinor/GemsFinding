@@ -71,7 +71,10 @@ public class Gem : MonoBehaviour
         if (impulse.magnitude > brakingVector.magnitude)
             impulse -= brakingVector;
         else
+        {
             impulse = Vector3.zero;
+            enabled = false;
+        }
 
         transform.localPosition = pos;
         

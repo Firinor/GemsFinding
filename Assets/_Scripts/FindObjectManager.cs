@@ -19,34 +19,26 @@ public class FindObjectManager : MonoBehaviour
     private List<Gem> allIngredients;
     [SerializeField]
     private Recipe recipe;
-    [SerializeField]
-    private int recipeIngredientCount = 5;
     [SerializeField] 
     private BoxCollider2D GemZone;
-    [SerializeField]
-    private int ingredientInBoxCount = 250; 
     [SerializeField]
     private float forceToIngredient;
     [SerializeField]
     private float spawnDistance;
 
+
+    private PuzzleContex contex;
+    
     //public ParticleSystem successParticleSystem;
     //public ParticleSystem errorParticleSystem;
     
     #endregion
 
-    public void RetryPuzzle()
+    public void Initialize(PuzzleContex contex)
     {
-        OnEnable();
-    }
-
-    private void Start()
-    {
+        this.contex = contex;
+        
         recipe.RecipeIsComplete += SuccessfullySolvePuzzle;
-    }
-
-    protected void OnEnable()
-    {
         StartPuzzle();
     }
 
@@ -54,7 +46,7 @@ public class FindObjectManager : MonoBehaviour
     {
         recipe.Clear();
         
-        List<int> recipeIntList = GameMath.AFewCardsFromTheDeck(recipeIngredientCount, allIngredients.Count);
+        List<int> recipeIntList = GameMath.AFewCardsFromTheDeck(contex.RecipeGemCount, contex.AllIngridients);
 
         List<Gem> recipeGems = new();
         foreach (var i in recipeIntList)
@@ -67,24 +59,18 @@ public class FindObjectManager : MonoBehaviour
     public void StartPuzzle()
     {
         pool.ClearAll();
-        //OpenBox();
-
+        
         allIngredients = new List<Gem>();
-
-        int gemsCount = puzzleConfig.GemsSprites.Length;
-        int gemsColors = puzzleConfig.GemsColors.Length;
         
-        //ingredientInBoxCount = gemsCount * gemsColors;
-        
-        for (int i=0; i<ingredientInBoxCount; i++)
+        for (int i = 0; i < contex.IngredientInBoxCount; i++)
         {
             Gem newGem = pool.Get();
 
             float direction = Random.value * 360 * Mathf.Deg2Rad;
             newGem.transform.localPosition = new Vector3(math.cos(direction), math.sin(direction), 0) * spawnDistance;
             
-            int spriteIndex = i / gemsColors;
-            int colorIndex = i % gemsColors;
+            int spriteIndex = i / contex.GemColorCount;
+            int colorIndex = i % contex.GemColorCount;
             
             newGem.SetView(puzzleConfig.GemsSprites[spriteIndex], puzzleConfig.GemsColors[colorIndex]);
             newGem.SetRandomImpulse(forceToIngredient);

@@ -2201,9 +2201,7 @@ MonoBehaviour:
   puzzleConfig: {fileID: 403798199}
   pool: {fileID: 376978070}
   recipe: {fileID: 160472096}
-  recipeIngredientCount: 1
   GemZone: {fileID: 1264233802}
-  ingredientInBoxCount: 300
   forceToIngredient: 20
   spawnDistance: 1
 --- !u!114 &403798199
@@ -2326,8 +2324,6 @@ MonoBehaviour:
   - {r: 0.08962262, g: 0.37376133, b: 1, a: 0.9019608}
   - {r: 0.9333334, g: 0, b: 1, a: 0.9019608}
   - {r: 0.6886792, g: 0, b: 0, a: 0.9019608}
-  ClosedChest: {fileID: 3409271006476197203, guid: ffe2e5d16b56a01429c8bc50b540421d, type: 3}
-  OpenedChest: {fileID: 661394140614664346, guid: ffe2e5d16b56a01429c8bc50b540421d, type: 3}
 --- !u!1001 &406787287
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5107,7 +5103,7 @@ MonoBehaviour:
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
   m_ShadowsEnabled: 1
-  m_ShadowIntensity: 0.75
+  m_ShadowIntensity: 0.715
   m_ShadowSoftness: 0.3
   m_ShadowSoftnessFalloffIntensity: 0.5
   m_ShadowVolumeIntensityEnabled: 0
@@ -5117,7 +5113,7 @@ MonoBehaviour:
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 2
+  m_PointLightInnerRadius: 0.2
   m_PointLightOuterRadius: 4
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
@@ -5138,7 +5134,7 @@ Transform:
   m_GameObject: {fileID: 958265188}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.112, y: 1.229, z: 0}
+  m_LocalPosition: {x: -0.975, y: 1.013, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6032,6 +6028,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1232905433}
+  - component: {fileID: 1232905434}
   m_Layer: 0
   m_Name: Bootstrap
   m_TagString: Untagged
@@ -6054,6 +6051,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1232905434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232905432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26d2e5ec69b2cd048864e6e3f39f026f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bootstrup
+  mainManager: {fileID: 403798198}
 --- !u!1001 &1259312110
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6413,12 +6423,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3929304121011744850, guid: 5e0d213ad6857f74b9dcd92c1e417968, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929304121011744850, guid: 5e0d213ad6857f74b9dcd92c1e417968, type: 3}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929304121011744850, guid: 5e0d213ad6857f74b9dcd92c1e417968, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -87993868, guid: 2dabd06ce85d48d4fa99a7b77e2570be, type: 3}
     - target: {fileID: 3929304121011744850, guid: 5e0d213ad6857f74b9dcd92c1e417968, type: 3}
       propertyPath: m_Color.a
       value: 0.9019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929304121011744850, guid: 5e0d213ad6857f74b9dcd92c1e417968, type: 3}
+      propertyPath: m_DrawMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8455584675609609423, guid: 5e0d213ad6857f74b9dcd92c1e417968, type: 3}
       propertyPath: m_Enabled

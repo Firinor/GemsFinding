@@ -4,6 +4,4 @@ public class FindObjectPuzzleConfig : MonoBehaviour
 {
     public Sprite[] GemsSprites;
     public Color[] GemsColors;
-    public Sprite ClosedChest;
-    public Sprite OpenedChest;
 }

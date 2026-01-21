@@ -1,4 +1,7 @@
-﻿public class PuzzleContex
+﻿using System;
+
+[Serializable]
+public class PuzzleContex
 {
     public int IngredientInBoxCount = 7;
     public int GemFormCount = 7;

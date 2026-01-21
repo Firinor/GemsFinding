@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 825d33b5e0954ff68fd3d363a867f3b6, type: 3}
+  m_Name: Shapes Count
+  m_EditorClassIdentifier: Assembly-CSharp::MetaPointData
+  Icon: {fileID: -1916344210, guid: 2dabd06ce85d48d4fa99a7b77e2570be, type: 3}
+  Type: 2
+  Value: 1
+  MaxLevel: 10
+  Cost: 32000000c8000000f4010000dc050000b80b000010270000204e000050c30000c0d4010090d00300
+  Unlocks:
+  - {fileID: 11400000, guid: b4dbd38dd730e5a49a0dba4f42f48aa5, type: 2}

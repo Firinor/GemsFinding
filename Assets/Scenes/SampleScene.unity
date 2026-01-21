@@ -2314,16 +2314,17 @@ MonoBehaviour:
   - {fileID: -2109473409, guid: 2dabd06ce85d48d4fa99a7b77e2570be, type: 3}
   - {fileID: -266111593, guid: 2dabd06ce85d48d4fa99a7b77e2570be, type: 3}
   GemsColors:
-  - {r: 1, g: 1, b: 1, a: 0.9019608}
   - {r: 1, g: 0, b: 0, a: 0.9019608}
-  - {r: 1, g: 0.6, b: 0, a: 0.9019608}
+  - {r: 0.08962262, g: 0.37376133, b: 1, a: 0.9019608}
   - {r: 0.99636734, g: 1, b: 0, a: 0.5019608}
   - {r: 0.15304625, g: 1, b: 0, a: 0.8}
-  - {r: 0, g: 1, b: 0.34998178, a: 0.9019608}
-  - {r: 0, g: 1, b: 0.9720595, a: 0.5019608}
-  - {r: 0.08962262, g: 0.37376133, b: 1, a: 0.9019608}
+  - {r: 1, g: 1, b: 1, a: 0.9019608}
+  - {r: 1, g: 0.6, b: 0, a: 0.9019608}
   - {r: 0.9333334, g: 0, b: 1, a: 0.9019608}
+  - {r: 0, g: 1, b: 0.9720595, a: 0.5019608}
+  - {r: 0, g: 0.4056604, b: 0.1415834, a: 0.9019608}
   - {r: 0.6886792, g: 0, b: 0, a: 0.9019608}
+  - {r: 0.0012847747, g: 0, b: 0.3490566, a: 0.9019608}
 --- !u!1001 &406787287
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3760,15 +3761,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_Color: {r: 0.1509434, g: 0.1509434, b: 0.1509434, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -6937154614026109424, guid: 36ce7b7dd9e29de4b8bc07aa47b1bfbf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c40703a9bbd8a6a44be583522d88050d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6064,6 +6065,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bootstrup
   mainManager: {fileID: 403798198}
+  PuzzleContex:
+    IngredientInBoxCount: 70
+    GemFormCount: 70
+    GemColorCount: 1
+    RecipeGemCount: 16
 --- !u!1001 &1259312110
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,15 +1,17 @@
 using UnityEngine;
 
 [DefaultExecutionOrder(-1)]
-public class Bootstrup : MonoBehaviour
+public class CoreBootstrup : MonoBehaviour
 {
     [SerializeField] 
     private FindObjectManager mainManager;
+
+    public PuzzleContex PuzzleContex;
     
     void Awake()
     {
         LoadPlayerData();
-        mainManager.Initialize(new());
+        mainManager.Initialize(PuzzleContex);
     }
 
     private void LoadPlayerData()

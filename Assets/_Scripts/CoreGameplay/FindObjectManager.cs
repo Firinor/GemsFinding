@@ -68,9 +68,15 @@ public class FindObjectManager : MonoBehaviour
 
             float direction = Random.value * 360 * Mathf.Deg2Rad;
             newGem.transform.localPosition = new Vector3(math.cos(direction), math.sin(direction), 0) * spawnDistance;
-            
+
+            int colorIndex;
             int spriteIndex = i / contex.GemColorCount;
-            int colorIndex = i % contex.GemColorCount;
+            if (contex.GemColorCount < 3)
+                colorIndex = i % puzzleConfig.GemsColors.Length;
+            else
+                colorIndex = i % contex.GemColorCount;
+                
+            
             
             newGem.SetView(puzzleConfig.GemsSprites[spriteIndex], puzzleConfig.GemsColors[colorIndex]);
             newGem.SetRandomImpulse(forceToIngredient);

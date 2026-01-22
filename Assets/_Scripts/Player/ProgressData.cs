@@ -6,5 +6,5 @@ public class ProgressData
 {
     public int GoldCoins;
 
-    public List<PlayerDataMetaPoint> MetaPoints;
+    public List<PlayerDataMetaPoint> MetaPoints = new();
 }

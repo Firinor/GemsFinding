@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 825d33b5e0954ff68fd3d363a867f3b6, type: 3}
   m_Name: Color count 2
   m_EditorClassIdentifier: Assembly-CSharp::MetaPointData
-  Icon: {fileID: 0}
+  ID: Color2
+  Icon: {fileID: -7865299731024084582, guid: ffe2e5d16b56a01429c8bc50b540421d, type: 3}
   Type: 0
-  Value: 0
-  MaxLevel: 0
-  Cost: 
-  Unlocks: []
+  Value: 1
+  MaxLevel: 3
+  Cost: c8000000f4010000b0040000
+  Unlocks:
+  - {fileID: 11400000, guid: 253d6e7df589a28498646cfd952ff70c, type: 2}

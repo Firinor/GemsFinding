@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 825d33b5e0954ff68fd3d363a867f3b6, type: 3}
   m_Name: Shapes Count
   m_EditorClassIdentifier: Assembly-CSharp::MetaPointData
+  ID: Shape1
   Icon: {fileID: -1916344210, guid: 2dabd06ce85d48d4fa99a7b77e2570be, type: 3}
   Type: 2
   Value: 1

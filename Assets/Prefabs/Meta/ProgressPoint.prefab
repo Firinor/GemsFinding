@@ -212,6 +212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MetaTreePoint
   Icon: {fileID: 986302312222044961}
   Button: {fileID: 7374868290311606656}
+  LevelText: {fileID: 30789264698519083}
   Data: {fileID: 0}
 --- !u!1 &6778834078235774840
 GameObject:

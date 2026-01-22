@@ -6,16 +6,18 @@ public class MetaBootstrup : MonoBehaviour
     [SerializeField] 
     private MetaTreeManager MetaTree;
 
-    public MetaContex MetaContex;
+    public MetaContext MetaContext;
     
     void Awake()
     {
+        MetaContext = new();
+        
         LoadPlayerData();
-        MetaTree.Initialize(MetaContex);
+        MetaTree.Initialize(MetaContext);
     }
 
     private void LoadPlayerData()
     {
-        
+        MetaContext.Player = SaveLoadSystem<ProgressData>.Load(Default: new());
     }
 }

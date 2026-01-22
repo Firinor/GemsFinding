@@ -452,6 +452,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ProgressPoint (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 7103480848373633112, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+      propertyPath: Data
+      value: 
+      objectReference: {fileID: 11400000, guid: 60f8301b06274504f8daede61f9768f4, type: 2}
     - target: {fileID: 7374868290311606656, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 0
@@ -461,6 +465,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+--- !u!114 &224503004 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7103480848373633112, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+  m_PrefabInstance: {fileID: 224503003}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6f185ab400e466d9764fbda5eb3b27c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MetaTreePoint
 --- !u!1001 &226759313
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -562,6 +577,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ProgressPoint (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7103480848373633112, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+      propertyPath: Data
+      value: 
+      objectReference: {fileID: 11400000, guid: 83c18f7d3a3b4a84ea8dc003a974a7e3, type: 2}
     - target: {fileID: 7374868290311606656, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 0
@@ -571,6 +590,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+--- !u!114 &226759314 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7103480848373633112, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+  m_PrefabInstance: {fileID: 226759313}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6f185ab400e466d9764fbda5eb3b27c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MetaTreePoint
 --- !u!224 &301868833 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 932766147629149897, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
@@ -902,6 +932,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ProgressPoint (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7103480848373633112, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+      propertyPath: Data
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f0076ecee68b5e499930bc11c91b263, type: 2}
     - target: {fileID: 7374868290311606656, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 0
@@ -911,6 +945,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+--- !u!114 &539353334 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7103480848373633112, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+  m_PrefabInstance: {fileID: 539353333}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6f185ab400e466d9764fbda5eb3b27c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MetaTreePoint
 --- !u!1 &554294355
 GameObject:
   m_ObjectHideFlags: 0
@@ -1086,6 +1131,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ProgressPoint (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7103480848373633112, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+      propertyPath: Data
+      value: 
+      objectReference: {fileID: 11400000, guid: 34da81749cf85d341b4048148ef26305, type: 2}
     - target: {fileID: 7374868290311606656, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 0
@@ -1095,6 +1144,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+--- !u!114 &615589804 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7103480848373633112, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+  m_PrefabInstance: {fileID: 615589803}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6f185ab400e466d9764fbda5eb3b27c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MetaTreePoint
 --- !u!1001 &620103834
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1196,6 +1256,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ProgressPoint (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 7103480848373633112, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+      propertyPath: Data
+      value: 
+      objectReference: {fileID: 11400000, guid: 870ff54ade3398b4eb82e1d46e89ba6e, type: 2}
     - target: {fileID: 7374868290311606656, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 0
@@ -1205,6 +1269,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+--- !u!114 &620103835 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7103480848373633112, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+  m_PrefabInstance: {fileID: 620103834}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6f185ab400e466d9764fbda5eb3b27c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MetaTreePoint
 --- !u!224 &750057451 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 932766147629149897, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
@@ -1704,6 +1779,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ProgressPoint (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7103480848373633112, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+      propertyPath: Data
+      value: 
+      objectReference: {fileID: 11400000, guid: bc7a887ba90bd404aaa2bbbaf79d2c41, type: 2}
     - target: {fileID: 7374868290311606656, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 0
@@ -1713,6 +1792,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+--- !u!114 &908364274 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7103480848373633112, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+  m_PrefabInstance: {fileID: 908364273}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6f185ab400e466d9764fbda5eb3b27c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MetaTreePoint
 --- !u!1 &915879877
 GameObject:
   m_ObjectHideFlags: 0
@@ -2134,8 +2224,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0f5ee5728c64b4080cd2091391df4f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MetaTreeManager
-  ponts:
+  points:
   - {fileID: 1777450962263350581}
+  - {fileID: 539353334}
+  - {fileID: 226759314}
+  - {fileID: 908364274}
+  - {fileID: 620103835}
+  - {fileID: 615589804}
+  - {fileID: 1797916211}
+  - {fileID: 2020431265}
+  - {fileID: 224503004}
 --- !u!1 &1735559485
 GameObject:
   m_ObjectHideFlags: 0
@@ -2328,6 +2426,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ProgressPoint (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 7103480848373633112, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+      propertyPath: Data
+      value: 
+      objectReference: {fileID: 11400000, guid: becdc71743783704e8861106dd1e54c1, type: 2}
     - target: {fileID: 7374868290311606656, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 0
@@ -2337,6 +2439,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+--- !u!114 &1797916211 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7103480848373633112, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+  m_PrefabInstance: {fileID: 1797916210}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6f185ab400e466d9764fbda5eb3b27c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MetaTreePoint
 --- !u!224 &1805866489 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 932766147629149897, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
@@ -2392,7 +2505,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MetaBootstrup
   MetaTree: {fileID: 1662032824}
-  MetaContex: {fileID: 11400000, guid: 57dcb2721e935204696b7769c7547a87, type: 2}
 --- !u!1 &2005368769
 GameObject:
   m_ObjectHideFlags: 0
@@ -2538,6 +2650,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ProgressPoint (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 7103480848373633112, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+      propertyPath: Data
+      value: 
+      objectReference: {fileID: 11400000, guid: b4dbd38dd730e5a49a0dba4f42f48aa5, type: 2}
     - target: {fileID: 7374868290311606656, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 0
@@ -2547,6 +2663,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+--- !u!114 &2020431265 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7103480848373633112, guid: f73471d6e254bd444a48b23c96347a68, type: 3}
+  m_PrefabInstance: {fileID: 2020431264}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6f185ab400e466d9764fbda5eb3b27c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MetaTreePoint
 --- !u!1001 &1777450962263350580
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -20,7 +20,7 @@ public class MetaTreeManager : MonoBehaviour
 
     private void SubscribeButtons()
     {
-        foreach (var point in points)
+        foreach (MetaPointView point in points)
         {
             point.Button.onClick.AddListener(() => PointClick(point));
         }
@@ -29,16 +29,33 @@ public class MetaTreeManager : MonoBehaviour
     private void PointClick(MetaPointView point)
     {
         PlayerDataMetaPoint playerPoint = player.MetaPoints.FirstOrDefault(p => p.ID == point.Data.ID);
+        int level;
         if (playerPoint is not null)
+        {
             playerPoint.Level++;
+            level = playerPoint.Level;
+        }
         else
+        {
+            level = 1;
             player.MetaPoints.Add(new()
             {
                 ID = point.Data.ID,
                 Level = 1
             });
+        }
         
         SaveLoadSystem<ProgressData>.Save(player);
+
+        if (level == point.Data.MaxLevel)
+        {
+            point.ToMaxFrame();
+            point.Button.onClick.RemoveAllListeners();
+        }
+        else
+            point.ToLevelFrame();
+        
+        point.SetText(level);
         
         foreach (MetaPointData unlock in point.Data.Unlocks)
         {
@@ -55,7 +72,7 @@ public class MetaTreeManager : MonoBehaviour
         foreach (PlayerDataMetaPoint point in metaContex.Player.MetaPoints)
         {
             MetaPointView treePoint = points.First(p => p.Data.ID == point.ID);
-            treePoint.Initialize(point);
+            treePoint.SetText(point.Level);
             
             foreach (MetaPointData unlock in treePoint.Data.Unlocks)
             {

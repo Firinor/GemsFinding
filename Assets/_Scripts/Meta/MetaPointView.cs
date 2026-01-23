@@ -4,7 +4,11 @@ using UnityEngine.UI;
 
 public class MetaPointView : MonoBehaviour
 {
+    public Image Frame;
     public Image Icon;
+    [SerializeField] private Sprite LevelFrame;
+    [SerializeField] private Sprite MaxFrame;
+    
     public Button Button;
     public TextMeshProUGUI LevelText;
     public MetaPointData Data;
@@ -17,8 +21,18 @@ public class MetaPointView : MonoBehaviour
         Icon.sprite = Data.Icon;
     }
     
-    public void Initialize(PlayerDataMetaPoint data)
+    public void SetText(int level)
     {
-        LevelText.text = data.Level + "/" + Data.MaxLevel;
+        LevelText.text = level + "/" + Data.MaxLevel;
+    }
+
+    public void ToLevelFrame()
+    {
+        Frame.sprite = LevelFrame;
+    }
+
+    public void ToMaxFrame()
+    {
+        Frame.sprite = MaxFrame;
     }
 }

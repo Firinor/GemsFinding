@@ -1,8 +1,10 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class MetaPointView : MonoBehaviour
+public class MetaPointView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Image Frame;
     public Image Icon;
@@ -10,7 +12,8 @@ public class MetaPointView : MonoBehaviour
     [SerializeField] private Sprite MaxFrame;
     
     public Button Button;
-    public TextMeshProUGUI LevelText;
+    public event Action<MetaPointData> OnPointerEnterAction;
+    public event Action OnPointerExitAction;
     public MetaPointData Data;
 
     [ContextMenu(nameof(Initialize))]
@@ -19,11 +22,6 @@ public class MetaPointView : MonoBehaviour
         gameObject.SetActive(true);
         
         Icon.sprite = Data.Icon;
-    }
-    
-    public void SetText(int level)
-    {
-        LevelText.text = level + "/" + Data.MaxLevel;
     }
 
     public void ToLevelFrame()
@@ -34,5 +32,15 @@ public class MetaPointView : MonoBehaviour
     public void ToMaxFrame()
     {
         Frame.sprite = MaxFrame;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        OnPointerEnterAction?.Invoke(Data);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        OnPointerExitAction?.Invoke();
     }
 }

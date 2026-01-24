@@ -5,6 +5,10 @@ using UnityEngine;
 public class MetaPointData : ScriptableObject
 {
     public string ID;
+    
+    public string Name;
+    [Multiline] public string Discription;
+    
     public Sprite Icon;
     public MetaPointType Type;
     public int Value;

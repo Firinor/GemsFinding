@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -6,7 +7,9 @@ public class MetaTreeManager : MonoBehaviour
 {
     [SerializeField] 
     private List<MetaPointView> points;
-
+    [SerializeField] 
+    private InfoPanel infoPanel;
+    
     private ProgressData player;
     
     public void Initialize(MetaContext metaContex)
@@ -23,7 +26,57 @@ public class MetaTreeManager : MonoBehaviour
         foreach (MetaPointView point in points)
         {
             point.Button.onClick.AddListener(() => PointClick(point));
+            point.OnPointerEnterAction += ShowInfo;
+            point.OnPointerExitAction += HideInfo;
         }
+    }
+
+    private void ShowInfo(MetaPointData pointData)
+    {
+        MetaPointInfo info = new();
+        info.Name = pointData.Name;
+        info.Discription = pointData.Discription;
+
+        PlayerDataMetaPoint playerPointData = player.MetaPoints.FirstOrDefault(p => p.ID == pointData.ID);
+
+        info.Level = "0";
+        int level = 0;
+        if (playerPointData is not null)
+        {
+            level = playerPointData.Level;
+            info.Level = level.ToString();
+        }
+        
+        info.MaxLevel = pointData.MaxLevel.ToString();
+        
+        info.Effect = pointData.Type switch
+        {
+            MetaPointType.RecipeCount => player.Stats.RecipeGemCount.ToString(),
+            MetaPointType.InBoxGemsCount => player.Stats.InBoxGemCount.ToString(),
+            MetaPointType.GemShapeCount => player.Stats.ShapeCount.ToString(),
+            MetaPointType.GemColorCount => player.Stats.ColorCount.ToString(),
+            MetaPointType.GemSpoilCount => player.Stats.SpoilCount.ToString(),
+            MetaPointType.GemDuoColorCount => player.Stats.DuoColorCount.ToString(),
+            MetaPointType.GemDuoShapeCount => player.Stats.DuoShapeCount.ToString(),
+            MetaPointType.Invisible => player.Stats.InvisibleCount.ToString(),
+            MetaPointType.Moveble => player.Stats.MovebleCount.ToString(),
+            MetaPointType.Jumpble => player.Stats.JumpbleCount.ToString(),
+            MetaPointType.ChangingColor => player.Stats.ChangingColor.ToString(),
+            MetaPointType.Light => player.Stats.LightRadius.ToString(),
+            _ => throw new ArgumentOutOfRangeException()
+        };
+
+        info.NextEffect = (Int32.Parse(info.Effect) + pointData.Value).ToString();
+        
+        if(level < pointData.MaxLevel)
+            info.Cost = pointData.Cost[Int32.Parse(info.Level)].ToString();
+        
+        infoPanel.Show(info);
+    }
+
+    private void HideInfo()
+    {
+        infoPanel.Hide();
     }
 
     private void PointClick(MetaPointView point)
@@ -55,8 +108,6 @@ public class MetaTreeManager : MonoBehaviour
         else
             point.ToLevelFrame();
         
-        point.SetText(level);
-        
         foreach (MetaPointData unlock in point.Data.Unlocks)
         {
             MetaPointView unlockPoint = points.First(p => p.Data.ID == unlock.ID);
@@ -72,7 +123,6 @@ public class MetaTreeManager : MonoBehaviour
         foreach (PlayerDataMetaPoint point in metaContex.Player.MetaPoints)
         {
             MetaPointView treePoint = points.First(p => p.Data.ID == point.ID);
-            treePoint.SetText(point.Level);
             
             foreach (MetaPointData unlock in treePoint.Data.Unlocks)
             {
@@ -95,6 +145,8 @@ public class MetaTreeManager : MonoBehaviour
     {
         foreach (var point in points)
         {
+            point.OnPointerEnterAction -= ShowInfo;
+            point.OnPointerExitAction -= HideInfo;
             point.Button.onClick.RemoveAllListeners();
         }
     }

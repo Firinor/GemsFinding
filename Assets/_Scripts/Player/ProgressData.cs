@@ -1,14 +1,87 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 [Serializable]
 public class ProgressData
 {
     public int GoldCoins;
+    public event Action<int> OnGoldChange;
+    public void AddGold(int count)
+    {
+        GoldCoins += count;
+        OnGoldChange?.Invoke(GoldCoins);
+    }
+    public bool TrySpendGold(int count)
+    {
+        if (GoldCoins < count)
+            return false;
 
+        GoldCoins -= count;
+        OnGoldChange?.Invoke(GoldCoins);
+        return true;
+    }
+    
     public List<PlayerDataMetaPoint> MetaPoints = new();
+    public int GetPointsLevel() => MetaPoints.Sum(point => point.Level);
+    
+    [NonSerialized]
+    public Stats Stats;
 
-    public Stats Stats = new Stats();
+    public void InitializeStats(IEnumerable<MetaPointData> points)
+    {
+        Stats = new Stats();
+    
+        foreach (MetaPointData point in points)
+        {
+            PlayerDataMetaPoint playerPoint = MetaPoints.FirstOrDefault(p => p.ID == point.ID);
+            
+            if(playerPoint is null)
+                continue;
+            
+            switch(point.Type)
+            {
+                case MetaPointType.RecipeCount:
+                    Stats.RecipeGemCount += point.Value * playerPoint.Level;
+                    break;
+                case MetaPointType.InBoxGemsCount:
+                    Stats.InBoxGemCount += point.Value * playerPoint.Level;
+                    break;
+                case MetaPointType.GemShapeCount:
+                    Stats.ShapeCount += point.Value * playerPoint.Level;
+                    break;
+                case MetaPointType.GemColorCount:
+                    Stats.ColorCount += point.Value * playerPoint.Level;
+                    break;
+                case MetaPointType.GemSpoilCount:
+                    Stats.SpoilCount += point.Value * playerPoint.Level;
+                    break;
+                case MetaPointType.GemDuoColorCount:
+                    Stats.DuoColorCount += point.Value * playerPoint.Level;
+                    break;
+                case MetaPointType.GemDuoShapeCount:
+                    Stats.DuoShapeCount += point.Value * playerPoint.Level;
+                    break;
+                case MetaPointType.Invisible:
+                    Stats.InvisibleCount += point.Value * playerPoint.Level;
+                    break;
+                case MetaPointType.Moveble:
+                    Stats.MovebleCount += point.Value * playerPoint.Level;
+                    break;
+                case MetaPointType.Jumpble:
+                    Stats.JumpbleCount += point.Value * playerPoint.Level;
+                    break;
+                case MetaPointType.ChangingColor:
+                    Stats.ChangingColor += point.Value * playerPoint.Level;
+                    break;
+                case MetaPointType.Light:
+                    Stats.LightRadius += point.Value * playerPoint.Level;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            };
+        }
+    }
 }
 
 public class Stats
@@ -27,5 +100,5 @@ public class Stats
     public int JumpbleCount;
     public int ChangingColor;
     
-    public int LightRadius = 4;
+    public float LightRadius = 4;
 }

@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: _Recipe Point 1
   m_EditorClassIdentifier: Assembly-CSharp::MetaPointData
   ID: Recipe1
+  Name: "\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C \u0440\u0435\u0446\u0435\u043F\u0442\u0430"
+  Discription: "\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u043A\u0440\u0438\u0441\u0442\u0430\u043B\u043B\u043E\u0432,
+    \n\u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u043D\u0430\u0434\u043E \u043D\u0430\u0439\u0442\u0438"
   Icon: {fileID: 21300000, guid: 18d30b77bb2d9174f943981fb271146c, type: 3}
   Type: 0
   Value: 2

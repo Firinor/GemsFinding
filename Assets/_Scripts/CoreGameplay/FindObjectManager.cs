@@ -27,16 +27,16 @@ public class FindObjectManager : MonoBehaviour
     private float spawnDistance;
 
 
-    private PuzzleContex contex;
+    private Stats contex;
     
     //public ParticleSystem successParticleSystem;
     //public ParticleSystem errorParticleSystem;
     
     #endregion
 
-    public void Initialize(PuzzleContex contex)
+    public void Initialize(Stats stats)
     {
-        this.contex = contex;
+        contex = stats;
         
         recipe.RecipeIsComplete += SuccessfullySolvePuzzle;
         StartPuzzle();
@@ -46,7 +46,7 @@ public class FindObjectManager : MonoBehaviour
     {
         recipe.Clear();
         
-        List<int> recipeIntList = GameMath.AFewCardsFromTheDeck(contex.RecipeGemCount, contex.AllIngridients);
+        List<int> recipeIntList = GameMath.AFewCardsFromTheDeck(contex.RecipeGemCount, contex.ShapeCount * contex.ColorCount);
 
         List<Gem> recipeGems = new();
         foreach (var i in recipeIntList)
@@ -62,7 +62,7 @@ public class FindObjectManager : MonoBehaviour
         
         allIngredients = new List<Gem>();
         
-        for (int i = 0; i < contex.IngredientInBoxCount; i++)
+        for (int i = 0; i < contex.InBoxGemCount; i++)
         {
             Gem newGem = pool.Get();
 
@@ -70,11 +70,11 @@ public class FindObjectManager : MonoBehaviour
             newGem.transform.localPosition = new Vector3(math.cos(direction), math.sin(direction), 0) * spawnDistance;
 
             int colorIndex;
-            int spriteIndex = i / contex.GemColorCount;
-            if (contex.GemColorCount < 3)
+            int spriteIndex = i / contex.ColorCount;
+            if (contex.ColorCount < 3)
                 colorIndex = i % puzzleConfig.GemsColors.Length;
             else
-                colorIndex = i % contex.GemColorCount;
+                colorIndex = i % contex.ColorCount;
                 
             
             

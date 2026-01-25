@@ -1,18 +1,19 @@
 ﻿using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class MetaPointView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    public RectTransform InfoAncor;
     public Image Frame;
     public Image Icon;
+    public Image Plus;
     [SerializeField] private Sprite LevelFrame;
     [SerializeField] private Sprite MaxFrame;
     
     public Button Button;
-    public event Action<MetaPointData> OnPointerEnterAction;
+    public event Action<MetaPointData, RectTransform> OnPointerEnterAction;
     public event Action OnPointerExitAction;
     public MetaPointData Data;
 
@@ -31,16 +32,22 @@ public class MetaPointView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void ToMaxFrame()
     {
+        Plus.enabled = false;
         Frame.sprite = MaxFrame;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        OnPointerEnterAction?.Invoke(Data);
+        OnPointerEnterAction?.Invoke(Data, InfoAncor);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         OnPointerExitAction?.Invoke();
+    }
+
+    public void ShowPlus(bool v)
+    {
+        Plus.enabled = v;
     }
 }

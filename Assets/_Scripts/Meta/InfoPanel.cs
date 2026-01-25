@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class InfoPanel : MonoBehaviour
 {
@@ -14,7 +13,8 @@ public class InfoPanel : MonoBehaviour
     public void Show(MetaPointInfo info)
     {
         gameObject.SetActive(true);
-        RectTransform.anchoredPosition = Mouse.current.position.ReadValue();
+        if(info.Ancor is not null)
+            RectTransform.anchoredPosition = info.Ancor.position;
 
         Name.text = info.Name;
         Discription.text = info.Discription;

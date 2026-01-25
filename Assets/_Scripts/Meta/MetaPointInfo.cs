@@ -1,5 +1,8 @@
-﻿public class MetaPointInfo
+﻿using UnityEngine;
+
+public class MetaPointInfo
 {
+    public RectTransform Ancor;
     public string Name;
     public string Discription;
     public string Cost;

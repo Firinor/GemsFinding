@@ -19,6 +19,8 @@ public class FindObjectManager : MonoBehaviour
     private List<Gem> allIngredients;
     [SerializeField]
     private Recipe recipe;
+    [SerializeField]
+    private GameObject winScreen;
     [SerializeField] 
     private BoxCollider2D GemZone;
     [SerializeField]
@@ -26,7 +28,7 @@ public class FindObjectManager : MonoBehaviour
     [SerializeField]
     private float spawnDistance;
 
-
+    private ProgressData player;
     private Stats contex;
     
     //public ParticleSystem successParticleSystem;
@@ -34,9 +36,10 @@ public class FindObjectManager : MonoBehaviour
     
     #endregion
 
-    public void Initialize(Stats stats)
+    public void Initialize(ProgressData player)
     {
-        contex = stats;
+        this.player = player;
+        contex = player.Stats;
         
         recipe.RecipeIsComplete += SuccessfullySolvePuzzle;
         StartPuzzle();
@@ -58,6 +61,7 @@ public class FindObjectManager : MonoBehaviour
     [ContextMenu("StartPuzzle")]
     public void StartPuzzle()
     {
+        winScreen.SetActive(false);
         pool.ClearAll();
         
         allIngredients = new List<Gem>();
@@ -88,12 +92,11 @@ public class FindObjectManager : MonoBehaviour
         CreateNewRecipe();
     }
     
-    public async void SuccessfullySolvePuzzle()
+    private void SuccessfullySolvePuzzle()
     {
-        //await HarvestAllIngredients();
-
-        await Task.Delay(500);
-        //base.SuccessfullySolvePuzzle();
+        player.AddGold(200);
+        SaveLoadSystem<ProgressData>.Save(player);
+        winScreen.SetActive(true);
     }
 
     private void HarvestAllIngredients()

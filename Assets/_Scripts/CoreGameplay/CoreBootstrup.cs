@@ -13,7 +13,7 @@ public class CoreBootstrup : MonoBehaviour
     void Awake()
     {
         LoadPlayerData();
-        mainManager.Initialize(player.Stats);
+        mainManager.Initialize(player);
     }
 
     private void LoadPlayerData()

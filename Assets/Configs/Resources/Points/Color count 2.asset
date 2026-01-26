@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Color count 2
   m_EditorClassIdentifier: Assembly-CSharp::MetaPointData
   ID: Color2
+  Name: "\u0426\u0432\u0435\u0442\u0430"
+  Discription: "\u0420\u0430\u0437\u043D\u043E\u043E\u0431\u0440\u0430\u0437\u0438\u0435
+    \u0446\u0432\u0435\u0442\u043E\u0432 \n\u043A\u0440\u0438\u0441\u0442\u0430\u043B\u043B\u043E\u0432"
   Icon: {fileID: -7865299731024084582, guid: ffe2e5d16b56a01429c8bc50b540421d, type: 3}
-  Type: 0
+  Type: 3
   Value: 1
-  MaxLevel: 3
-  Cost: c8000000f4010000b0040000
+  Cost: c8000000f4010000
   Unlocks:
   - {fileID: 11400000, guid: 253d6e7df589a28498646cfd952ff70c, type: 2}

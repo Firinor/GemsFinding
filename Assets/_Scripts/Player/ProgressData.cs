@@ -81,6 +81,9 @@ public class ProgressData
                     throw new ArgumentOutOfRangeException();
             };
         }
+
+        if (Stats.InBoxGemCount > Stats.ColorCount * Stats.ShapeCount)
+            Stats.InBoxGemCount = Stats.ColorCount * Stats.ShapeCount;
     }
 }
 

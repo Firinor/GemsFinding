@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 825d33b5e0954ff68fd3d363a867f3b6, type: 3}
+  m_Name: Color count 3
+  m_EditorClassIdentifier: Assembly-CSharp::MetaPointData
+  ID: Color3
+  Name: "\u0426\u0432\u0435\u0442\u0430"
+  Discription: "\u0420\u0430\u0437\u043D\u043E\u043E\u0431\u0440\u0430\u0437\u0438\u0435
+    \u0446\u0432\u0435\u0442\u043E\u0432 \n\u043A\u0440\u0438\u0441\u0442\u0430\u043B\u043B\u043E\u0432"
+  Icon: {fileID: 2377839035962947461, guid: ffe2e5d16b56a01429c8bc50b540421d, type: 3}
+  Type: 3
+  Value: 1
+  Cost: fa000000f4010000ee020000
+  Unlocks:
+  - {fileID: 11400000, guid: 06f995c0b2ebd7f4abb25e86e4a0fb38, type: 2}

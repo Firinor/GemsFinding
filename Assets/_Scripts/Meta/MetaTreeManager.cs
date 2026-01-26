@@ -19,7 +19,7 @@ public class MetaTreeManager : MonoBehaviour
     [ContextMenu(nameof(CalculateAllProgress))]
     private void CalculateAllProgress()
     {
-        AllProgressCount = 0;
+        AllProgressCount = -1;
         foreach (MetaPointView point in points)
         {
             AllProgressCount += point.Data.MaxLevel;
@@ -42,7 +42,19 @@ public class MetaTreeManager : MonoBehaviour
         
         foreach (MetaPointView point in points)
         {
-            point.Button.onClick.AddListener(() => PointClick(point));
+            PlayerDataMetaPoint playerPoint = player.MetaPoints.FirstOrDefault(p => p.ID == point.Data.ID);
+            int level = playerPoint is not null ? playerPoint.Level : 0;
+            
+            if (level == 0)
+                point.Button.onClick.AddListener(() => PointClick(point));
+            else if(level < point.Data.MaxLevel)
+            {
+                point.Button.onClick.AddListener(() => PointClick(point));
+                point.ToLevelFrame();
+            }
+            else
+                point.ToMaxFrame();
+            
             point.OnPointerEnterAction += ShowInfo;
             point.OnPointerExitAction += HideInfo;
         }
@@ -145,7 +157,7 @@ public class MetaTreeManager : MonoBehaviour
         
         SaveLoadSystem<ProgressData>.Save(player);
 
-        if (level == point.Data.MaxLevel)
+        if (level >= point.Data.MaxLevel)
         {
             point.ToMaxFrame();
             point.Button.onClick.RemoveAllListeners();

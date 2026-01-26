@@ -12,7 +12,7 @@ public class MetaPointData : ScriptableObject
     public Sprite Icon;
     public MetaPointType Type;
     public int Value;
-    public int MaxLevel;
+    public int MaxLevel => Cost.Length;
 
     public int[] Cost;
 

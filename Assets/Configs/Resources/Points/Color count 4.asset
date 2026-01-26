@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 825d33b5e0954ff68fd3d363a867f3b6, type: 3}
-  m_Name: Color count
+  m_Name: Color count 4
   m_EditorClassIdentifier: Assembly-CSharp::MetaPointData
-  ID: Color1
+  ID: Color4
+  Name: "\u0426\u0432\u0435\u0442\u0430"
+  Discription: "\u0420\u0430\u0437\u043D\u043E\u043E\u0431\u0440\u0430\u0437\u0438\u0435
+    \u0446\u0432\u0435\u0442\u043E\u0432 \n\u043A\u0440\u0438\u0441\u0442\u0430\u043B\u043B\u043E\u0432"
   Icon: {fileID: 2377839035962947461, guid: ffe2e5d16b56a01429c8bc50b540421d, type: 3}
   Type: 3
   Value: 1
-  MaxLevel: 2
-  Cost: c8000000f4010000
-  Unlocks:
-  - {fileID: 11400000, guid: 60f8301b06274504f8daede61f9768f4, type: 2}
+  Cost: b004000060090000100e0000c0120000
+  Unlocks: []

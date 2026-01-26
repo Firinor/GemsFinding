@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: Shapes Count 2
   m_EditorClassIdentifier: Assembly-CSharp::MetaPointData
   ID: Shape2
-  Icon: {fileID: 0}
-  Type: 0
-  Value: 0
-  MaxLevel: 0
-  Cost: 
-  Unlocks: []
+  Name: "\u0424\u043E\u0440\u043C\u044B"
+  Discription: "\u0420\u0430\u0437\u043D\u043E\u043E\u0431\u0440\u0430\u0437\u0438\u0435
+    \u0444\u043E\u0440\u043C \n\u043A\u0440\u0438\u0441\u0442\u0430\u043B\u043B\u043E\u0432"
+  Icon: {fileID: -1916344210, guid: 2dabd06ce85d48d4fa99a7b77e2570be, type: 3}
+  Type: 2
+  Value: 10
+  Cost: d0070000
+  Unlocks:
+  - {fileID: 11400000, guid: 651b93b08b951e142982e2e263cbfa6f, type: 2}

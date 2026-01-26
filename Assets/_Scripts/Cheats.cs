@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Cheats : MonoBehaviour
@@ -11,8 +10,8 @@ public class Cheats : MonoBehaviour
    }
 
    [ContextMenu(nameof(AddGold))]
-   private void AddGold()
+   public void AddGold()
    {
-      player.AddGold(450);
+      player.AddGold(9999);
    }
 }

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using FirMath;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TMPro;
 using Unity.Mathematics;
 using Random = UnityEngine.Random;
 
@@ -21,6 +22,10 @@ public class FindObjectManager : MonoBehaviour
     private Recipe recipe;
     [SerializeField]
     private GameObject winScreen;
+    [SerializeField] 
+    private TextMeshProUGUI rewardText;
+    [SerializeField]
+    private TextMeshProUGUI rewardInfoText;
     [SerializeField] 
     private BoxCollider2D GemZone;
     [SerializeField]
@@ -48,8 +53,9 @@ public class FindObjectManager : MonoBehaviour
     private void CreateNewRecipe()
     {
         recipe.Clear();
-        
-        List<int> recipeIntList = GameMath.AFewCardsFromTheDeck(contex.RecipeGemCount, contex.ShapeCount * contex.ColorCount);
+
+        int DeckLenght = Math.Min(contex.InBoxGemCount, contex.ShapeCount * contex.ColorCount);
+        List<int> recipeIntList = GameMath.AFewCardsFromTheDeck(contex.RecipeGemCount, DeckLenght);
 
         List<Gem> recipeGems = new();
         foreach (var i in recipeIntList)
@@ -79,8 +85,6 @@ public class FindObjectManager : MonoBehaviour
                 colorIndex = i % puzzleConfig.GemsColors.Length;
             else
                 colorIndex = i % contex.ColorCount;
-                
-            
             
             newGem.SetView(puzzleConfig.GemsSprites[spriteIndex], puzzleConfig.GemsColors[colorIndex]);
             newGem.SetRandomImpulse(forceToIngredient);
@@ -94,7 +98,17 @@ public class FindObjectManager : MonoBehaviour
     
     private void SuccessfullySolvePuzzle()
     {
-        player.AddGold(200);
+        int reward = player.Stats.ShapeCount * player.Stats.ColorCount * player.Stats.RecipeGemCount + player.Stats.InBoxGemCount;
+        rewardInfoText.text = $"Формы: {player.Stats.ShapeCount}" +
+                              $"\nЦвета: {player.Stats.ColorCount}" +
+                              $"\nРецепт: {player.Stats.RecipeGemCount}" +
+                              $"\nКоличество: {player.Stats.InBoxGemCount}" +
+                              "\n" +
+                              $"\nИтого: {player.Stats.ShapeCount}*{player.Stats.ColorCount}*{player.Stats.RecipeGemCount} + {player.Stats.InBoxGemCount} = {reward}$";
+
+        rewardText.text = $"ПОЗДРАВЛЯЮ!\nТВОЙ ПРИЗ\n{reward}$";
+        
+        player.AddGold(reward);
         SaveLoadSystem<ProgressData>.Save(player);
         winScreen.SetActive(true);
     }

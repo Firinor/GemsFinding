@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: In Box 2
   m_EditorClassIdentifier: Assembly-CSharp::MetaPointData
   ID: Box2
-  Icon: {fileID: 0}
-  Type: 0
-  Value: 0
-  MaxLevel: 0
-  Cost: 
+  Name: "\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E"
+  Discription: "\u0421\u043A\u043E\u043B\u044C\u043A\u043E \u043A\u0440\u0438\u0441\u0442\u0430\u043B\u043B\u043E\u0432
+    \n\u0431\u0443\u0434\u0435\u0442 \u0432 \u043A\u043E\u0440\u043E\u0431\u043A\u0435"
+  Icon: {fileID: 21300000, guid: 9a51c68d5ad99a14794b5b9801a51a09, type: 3}
+  Type: 1
+  Value: 150
+  Cost: f4010000dc050000c4090000ac0d0000941100007c150000
   Unlocks: []

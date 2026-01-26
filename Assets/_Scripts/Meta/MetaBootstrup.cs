@@ -20,11 +20,9 @@ public class MetaBootstrup : MonoBehaviour
     private Button endButton;
     [SerializeField] 
     private GameObject endScreen;
-
-#if UNITY_EDITOR
+    
     [SerializeField] 
     private Cheats cheats;
-#endif
 
     private MetaContext MetaContext;
     
@@ -36,9 +34,7 @@ public class MetaBootstrup : MonoBehaviour
         SubscribeToGold();
         SubscribeToProgress();
         MetaTree.Initialize(MetaContext);
-#if UNITY_EDITOR
         cheats.Initialize(MetaContext);
-#endif
     }
 
     private void SubscribeToProgress()
@@ -51,9 +47,9 @@ public class MetaBootstrup : MonoBehaviour
 
     private void SetProgressBar()
     {
-        progressSlider.value++;
+        progressSlider.value = MetaContext.Player.GetPointsLevel();
         textSlider.text = $"{(int)(progressSlider.value/progressSlider.maxValue * 100)}%";
-        if(Mathf.Approximately(progressSlider.value, progressSlider.maxValue))
+        if(progressSlider.value >= progressSlider.maxValue)
             endButton.onClick.AddListener(() =>
             {
                 endScreen.SetActive(true);

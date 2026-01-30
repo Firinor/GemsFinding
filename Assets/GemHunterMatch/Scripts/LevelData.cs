@@ -73,6 +73,7 @@ namespace Match3
             }
         }
 
+        [Obsolete("Obsolete")]
         public bool Matched(Gem gem)
         {
             foreach (var goal in Goals)

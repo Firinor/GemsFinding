@@ -87,6 +87,7 @@ public class ProgressData
     }
 }
 
+[Serializable]
 public class Stats
 {
     public int InBoxGemCount = 7;

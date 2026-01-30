@@ -467,6 +467,7 @@ namespace Match3
             }
         }
 
+        [Obsolete("Obsolete")]
         private void Update()
         {
             if(!m_BoardWasInit)
@@ -772,6 +773,7 @@ namespace Match3
             }
         }
 
+        [Obsolete("Obsolete")]
         void MatchTicking()
         {
             for (int i = 0; i < m_TickingMatch.Count; ++i)

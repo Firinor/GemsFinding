@@ -6707,6 +6707,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bootstrup
   mainManager: {fileID: 403798198}
+  isDebugMode: 1
+  stats:
+    InBoxGemCount: 70
+    RecipeGemCount: 1
+    ColorCount: 1
+    ShapeCount: 7
+    SpoilCount: 0
+    DuoColorCount: 0
+    DuoShapeCount: 0
+    InvisibleCount: 0
+    MovebleCount: 0
+    JumpbleCount: 0
+    ChangingColor: 0
+    LightRadius: 4
 --- !u!1001 &1259312110
 PrefabInstance:
   m_ObjectHideFlags: 0

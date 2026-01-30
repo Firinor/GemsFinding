@@ -485,6 +485,7 @@ namespace Match3
             m_CoverElement.AddToClassList("no-transition");
         }
 
+        [Obsolete("Obsolete")]
         public void AddMatchEffect(Gem gem)
         {
             var elem = new Image();
@@ -518,6 +519,7 @@ namespace Match3
             });
         }
 
+        [Obsolete("Obsolete")]
         public void AddCoin(Vector3 startPoint)
         {
             var elem = new Image();

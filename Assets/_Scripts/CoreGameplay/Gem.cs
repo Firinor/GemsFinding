@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using Unity.Mathematics;
+using UnityEngine.Rendering.Universal;
 
 public class Gem : MonoBehaviour
 {
@@ -17,6 +18,10 @@ public class Gem : MonoBehaviour
     private float brakingFactor;
     [SerializeField]
     private SpriteRenderer spriteRenderer;
+    [SerializeField]
+    private TrailRenderer trailRenderer;
+    [SerializeField]
+    private Light2D Light2D;
     public SpriteRenderer Sprite => spriteRenderer;
     [SerializeField]
     private int id;
@@ -131,5 +136,28 @@ public class Gem : MonoBehaviour
     {
         spriteRenderer.sprite = sprite;
         spriteRenderer.color = color;
+        Light2D.color = color;
+        
+        Gradient gradient = new Gradient();
+        
+        GradientAlphaKey[] alphaKeys = new GradientAlphaKey[3];
+        alphaKeys[0].alpha = 0f;
+        alphaKeys[0].time = 0f;
+        alphaKeys[1].alpha = 1f;
+        alphaKeys[1].time = 0.25f;
+        alphaKeys[2].alpha = 0f;
+        alphaKeys[2].time = 1f;
+        
+        GradientColorKey[] colorKeys = new GradientColorKey[3];
+        colorKeys[0].color = Color.white;
+        colorKeys[0].time = 0f;
+        colorKeys[1].color = color;
+        colorKeys[1].time = 0.25f;
+        colorKeys[2].color = Color.white;
+        colorKeys[2].time = 1f;
+        
+        gradient.SetKeys(colorKeys, alphaKeys);
+        
+        trailRenderer.colorGradient = gradient;
     }
 }

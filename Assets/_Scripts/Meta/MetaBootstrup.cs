@@ -7,6 +7,9 @@ using UnityEngine.UI;
 public class MetaBootstrup : MonoBehaviour
 {
     [SerializeField] 
+    private Settings settings;
+    
+    [SerializeField] 
     private MetaTreeManager MetaTree;
     
     [SerializeField] 
@@ -29,6 +32,8 @@ public class MetaBootstrup : MonoBehaviour
     void Awake()
     {
         MetaContext = new();
+
+        settings.Initialize();
         
         LoadPlayerData();
         SubscribeToGold();
@@ -73,6 +78,10 @@ public class MetaBootstrup : MonoBehaviour
     {
         MetaContext.Player = SaveLoadSystem<ProgressData>.Load(Default: new());
         MetaContext.Player.InitializeStats(MetaTree.PointsData.Select(p => p.Data));
+    }
+    private void LoadSettingsData()
+    {
+        throw new System.NotImplementedException();
     }
 
     private void OnDestroy()

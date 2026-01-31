@@ -1,10 +1,11 @@
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 [DefaultExecutionOrder(-1)]
 public class CoreBootstrup : MonoBehaviour
 {
+    [SerializeField] 
+    private Settings settings;
     [SerializeField] 
     private FindObjectManager mainManager;
 
@@ -15,6 +16,7 @@ public class CoreBootstrup : MonoBehaviour
     
     void Awake()
     {
+        settings.Initialize();
         LoadPlayerData(out ProgressData player);
         mainManager.Initialize(player);
     }

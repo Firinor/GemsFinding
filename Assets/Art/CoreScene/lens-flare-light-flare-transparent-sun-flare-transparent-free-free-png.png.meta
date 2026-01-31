@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 57013b6209779224ca07830a060b8a44
+guid: 84af9450f57813c4f8478f81458041d6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6329159843232831957
-    second: $_57_0
+      213: 7874290505016107237
+    second: lens-flare-light-flare-transparent-sun-flare-transparent-free-free-png_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,12 +37,12 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
-    wrapW: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -110,6 +110,19 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
     buildTarget: WindowsStoreApps
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -126,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: $_57_0
+      name: lens-flare-light-flare-transparent-sun-flare-transparent-free-free-png_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 729
-        height: 1024
+        width: 1742
+        height: 980
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b26a079e7ae4a28a0800000000000000
-      internalID: -6329159843232831957
+      spriteID: 5e067b99e79174d60800000000000000
+      internalID: 7874290505016107237
       vertices: []
       indices: 
       edges: []
@@ -161,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      $_57_0: -6329159843232831957
+      lens-flare-light-flare-transparent-sun-flare-transparent-free-free-png_0: 7874290505016107237
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -178,9 +178,9 @@ TextureImporter:
       name: TreeFrames_2
       rect:
         serializedVersion: 2
-        x: 505
+        x: 502
         y: 268
-        width: 200
+        width: 203
         height: 200
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

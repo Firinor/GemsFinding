@@ -21,7 +21,7 @@ public class Settings : MonoBehaviour
     
     public void Initialize()
     {
-        data = SaveLoadSystem<SettingsData>.Load();
+        data = SaveLoadSystem<SettingsData>.Load(new ());
 
         SetSounds();
         SetLanguage();

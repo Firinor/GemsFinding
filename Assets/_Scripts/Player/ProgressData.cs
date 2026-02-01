@@ -6,7 +6,13 @@ using System.Linq;
 public class ProgressData
 {
     public int GoldCoins;
+    public List<PlayerDataMetaPoint> MetaPoints = new();
+    
+    [NonSerialized] public Stats Stats;
+
+#region Methods
     public event Action<int> OnGoldChange;
+    
     public void AddGold(int count)
     {
         GoldCoins += count;
@@ -21,13 +27,7 @@ public class ProgressData
         OnGoldChange?.Invoke(GoldCoins);
         return true;
     }
-    
-    public List<PlayerDataMetaPoint> MetaPoints = new();
     public int GetPointsLevel() => MetaPoints.Sum(point => point.Level);
-    
-    [NonSerialized]
-    public Stats Stats;
-
     public void InitializeStats(IEnumerable<MetaPointData> points)
     {
         Stats = new Stats();
@@ -85,6 +85,7 @@ public class ProgressData
         if (Stats.InBoxGemCount > Stats.ColorCount * Stats.ShapeCount)
             Stats.InBoxGemCount = Stats.ColorCount * Stats.ShapeCount;
     }
+#endregion
 }
 
 [Serializable]

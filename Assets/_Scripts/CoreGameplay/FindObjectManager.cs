@@ -31,7 +31,7 @@ public class FindObjectManager : MonoBehaviour
     [SerializeField]
     private float forceToIngredient;
     [SerializeField]
-    private float spawnDistance;
+    private BoxCollider2D spawnZone;
 
     private ProgressData player;
     private Stats contex;
@@ -75,10 +75,8 @@ public class FindObjectManager : MonoBehaviour
         for (int i = 0; i < contex.InBoxGemCount; i++)
         {
             Gem newGem = pool.Get();
-
-            float direction = Random.value * 360 * Mathf.Deg2Rad;
-            newGem.transform.localPosition = new Vector3(math.cos(direction), math.sin(direction), 0) * spawnDistance;
-
+            newGem.OnEdge += Respawn;
+            
             int colorIndex;
             int spriteIndex = i / contex.ColorCount;
             if (contex.ColorCount < 3)
@@ -87,15 +85,28 @@ public class FindObjectManager : MonoBehaviour
                 colorIndex = i % contex.ColorCount;
             
             newGem.SetView(puzzleConfig.GemsSprites[spriteIndex], puzzleConfig.GemsColors[colorIndex]);
-            newGem.SetRandomImpulse(forceToIngredient);
+
+            Respawn(newGem);
             
             allIngredients.Add(newGem);
         }
-        Gem.Bounds = GemZone.bounds;
+        Gem.boxZone = GemZone;
+        Gem.riverZone = spawnZone;
         
         CreateNewRecipe();
     }
-    
+
+    private void Respawn(Gem gem)
+    {
+        float x = (spawnZone.bounds.max.x - spawnZone.bounds.min.x) * Random.value;
+        x += spawnZone.bounds.min.x;
+        float y = (spawnZone.bounds.max.y - spawnZone.bounds.min.y) * Random.value;
+        y += spawnZone.bounds.min.y;
+        gem.transform.localPosition = new Vector3(x, y, 0);
+        gem.ResetTail();
+        gem.SetRandomImpulse(forceToIngredient);
+    }
+
     private void SuccessfullySolvePuzzle()
     {
         int reward = player.Stats.ShapeCount * player.Stats.ColorCount * player.Stats.RecipeGemCount + player.Stats.InBoxGemCount;
@@ -144,5 +155,10 @@ public class FindObjectManager : MonoBehaviour
     private void OnDestroy()
     {
         recipe.RecipeIsComplete -= SuccessfullySolvePuzzle;
+
+        foreach (Gem gem in allIngredients)
+        {
+            gem.OnEdge -= Respawn;
+        }
     }
 }

@@ -21,9 +21,11 @@ public class GemPool : MonoBehaviour
     {
         for (int i = 0; i < ingredientParent.childCount - 1; i++)
         {
-            ingredientParent.GetChild(i).GetComponent<SpriteRenderer>().sortingOrder = startLayer + currentLayerStep;
+            Transform child = ingredientParent.GetChild(i);
+            child.GetComponent<SpriteRenderer>().sortingOrder = startLayer + currentLayerStep;
             currentLayerStep++;
-            ingredientParent.GetChild(i).GetComponent<Gem>().OnBoundTink += sound.PlayGemTink;
+            Gem gem = child.GetComponent<Gem>();
+            gem.OnBoundTink += sound.PlayGemTink;
         }
     }
 
@@ -43,6 +45,7 @@ public class GemPool : MonoBehaviour
         {
             result = Instantiate(ingredientPrefab, ingredientParent);
             result.GetComponent<SpriteRenderer>().sortingOrder = startLayer + currentLayerStep;
+            result.OnBoundTink += sound.PlayGemTink;
             currentLayerStep++;
         }
 

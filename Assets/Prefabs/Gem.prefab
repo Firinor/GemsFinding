@@ -200,10 +200,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mass: 10
   rotationSpeed: 50
-  brakingFactor: 3
+  brakingBoxFactor: 3
+  brakingRiverFactor: 1
   spriteRenderer: {fileID: 3929304121011744850}
   trailRenderer: {fileID: 3415702480693677285}
   Light2D: {fileID: 4162706281588474278}
+  dirt: {fileID: 0}
   id: 0
 --- !u!96 &3415702480693677285
 TrailRenderer:

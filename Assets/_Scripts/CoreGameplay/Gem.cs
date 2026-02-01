@@ -6,27 +6,36 @@ using UnityEngine.Rendering.Universal;
 
 public class Gem : MonoBehaviour
 {
-    public static Bounds Bounds;
+    public static BoxCollider2D boxZone;
+    public static BoxCollider2D riverZone;
+    private static Bounds Bounds => boxZone.bounds;
 
     public event Action<Vector3> OnBoundTink;
+    public event Action<Gem> OnEdge;
     
     [SerializeField]
     private float mass;
     [SerializeField]
     private float rotationSpeed;
     [SerializeField] 
-    private float brakingFactor;
+    private float brakingBoxFactor;
+    [SerializeField] 
+    private float brakingRiverFactor;
     [SerializeField]
     private SpriteRenderer spriteRenderer;
     [SerializeField]
     private TrailRenderer trailRenderer;
     [SerializeField]
     private Light2D Light2D;
+    [SerializeField]
+    private RectTransform dirt;
     public SpriteRenderer Sprite => spriteRenderer;
     [SerializeField]
     private int id;
     
-    private const int ERROR_FORCE = 10;
+    private const int ERROR_FORCE = 8;
+    private const int RIVER_FORCE = 2;
+    private const float X_EDGE = -50;
 
     private Vector3 impulse;
     private float rotation;
@@ -37,20 +46,24 @@ public class Gem : MonoBehaviour
         if (!Bounds.Contains(transform.localPosition))
             GravityForce();
         
-        if (impulse != Vector3.zero)
-            ForceToIngredient();
+        ForceToIngredient();
     }
 
     private void GravityForce()
     {
-        impulse += (Bounds.center - transform.localPosition).normalized * (Physics2D.gravity.magnitude * Time.fixedDeltaTime);
+        impulse += Vector3.left * (RIVER_FORCE * Time.fixedDeltaTime);
+
+        if (transform.localPosition.y > riverZone.bounds.max.y)
+            impulse += Vector3.down * (ERROR_FORCE * Time.fixedDeltaTime);
+        if (transform.localPosition.y < riverZone.bounds.min.y)
+            impulse += Vector3.up * (ERROR_FORCE * Time.fixedDeltaTime);
     }
 
     public void ResetPhysics()
     {
         impulse = Vector3.zero;
     }
-    
+
     private void ForceToIngredient()
     {
         Vector3 pos = transform.localPosition;
@@ -58,13 +71,14 @@ public class Gem : MonoBehaviour
         if (Bounds.Contains(pos))
         {
             Vector3 afterPos = pos + impulse * Time.fixedDeltaTime;
-            if (afterPos.x < Bounds.min.x || afterPos.x > Bounds.max.x)
+            if (afterPos.x < Bounds.min.x)
             {
                 impulse.x = -impulse.x;
                 NewRotation();
                 OnBoundTink?.Invoke(pos);
                 //afterPos.x = Mathf.Clamp(afterPos.x, bounds.min.x, bounds.max.x);
             }
+
             if (afterPos.y < Bounds.min.y || afterPos.y > Bounds.max.y)
             {
                 impulse.y = -impulse.y;
@@ -76,17 +90,38 @@ public class Gem : MonoBehaviour
 
         pos += impulse * Time.fixedDeltaTime;
 
-        Vector3 brakingVector = impulse.normalized * brakingFactor * Time.fixedDeltaTime;
+        Vector3 brakingVector;
 
-        if (impulse.magnitude > brakingVector.magnitude)
-            impulse -= brakingVector;
+        if (boxZone.bounds.Contains(transform.localPosition))
+        {
+            brakingVector = impulse.normalized * brakingBoxFactor * Time.fixedDeltaTime;
+            if (impulse.magnitude > brakingVector.magnitude)
+                impulse -= brakingVector;
+            else
+            {
+                impulse = Vector3.zero;
+                //enabled = false;
+            }
+        }
         else
         {
-            impulse = Vector3.zero;
-            enabled = false;
+            brakingVector = impulse.normalized * brakingRiverFactor * Time.fixedDeltaTime;
+            if (impulse.magnitude > brakingVector.magnitude)
+                impulse -= brakingVector;
+            else
+            {
+                impulse = Vector3.zero;
+                //enabled = false;
+            }
         }
 
         transform.localPosition = pos;
+
+        if (transform.localPosition.x < X_EDGE)
+        {
+            OnEdge?.Invoke(this);
+            return;
+        }
         
         if(rotationFromSpeedCoefficient == 0)
             return;
@@ -159,5 +194,10 @@ public class Gem : MonoBehaviour
         gradient.SetKeys(colorKeys, alphaKeys);
         
         trailRenderer.colorGradient = gradient;
+    }
+
+    public void ResetTail()
+    {
+        trailRenderer.Clear();
     }
 }

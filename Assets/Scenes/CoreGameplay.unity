@@ -7576,7 +7576,7 @@ Transform:
   m_GameObject: {fileID: 1335061835}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.36842856, y: -0.0005714382, z: 0}
+  m_LocalPosition: {x: 0.36842856, y: 0, z: 0}
   m_LocalScale: {x: 1.0126429, y: 1.0225713, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10391,6 +10391,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1707095767}
   - component: {fileID: 1707095766}
+  - component: {fileID: 1707095768}
   m_Layer: 0
   m_Name: GemGateway
   m_TagString: Untagged
@@ -10466,13 +10467,26 @@ Transform:
   m_GameObject: {fileID: 1707095765}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.27, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1335061836}
   m_Father: {fileID: 143018202}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1707095768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707095765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e5424eff7a2cf3438a880d59275cbee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GemBox
+  Speed: 5
 --- !u!1001 &1711436834
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10666,6 +10680,7 @@ Transform:
   - {fileID: 403798197}
   - {fileID: 531505294}
   - {fileID: 436152511}
+  - {fileID: 2001515500}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1722577344
@@ -11903,6 +11918,58 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3183162015828345241, guid: 5e0d213ad6857f74b9dcd92c1e417968, type: 3}
   m_PrefabInstance: {fileID: 1998078744}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2001515499
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2001515500}
+  - component: {fileID: 2001515501}
+  m_Layer: 0
+  m_Name: CameraController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2001515500
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001515499}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1721137077}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2001515501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001515499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acec9b203ab2fd74ca6c48ffc1a125f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraController
+  _camera: {fileID: 519420031}
+  CachPosition:
+    Size: 15
+    Position: {x: 0, y: 10, z: -10}
+  SortPosition:
+    Size: 5
+    Position: {x: 0, y: 0, z: -10}
+  SwitchTime: 1.5
 --- !u!1001 &2031458813
 PrefabInstance:
   m_ObjectHideFlags: 0

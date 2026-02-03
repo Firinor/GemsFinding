@@ -16,7 +16,7 @@ MonoBehaviour:
   Name: "\u0424\u043E\u0440\u043C\u044B"
   Discription: "\u0420\u0430\u0437\u043D\u043E\u043E\u0431\u0440\u0430\u0437\u0438\u0435
     \u0444\u043E\u0440\u043C \n\u043A\u0440\u0438\u0441\u0442\u0430\u043B\u043B\u043E\u0432"
-  Icon: {fileID: -1916344210, guid: 2dabd06ce85d48d4fa99a7b77e2570be, type: 3}
+  Icon: {fileID: -2358044605754972034, guid: 3815f56527b154d4180d4f575ea62124, type: 3}
   Type: 2
   Value: 10
   Cost: e8030000dc050000

@@ -6,9 +6,9 @@ using UnityEngine.Rendering.Universal;
 
 public class Gem : MonoBehaviour
 {
-    public static BoxCollider2D boxZone;
+    public static GemBox box;
     public static BoxCollider2D riverZone;
-    private static Bounds Bounds => boxZone.bounds;
+    private static Bounds Bounds => box.boxZone.bounds;
 
     public event Action<Vector3> OnBoundTink;
     public event Action<Gem> OnEdge;
@@ -34,12 +34,14 @@ public class Gem : MonoBehaviour
     private int id;
     
     private const int ERROR_FORCE = 8;
-    private const int RIVER_FORCE = 2;
+    private const int RIVER_FORCE = 3;
     private const float X_EDGE = -50;
+    private const float BOX_MOVE_COEFFICIENT = 1f;
 
     private Vector3 impulse;
     private float rotation;
     private float rotationFromSpeedCoefficient;
+    private bool isInBox;
 
     void FixedUpdate()
     {
@@ -51,8 +53,9 @@ public class Gem : MonoBehaviour
 
     private void GravityForce()
     {
-        impulse += Vector3.left * (RIVER_FORCE * Time.fixedDeltaTime);
-
+        if (!isInBox)
+            return;
+        
         if (transform.localPosition.y > riverZone.bounds.max.y)
             impulse += Vector3.down * (ERROR_FORCE * Time.fixedDeltaTime);
         if (transform.localPosition.y < riverZone.bounds.min.y)
@@ -70,6 +73,12 @@ public class Gem : MonoBehaviour
 
         if (Bounds.Contains(pos))
         {
+            if (!isInBox)
+            {
+                isInBox = true;
+                box.OnMove += BoxMove;
+            }
+            
             Vector3 afterPos = pos + impulse * Time.fixedDeltaTime;
             if (afterPos.x < Bounds.min.x)
             {
@@ -87,12 +96,21 @@ public class Gem : MonoBehaviour
                 //afterPos.y = Mathf.Clamp(afterPos.y, bounds.min.y, bounds.max.y);
             }
         }
+        else
+        {
+            if (isInBox)
+            {
+                isInBox = false;
+                box.OnMove -= BoxMove;
+            }
+            impulse += Vector3.left * (RIVER_FORCE * Time.fixedDeltaTime);
+        }
 
         pos += impulse * Time.fixedDeltaTime;
 
         Vector3 brakingVector;
 
-        if (boxZone.bounds.Contains(transform.localPosition))
+        if (Bounds.Contains(transform.localPosition))
         {
             brakingVector = impulse.normalized * brakingBoxFactor * Time.fixedDeltaTime;
             if (impulse.magnitude > brakingVector.magnitude)
@@ -199,5 +217,16 @@ public class Gem : MonoBehaviour
     public void ResetTail()
     {
         trailRenderer.Clear();
+
+    }
+
+    private void BoxMove(Vector3 delta)
+    {
+        transform.localPosition += delta * BOX_MOVE_COEFFICIENT;
+    }
+    
+    private void OnDestroy()
+    {
+        box.OnMove -= BoxMove;
     }
 }

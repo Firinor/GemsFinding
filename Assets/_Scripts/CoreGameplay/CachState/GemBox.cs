@@ -8,6 +8,8 @@ public class GemBox : MonoBehaviour
     private int capacity;
 
     public float Speed;
+    public BoxCollider2D boxZone;
+    public event Action<Vector3> OnMove;
     public event Action<Gem> OnСatch;
 
     private List<Gem> gems = new();
@@ -34,8 +36,10 @@ public class GemBox : MonoBehaviour
         worldPoint.z = 0;
         worldPoint.x += offset;
 
-        Vector3 delta = worldPoint - transform.position;
+        Vector3 delta = (worldPoint - transform.position) * Time.deltaTime;
 
-        transform.position += delta * Time.deltaTime;
+        transform.position += delta;
+        
+        OnMove?.Invoke(delta);
     }
 }

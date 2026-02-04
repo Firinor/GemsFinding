@@ -27,7 +27,7 @@ public class FindObjectManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI rewardInfoText;
     [SerializeField] 
-    private BoxCollider2D GemZone;
+    private GemBox GemBox;
     [SerializeField]
     private float forceToIngredient;
     [SerializeField]
@@ -90,7 +90,7 @@ public class FindObjectManager : MonoBehaviour
             
             allIngredients.Add(newGem);
         }
-        Gem.boxZone = GemZone;
+        Gem.box = GemBox;
         Gem.riverZone = spawnZone;
         
         CreateNewRecipe();

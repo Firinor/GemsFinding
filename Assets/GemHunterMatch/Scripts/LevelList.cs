@@ -52,7 +52,7 @@ namespace Match3
 
         public void OnPreprocessBuild(BuildReport report)
         {
-            try
+            /*try
             {
                 var levelListAssets = AssetDatabase.FindAssets("t:LevelList");
 
@@ -131,7 +131,7 @@ namespace Match3
             catch (Exception e)
             {
                 throw new BuildFailedException($"Exception during prebuild {e.Message}");
-            }
+            }*/
         }
     }
 #endif

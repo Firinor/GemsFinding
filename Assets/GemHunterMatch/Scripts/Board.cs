@@ -14,7 +14,7 @@ namespace Match3
     [DefaultExecutionOrder(-9999)]
     public class Board : MonoBehaviour
     {
-        //Board hold a list of BoardAction that get ticked on its Update. Useful for Bonus to add timed effects and the like.
+        //Board hold a list of BoardAction that get ticked on its FixedUpdate. Useful for Bonus to add timed effects and the like.
         public interface IBoardAction
         {
             //Return true if should continue, false if the action done 

@@ -9,6 +9,7 @@ public class GemBox : MonoBehaviour
 
     public float Speed;
     public BoxCollider2D boxZone;
+    public BoxCollider2D boxOutZone;
     public event Action<Vector3> OnMove;
     public event Action<Gem> OnСatch;
 

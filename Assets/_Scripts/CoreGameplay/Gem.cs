@@ -9,18 +9,15 @@ public class Gem : MonoBehaviour
     public static GemBox box;
     public static BoxCollider2D riverZone;
     private static Bounds Bounds => box.boxZone.bounds;
+    private static Bounds OutBounds => box.boxOutZone.bounds;
 
-    public event Action<Vector3> OnBoundTink;
-    public event Action<Gem> OnEdge;
+    public Action<Vector3> OnBoundTink;
+    public Action<Gem> OnEdge;
     
     [SerializeField]
     private float mass;
     [SerializeField]
     private float rotationSpeed;
-    [SerializeField] 
-    private float brakingBoxFactor;
-    [SerializeField] 
-    private float brakingRiverFactor;
     [SerializeField]
     private SpriteRenderer spriteRenderer;
     [SerializeField]
@@ -28,125 +25,53 @@ public class Gem : MonoBehaviour
     [SerializeField]
     private Light2D Light2D;
     [SerializeField]
-    private RectTransform dirt;
+    private Transform dirt;
     public SpriteRenderer Sprite => spriteRenderer;
     [SerializeField]
     private int id;
     
+    
+    private const float BrakingBoxFactor = 4;
+    private const float BrakingRiverFactor = 1;
+    
     private const int ERROR_FORCE = 8;
     private const int RIVER_FORCE = 3;
     private const float X_EDGE = -50;
-    private const float BOX_MOVE_COEFFICIENT = 1f;
+    private const float BOX_MOVE_COEFFICIENT = .9f;
+    private const float BOX_BORDER_COEFFICIENT = 90;
 
     private Vector3 impulse;
     private float rotation;
     private float rotationFromSpeedCoefficient;
-    private bool isInBox;
-
-    void FixedUpdate()
+    private Action updateBehaviour;
+    
+    void Update()
     {
-        if (!Bounds.Contains(transform.localPosition))
-            GravityForce();
+        updateBehaviour.Invoke();
         
-        ForceToIngredient();
-    }
-
-    private void GravityForce()
-    {
-        if (!isInBox)
-            return;
+        transform.localPosition += impulse * Time.deltaTime;
         
-        if (transform.localPosition.y > riverZone.bounds.max.y)
-            impulse += Vector3.down * (ERROR_FORCE * Time.fixedDeltaTime);
-        if (transform.localPosition.y < riverZone.bounds.min.y)
-            impulse += Vector3.up * (ERROR_FORCE * Time.fixedDeltaTime);
-    }
-
-    public void ResetPhysics()
-    {
-        impulse = Vector3.zero;
-    }
-
-    private void ForceToIngredient()
-    {
-        Vector3 pos = transform.localPosition;
-
-        if (Bounds.Contains(pos))
-        {
-            if (!isInBox)
-            {
-                isInBox = true;
-                box.OnMove += BoxMove;
-            }
-            
-            Vector3 afterPos = pos + impulse * Time.fixedDeltaTime;
-            if (afterPos.x < Bounds.min.x)
-            {
-                impulse.x = -impulse.x;
-                NewRotation();
-                OnBoundTink?.Invoke(pos);
-                //afterPos.x = Mathf.Clamp(afterPos.x, bounds.min.x, bounds.max.x);
-            }
-
-            if (afterPos.y < Bounds.min.y || afterPos.y > Bounds.max.y)
-            {
-                impulse.y = -impulse.y;
-                NewRotation();
-                OnBoundTink?.Invoke(pos);
-                //afterPos.y = Mathf.Clamp(afterPos.y, bounds.min.y, bounds.max.y);
-            }
-        }
-        else
-        {
-            if (isInBox)
-            {
-                isInBox = false;
-                box.OnMove -= BoxMove;
-            }
-            impulse += Vector3.left * (RIVER_FORCE * Time.fixedDeltaTime);
-        }
-
-        pos += impulse * Time.fixedDeltaTime;
-
-        Vector3 brakingVector;
-
-        if (Bounds.Contains(transform.localPosition))
-        {
-            brakingVector = impulse.normalized * brakingBoxFactor * Time.fixedDeltaTime;
-            if (impulse.magnitude > brakingVector.magnitude)
-                impulse -= brakingVector;
-            else
-            {
-                impulse = Vector3.zero;
-                //enabled = false;
-            }
-        }
-        else
-        {
-            brakingVector = impulse.normalized * brakingRiverFactor * Time.fixedDeltaTime;
-            if (impulse.magnitude > brakingVector.magnitude)
-                impulse -= brakingVector;
-            else
-            {
-                impulse = Vector3.zero;
-                //enabled = false;
-            }
-        }
-
-        transform.localPosition = pos;
-
         if (transform.localPosition.x < X_EDGE)
         {
             OnEdge?.Invoke(this);
             return;
         }
-        
+    
         if(rotationFromSpeedCoefficient == 0)
             return;
-        
+    
         rotation = impulse.magnitude / rotationFromSpeedCoefficient;
-        
+    
         transform.rotation *= Quaternion.Euler(0,0, rotation); 
+    }
+
+    public void ResetPhysics()
+    {
+        box.OnMove -= BoxBoarding;
+        box.OnMove -= BoxMove;
+        updateBehaviour = RiverBehaviour;
+        box.OnMove += BoxBoarding;
+        impulse = Vector3.zero;
     }
     
     public void SetRandomImpulse(float forse, bool randomForse = true)
@@ -217,14 +142,163 @@ public class Gem : MonoBehaviour
     public void ResetTail()
     {
         trailRenderer.Clear();
-
-    }
-
-    private void BoxMove(Vector3 delta)
-    {
-        transform.localPosition += delta * BOX_MOVE_COEFFICIENT;
     }
     
+#region Behaviour
+    private void BoxMove(Vector3 delta)
+    {
+        Vector3 pos = transform.localPosition;
+        Vector3 afterPos = pos + delta * BOX_MOVE_COEFFICIENT;
+        
+        if (afterPos.x < Bounds.min.x)
+        {
+            afterPos.x = Bounds.min.x;
+            afterPos += delta / BOX_MOVE_COEFFICIENT;
+            impulse += delta*BOX_BORDER_COEFFICIENT*(1+Random.value);
+            OnBoundTink?.Invoke(afterPos);
+        }
+        if (afterPos.y < Bounds.min.y || afterPos.y > Bounds.max.y)
+        {
+            afterPos.y = math.clamp(afterPos.y, Bounds.min.y, Bounds.max.y);
+            afterPos += delta / BOX_MOVE_COEFFICIENT;
+            impulse += delta*BOX_BORDER_COEFFICIENT*(1+Random.value);
+            OnBoundTink?.Invoke(afterPos);
+        }
+
+        transform.localPosition = afterPos;
+    }
+    private void BoxBoarding(Vector3 delta)
+    {
+        Vector3 pos = transform.localPosition;
+
+        if (!OutBounds.Contains(pos))
+            return;
+
+        Vector3 afterPos = pos + delta*(1+Random.value);
+
+        if (afterPos.x > OutBounds.max.x)
+        {
+            transform.localPosition = afterPos;
+            return;
+        }
+        
+        /*afterPos.x = Math.Min(afterPos.x, OutBounds.min.x);
+        if(afterPos.y < OutBounds.center.y)
+            afterPos.y = Math.Min(afterPos.y, OutBounds.min.y);
+        else
+            afterPos.y = Math.Max(afterPos.y, OutBounds.max.y);*/
+
+        impulse += delta * BOX_BORDER_COEFFICIENT;//*(1+Random.value);
+        OnBoundTink?.Invoke(afterPos);
+
+        transform.localPosition = afterPos;
+    }
+    
+    private void BoxBehaviour()
+    {
+        Vector3 pos = transform.localPosition;
+        Vector3 afterPos = pos + impulse * Time.deltaTime;
+        
+        if (afterPos.x < Bounds.min.x)
+        {
+            impulse.x = -impulse.x;
+            NewRotation();
+            OnBoundTink?.Invoke(pos);
+        }
+
+        if (afterPos.y < Bounds.min.y || afterPos.y > Bounds.max.y)
+        {
+            impulse.y = -impulse.y;
+            NewRotation();
+            OnBoundTink?.Invoke(pos);
+        }
+
+        pos += impulse * Time.deltaTime;
+
+        Vector3 brakingVector;
+
+        brakingVector = impulse.normalized * BrakingBoxFactor * Time.deltaTime;
+        if (impulse.magnitude > brakingVector.magnitude)
+            impulse -= brakingVector;
+        else
+        {
+            impulse = Vector3.zero;
+        }
+
+        transform.localPosition = pos;
+            
+        if (!Bounds.Contains(transform.localPosition))
+        {
+            box.OnMove -= BoxMove;
+            box.OnMove += BoxBoarding;
+            updateBehaviour = RiverBehaviour;
+        }
+        
+        if(rotationFromSpeedCoefficient == 0)
+            return;
+            
+        rotation = impulse.magnitude / rotationFromSpeedCoefficient;
+            
+        transform.rotation *= Quaternion.Euler(0,0, rotation); 
+    }
+
+    private void RiverBehaviour()
+    {
+        GravityForce();
+
+        Vector3 pos = transform.localPosition;
+
+        impulse += Vector3.left * (RIVER_FORCE * Time.deltaTime);
+
+        Vector3 afterPos = pos + impulse * Time.deltaTime;
+
+        Vector3 brakingVector = impulse.normalized * BrakingRiverFactor * Time.deltaTime;
+        if (impulse.magnitude > brakingVector.magnitude)
+            impulse -= brakingVector;
+        else
+        {
+            impulse = Vector3.zero;
+            //enabled = false;
+        }
+
+        if (Bounds.Contains(afterPos))
+        {
+            box.OnMove -= BoxBoarding;
+            box.OnMove += BoxMove;
+            updateBehaviour = BoxBehaviour;
+            return;
+        }
+        
+        if (pos.x < OutBounds.max.x 
+                 && OutBounds.Contains(afterPos))
+        {
+            if (afterPos.y > OutBounds.min.y || afterPos.y < OutBounds.max.y)
+            {
+                impulse.y = -impulse.y;
+                NewRotation();
+                OnBoundTink?.Invoke(afterPos);
+            }
+
+            if (afterPos.x > OutBounds.min.x)
+            {
+                impulse.x = -impulse.x;
+                NewRotation();
+                OnBoundTink?.Invoke(afterPos);
+            }
+            
+            afterPos = pos + impulse * Time.deltaTime; 
+        }
+    }
+    
+    private void GravityForce()
+    {
+        if (transform.localPosition.y > riverZone.bounds.max.y)
+            impulse += Vector3.down * (ERROR_FORCE * Time.deltaTime);
+        if (transform.localPosition.y < riverZone.bounds.min.y)
+            impulse += Vector3.up * (ERROR_FORCE * Time.deltaTime);
+    }
+#endregion
+
     private void OnDestroy()
     {
         box.OnMove -= BoxMove;

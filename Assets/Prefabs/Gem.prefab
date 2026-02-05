@@ -193,19 +193,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2885724026673860506}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ccd1e5479c9b3444ebb07d3dc8294a58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mass: 10
   rotationSpeed: 50
-  brakingBoxFactor: 7
-  brakingRiverFactor: 1
   spriteRenderer: {fileID: 3929304121011744850}
   trailRenderer: {fileID: 3415702480693677285}
   Light2D: {fileID: 4162706281588474278}
-  dirt: {fileID: 0}
+  dirt: {fileID: 7395522316763733370}
   id: 0
 --- !u!96 &3415702480693677285
 TrailRenderer:

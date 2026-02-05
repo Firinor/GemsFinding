@@ -67,6 +67,9 @@ public class FindObjectManager : MonoBehaviour
     [ContextMenu("StartPuzzle")]
     public void StartPuzzle()
     {
+        Gem.box = GemBox;
+        Gem.riverZone = spawnZone;
+        
         winScreen.SetActive(false);
         pool.ClearAll();
         
@@ -90,8 +93,6 @@ public class FindObjectManager : MonoBehaviour
             
             allIngredients.Add(newGem);
         }
-        Gem.box = GemBox;
-        Gem.riverZone = spawnZone;
         
         CreateNewRecipe();
     }

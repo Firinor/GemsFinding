@@ -153,7 +153,7 @@ TextureImporter:
         width: 1304
         height: 282
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -166,55 +166,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: SliderFrame_1
-      rect:
-        serializedVersion: 2
-        x: 210
-        y: 1951
-        width: 72
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e87474fb1d7377720800000000000000
-      internalID: 2843803063704569742
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SliderFrame_2
-      rect:
-        serializedVersion: 2
-        x: 501
-        y: 1949
-        width: 829
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 47be3525a0deb8580800000000000000
-      internalID: -8823698416315667596
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: c9d101daa05e7c94f83f7bdbac2d7156
     internalID: 0
     vertices: []
     indices: 

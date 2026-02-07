@@ -44,6 +44,9 @@ public class ProgressData
                 case MetaPointType.RecipeCount:
                     Stats.RecipeGemCount += point.Value * playerPoint.Level;
                     break;
+                case MetaPointType.InRiverGemsCount:
+                    Stats.InRiverGemCount += point.Value * playerPoint.Level;
+                    break;
                 case MetaPointType.InBoxGemsCount:
                     Stats.InBoxGemCount += point.Value * playerPoint.Level;
                     break;
@@ -91,6 +94,7 @@ public class ProgressData
 [Serializable]
 public class Stats
 {
+    public int InRiverGemCount = 20;
     public int InBoxGemCount = 7;
     public int RecipeGemCount = 1;
 

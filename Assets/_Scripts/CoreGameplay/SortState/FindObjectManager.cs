@@ -14,10 +14,11 @@ public class FindObjectManager : MonoBehaviour
     [SerializeField]
     private FindObjectPuzzleConfig puzzleConfig;
     
+    private List<Gem> allIngredients;
     [SerializeField]
     private GemPool pool;
-    
-    private List<Gem> allIngredients;
+    [SerializeField] 
+    private CameraController cameraController;
     [SerializeField]
     private Recipe recipe;
     [SerializeField]
@@ -46,15 +47,24 @@ public class FindObjectManager : MonoBehaviour
         this.player = player;
         contex = player.Stats;
         
+        GemBox.Initialize(player.Stats.InBoxGemCount);
+        GemBox.OnFull += ToSortState;   
         recipe.RecipeIsComplete += SuccessfullySolvePuzzle;
         StartPuzzle();
+    }
+
+    private void ToSortState()
+    {
+        GemBox.FreezeGems();
+        cameraController.ToSort();
+        CreateNewRecipe();
     }
 
     private void CreateNewRecipe()
     {
         recipe.Clear();
 
-        int DeckLenght = Math.Min(contex.InBoxGemCount, contex.ShapeCount * contex.ColorCount);
+        int DeckLenght = Math.Min(contex.InRiverGemCount, contex.ShapeCount * contex.ColorCount);
         List<int> recipeIntList = GameMath.AFewCardsFromTheDeck(contex.RecipeGemCount, DeckLenght);
 
         List<Gem> recipeGems = new();
@@ -75,7 +85,7 @@ public class FindObjectManager : MonoBehaviour
         
         allIngredients = new List<Gem>();
         
-        for (int i = 0; i < contex.InBoxGemCount; i++)
+        for (int i = 0; i < contex.InRiverGemCount; i++)
         {
             Gem newGem = pool.Get();
             newGem.OnEdge += Respawn;
@@ -105,6 +115,7 @@ public class FindObjectManager : MonoBehaviour
         y += spawnZone.bounds.min.y;
         gem.transform.localPosition = new Vector3(x, y, 0);
         gem.ResetTail();
+        gem.ResetPhysics();
         gem.SetRandomImpulse(forceToIngredient);
     }
 

@@ -7485,7 +7485,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Bootstrup
   settings: {fileID: 113095045}
   mainManager: {fileID: 403798198}
-  isDebugMode: 1
+  isDebugMode: 0
   stats:
     InRiverGemCount: 15
     InBoxGemCount: 5

@@ -80,7 +80,7 @@ public class MetaTreeManager : MonoBehaviour
         }
     }
 
-    private void ShowInfo(MetaPointData pointData, RectTransform anchor)
+    private void ShowInfo(MetaPointData pointData)
     {
         MetaPointInfo info = new();
         info.Name = pointData.Name;
@@ -101,6 +101,7 @@ public class MetaTreeManager : MonoBehaviour
         info.Effect = pointData.Type switch
         {
             MetaPointType.RecipeCount => player.Stats.RecipeGemCount.ToString(),
+            MetaPointType.InRiverGemsCount => player.Stats.InRiverGemCount.ToString(),
             MetaPointType.InBoxGemsCount => player.Stats.InBoxGemCount.ToString(),
             MetaPointType.GemShapeCount => player.Stats.ShapeCount.ToString(),
             MetaPointType.GemColorCount => player.Stats.ColorCount.ToString(),
@@ -120,7 +121,6 @@ public class MetaTreeManager : MonoBehaviour
         if(level < pointData.MaxLevel)
             info.Cost = pointData.Cost[Int32.Parse(info.Level)].ToString();
         
-        info.Ancor = anchor;
         infoPanel.Show(info);
     }
 
@@ -177,7 +177,7 @@ public class MetaTreeManager : MonoBehaviour
         
         OnNewPointLearned?.Invoke();
         
-        ShowInfo(point.Data, null);
+        ShowInfo(point.Data);
     }
 
     private void EnablePointsBy()

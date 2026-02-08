@@ -111,6 +111,10 @@ public class Settings : MonoBehaviour
         sfxToggle.isOn = data.IsSFXOn;
     }
 
+    public void DeleteSaves()
+    {
+        PlayerPrefs.DeleteAll();
+    }
     private void OnDestroy()
     {
         musicToggle.onValueChanged.RemoveAllListeners();

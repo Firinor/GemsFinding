@@ -8,12 +8,11 @@ public class Gem : MonoBehaviour
 {
     public static GemBox box;
     public static BoxCollider2D riverZone;
+    private static Bounds bounds => box.boxZone.bounds;
 
     public Action<Vector3> OnBoundTink;
     public Action<Gem> OnEdge;
     
-    [SerializeField]
-    private float mass;
     [SerializeField]
     private float rotationSpeed;
     [SerializeField]
@@ -27,14 +26,25 @@ public class Gem : MonoBehaviour
     public SpriteRenderer Sprite => spriteRenderer;
     [SerializeField] 
     private Rigidbody2D rigidbody2D;
-    [SerializeField]
-    private int id;
     
+    private const float BREAKING_FACTOR = 3;
     private const int ERROR_FORCE = 8;
     private const float X_EDGE = -50;
     private const float BOX_MOVE_COEFFICIENT = 1;
-    
-    void Update()
+    private const float CLEANING_SPEED = .3f;
+
+    private Vector3 impulse;
+    private float rotation;
+    private float rotationFromSpeedCoefficient;
+
+    private Action UpdateBehaviour;
+
+    private void Update()
+    {
+        UpdateBehaviour?.Invoke();
+    }
+
+    void CachUpdate()
     {
         if (transform.localPosition.x < X_EDGE)
         {
@@ -45,8 +55,75 @@ public class Gem : MonoBehaviour
         GravityForce();
     }
 
+    void SortUpdate()
+    {
+        if (!bounds.Contains(transform.localPosition))
+            GravitySortForce();
+
+        if (impulse != Vector3.zero)
+            ForceToIngredient();
+    }
+
+    private void GravitySortForce()
+    {
+        impulse += (bounds.center - transform.position).normalized * (10 * Time.deltaTime);
+    }
+
+    private void ForceToIngredient()
+    {
+        Vector3 pos = transform.localPosition;
+
+        if (bounds.Contains(pos))
+        {
+            Vector3 afterPos = pos + impulse * Time.deltaTime;
+            if (afterPos.x < bounds.min.x || afterPos.x > bounds.max.x)
+            {
+                impulse.x = -impulse.x;
+                NewSortRotation();
+                OnBoundTink?.Invoke(pos);
+                //afterPos.x = Mathf.Clamp(afterPos.x, bounds.min.x, bounds.max.x);
+            }
+            if (afterPos.y < bounds.min.y || afterPos.y > bounds.max.y)
+            {
+                impulse.y = -impulse.y;
+                NewSortRotation();
+                OnBoundTink?.Invoke(pos);
+                //afterPos.y = Mathf.Clamp(afterPos.y, bounds.min.y, bounds.max.y);
+            }
+        }
+
+        pos += impulse * Time.deltaTime;
+
+        Vector3 brakingVector = impulse.normalized * BREAKING_FACTOR * Time.deltaTime;
+
+        if (impulse.magnitude > brakingVector.magnitude)
+            impulse -= brakingVector;
+        else
+        {
+            impulse = Vector3.zero;
+        }
+
+        transform.localPosition = pos;
+
+        if(rotationFromSpeedCoefficient == 0)
+            return;
+
+        rotation = impulse.magnitude / rotationFromSpeedCoefficient;
+
+        transform.rotation *= Quaternion.Euler(0,0, rotation); 
+    }
+    private void GravityForce()
+    {
+        if (transform.localPosition.y > riverZone.bounds.max.y)
+            rigidbody2D.AddForce(Vector3.down * (ERROR_FORCE * Time.deltaTime), ForceMode2D.Impulse);
+        if (transform.localPosition.y < riverZone.bounds.min.y)
+            rigidbody2D.AddForce(Vector3.up * (ERROR_FORCE * Time.deltaTime), ForceMode2D.Impulse);
+    }
+    
     public void ResetPhysics()
     {
+        UpdateBehaviour = box.IsSortMode ? SortUpdate : CachUpdate;
+        impulse = Vector3.zero;
         rigidbody2D.linearVelocity = Vector2.zero;
         rigidbody2D.angularVelocity = 0;
         rigidbody2D.totalForce = Vector2.zero;
@@ -71,6 +148,27 @@ public class Gem : MonoBehaviour
         rigidbody2D.AddTorque(rotation, ForceMode2D.Impulse);
     }
     
+    public void SetSortRandomImpulse(float forse, bool randomForse = true)
+    {
+        forse *= randomForse ? Random.value : 1;
+        float randomDirection = Random.value * 360 * Mathf.Deg2Rad;
+
+        impulse = new Vector3(math.cos(randomDirection), math.sin(randomDirection), 0) * forse;
+
+        NewSortRotation();
+    }
+
+    private void NewSortRotation()
+    {
+        rotation = rotationSpeed * Random.value;
+        rotation *= FirMath.GameMath.HeadsOrTails() ? 1 : -1;
+
+        rotationFromSpeedCoefficient = impulse.magnitude / rotation;
+    }
+    public void SetSortImpulse(Vector3 impulse)
+    {
+        this.impulse = impulse;
+    }
     public void SetImpulse(Vector3 force, bool toZeroPoint = true)
     {
         rigidbody2D.AddForce(force, ForceMode2D.Impulse);
@@ -100,7 +198,8 @@ public class Gem : MonoBehaviour
         colorKeys[2].time = 1f;
         
         gradient.SetKeys(colorKeys, alphaKeys);
-        
+
+        dirt.localScale = Vector3.one;
         trailRenderer.colorGradient = gradient;
     }
 
@@ -112,19 +211,14 @@ public class Gem : MonoBehaviour
     public void BoxMove(Vector3 delta)
     {
         rigidbody2D.AddForce(delta * BOX_MOVE_COEFFICIENT, ForceMode2D.Impulse);
-    }
-    
-    private void GravityForce()
-    {
-        if (transform.localPosition.y > riverZone.bounds.max.y)
-            rigidbody2D.AddForce(Vector3.down * (ERROR_FORCE * Time.deltaTime), ForceMode2D.Impulse);
-        if (transform.localPosition.y < riverZone.bounds.min.y)
-            rigidbody2D.AddForce(Vector3.up * (ERROR_FORCE * Time.deltaTime), ForceMode2D.Impulse);
+        dirt.localScale *= (1 - CLEANING_SPEED * Time.deltaTime);
+        if (dirt.localScale.x <= 0.05f)
+            dirt.localScale = Vector3.zero;
     }
 
     public void Freeze()
     {
-        rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
+        rigidbody2D.bodyType = RigidbodyType2D.Static;
         box.OnMoveToSort += MoveToSort;
     }
 
@@ -135,8 +229,10 @@ public class Gem : MonoBehaviour
 
     public void Unfreeze()
     {
-        rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+        Destroy(rigidbody2D);
+        Destroy(GetComponent<Collider2D>());
         box.OnMoveToSort -= MoveToSort;
-        SetRandomImpulse(ERROR_FORCE);
+        UpdateBehaviour = SortUpdate;
+        SetSortRandomImpulse(ERROR_FORCE);
     }
 }

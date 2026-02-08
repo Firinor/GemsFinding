@@ -28,27 +28,33 @@ public class CameraController : MonoBehaviour
     }
 
     [ContextMenu(nameof(ToCach))]
+    public void ToCachInstant()
+    {
+        _camera.transform.position = CachPosition.Position;
+        _camera.orthographicSize = CachPosition.Size;
+    }
+
     public void ToCach()
     {
-#if UNITY_EDITOR
-        _camera.transform.position += CachPosition.Position;
-        _camera.orthographicSize += CachPosition.Size;
-#else
         targetPosition = CachPosition;
+        deltaPosition = (CachPosition.Position - SortPosition.Position) / SwitchTime;
+        deltaSize = (CachPosition.Size - SortPosition.Size)  / SwitchTime;
         coroutine = StartCoroutine(MoveCamera());
-#endif
     }
 
     [ContextMenu(nameof(ToSort))]
+    public void ToSortInstant()
+    {
+        _camera.transform.position = SortPosition.Position;
+        _camera.orthographicSize = SortPosition.Size;
+    }
+
     public void ToSort()
     {
-#if UNITY_EDITOR
-        _camera.transform.position += SortPosition.Position;
-        _camera.orthographicSize += SortPosition.Size;
-#else
         targetPosition = SortPosition;
+        deltaPosition = (SortPosition.Position - CachPosition.Position) / SwitchTime;
+        deltaSize = (SortPosition.Size - CachPosition.Size)  / SwitchTime;
         coroutine = StartCoroutine(MoveCamera());
-#endif
     }
 
     private IEnumerator MoveCamera()

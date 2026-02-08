@@ -1,11 +1,7 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 using FirMath;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using TMPro;
-using Unity.Mathematics;
 using Random = UnityEngine.Random;
 
 public class FindObjectManager : MonoBehaviour
@@ -19,14 +15,8 @@ public class FindObjectManager : MonoBehaviour
     private GemPool pool;
     [SerializeField] 
     private CameraController cameraController;
-    [SerializeField]
-    private Recipe recipe;
-    [SerializeField]
-    private GameObject winScreen;
     [SerializeField] 
-    private TextMeshProUGUI rewardText;
-    [SerializeField]
-    private TextMeshProUGUI rewardInfoText;
+    private CanvasView canvas;
     [SerializeField] 
     private GemBox GemBox;
     [SerializeField]
@@ -47,22 +37,39 @@ public class FindObjectManager : MonoBehaviour
         this.player = player;
         contex = player.Stats;
         
+        Gem.box = GemBox;
+        Gem.riverZone = spawnZone;
+        
         GemBox.Initialize(player.Stats.InBoxGemCount);
         GemBox.OnFull += ToSortState;   
-        recipe.RecipeIsComplete += SuccessfullySolvePuzzle;
+        canvas.Recipe.gameObject.SetActive(false);
+        canvas.Recipe.RecipeIsComplete += SuccessfullySolvePuzzle;
+        canvas.ToCachButton.gameObject.SetActive(false);
         StartPuzzle();
     }
 
+    public void ToCachState()
+    {
+        GemBox.ToCachMode();
+        cameraController.ToCach();
+        canvas.Recipe.gameObject.SetActive(false);
+        canvas.ToCachButton.gameObject.SetActive(false);
+    }
+    
     private void ToSortState()
     {
-        GemBox.FreezeGems();
+        GemBox.ToSotrMode();
+        StartCoroutine(GemBox.MoveToSortPoint(onComplete: () =>
+        {
+            canvas.Recipe.gameObject.SetActive(true);
+            canvas.ToCachButton.gameObject.SetActive(true);
+        }));
         cameraController.ToSort();
-        CreateNewRecipe();
     }
 
     private void CreateNewRecipe()
     {
-        recipe.Clear();
+        canvas.Recipe.Clear();
 
         int DeckLenght = Math.Min(contex.InRiverGemCount, contex.ShapeCount * contex.ColorCount);
         List<int> recipeIntList = GameMath.AFewCardsFromTheDeck(contex.RecipeGemCount, DeckLenght);
@@ -71,16 +78,13 @@ public class FindObjectManager : MonoBehaviour
         foreach (var i in recipeIntList)
             recipeGems.Add(allIngredients[i]);
         
-        recipe.SetResipe(recipeGems);
+        canvas.Recipe.SetResipe(recipeGems);
     }
 
     [ContextMenu("StartPuzzle")]
     public void StartPuzzle()
     {
-        Gem.box = GemBox;
-        Gem.riverZone = spawnZone;
-        
-        winScreen.SetActive(false);
+        canvas.WinScreen.SetActive(false);
         pool.ClearAll();
         
         allIngredients = new List<Gem>();
@@ -122,18 +126,18 @@ public class FindObjectManager : MonoBehaviour
     private void SuccessfullySolvePuzzle()
     {
         int reward = player.Stats.ShapeCount * player.Stats.ColorCount * player.Stats.RecipeGemCount + player.Stats.InBoxGemCount;
-        rewardInfoText.text = $"Формы: {player.Stats.ShapeCount}" +
+        canvas.RewardInfoText.text = $"Формы: {player.Stats.ShapeCount}" +
                               $"\nЦвета: {player.Stats.ColorCount}" +
                               $"\nРецепт: {player.Stats.RecipeGemCount}" +
                               $"\nКоличество: {player.Stats.InBoxGemCount}" +
                               "\n" +
                               $"\nИтого: {player.Stats.ShapeCount}*{player.Stats.ColorCount}*{player.Stats.RecipeGemCount} + {player.Stats.InBoxGemCount} = {reward}$";
 
-        rewardText.text = $"ПОЗДРАВЛЯЮ!\nТВОЙ ПРИЗ\n{reward}$";
+        canvas.RewardText.text = $"ПОЗДРАВЛЯЮ!\nТВОЙ ПРИЗ\n{reward}$";
         
         player.AddGold(reward);
         SaveLoadSystem<ProgressData>.Save(player);
-        winScreen.SetActive(true);
+        canvas.WinScreen.SetActive(true);
     }
 
     private void HarvestAllIngredients()
@@ -166,7 +170,7 @@ public class FindObjectManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        recipe.RecipeIsComplete -= SuccessfullySolvePuzzle;
+        canvas.Recipe.RecipeIsComplete -= SuccessfullySolvePuzzle;
 
         foreach (Gem gem in allIngredients)
         {

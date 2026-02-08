@@ -7,6 +7,9 @@ public class BoxCacher : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if(!enabled)
+            return;
+        
         Gem gem = other.GetComponent<Gem>(); 
         if(gem is null)
             return;
@@ -24,6 +27,9 @@ public class BoxCacher : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        if(!enabled)
+            return;
+        
         Gem gem = other.GetComponent<Gem>(); 
         if(gem is null)
             return;

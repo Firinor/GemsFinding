@@ -59,21 +59,26 @@ public class PlayerHandManager : MonoBehaviour
         mouseImpulse = currentMousePosition - lastMousePosition[lastPositionIndex];
     }
 
+    public void WashHand()
+    {
+        gem = null;
+    }
     private void ReleaseGem()
     {
+        if (gem is null)
+            return;
+        
         bool isCorrectGem = recipe.CheckGem(gemData);
 
         if (!isCorrectGem)
         {
-            Gem releaseGem = pool.Get();
-            releaseGem.SetView(inHandGem.sprite, gemData.Color);
-            
-            Vector2 currentMousePosition = Mouse.current.position.ReadValue();
+            //Vector2 currentMousePosition = Mouse.current.position.ReadValue();
             Vector3 pos = inHandGem.transform.position;
             pos.z = 0;
             
-            releaseGem.transform.position = pos;
-            releaseGem.SetImpulse(mouseImpulse * impulseCoefficient);
+            gem.transform.position = pos;
+            gem.SetSortImpulse(mouseImpulse * impulseCoefficient);
+            gem.gameObject.SetActive(true);
         }
         
         inHandGem.gameObject.SetActive(false);
@@ -84,11 +89,10 @@ public class PlayerHandManager : MonoBehaviour
     {
         Vector2 mousePosition = Mouse.current.position.ReadValue();
         Vector2 worldMousePosition = Camera.main!.ScreenToWorldPoint(mousePosition);
-
-        Gem firstGem = null;
-
+        
         int index = 0;
         
+        WashHand();
         for (int i = pool.GemParent.childCount - 1; i >= 0; i--)
         {
             Gem checkedGem = pool.GemParent.GetChild(i).GetComponent<Gem>();
@@ -97,22 +101,22 @@ public class PlayerHandManager : MonoBehaviour
                || !isGemOnPoint(checkedGem, worldMousePosition, ref index))
                 continue;
 
-            firstGem = checkedGem;
+            gem = checkedGem;
             break;
         }
         
-        if(firstGem is null)
+        if(gem is null)
             return;
 
-        pool.Return(firstGem);
+        pool.Return(gem);
         
-        inHandGem.sprite = firstGem.Sprite.sprite;
+        inHandGem.sprite = gem.Sprite.sprite;
         gemData.Sprite = inHandGem.sprite;
-        gemData.Color = firstGem.Sprite.color;
+        gemData.Color = gem.Sprite.color;
         inHandGem.color = new Color(gemData.Color.r, gemData.Color.g, gemData.Color.b, 1);
-        gemInHandOffset = Camera.main!.WorldToScreenPoint(firstGem.transform.position);
+        gemInHandOffset = Camera.main!.WorldToScreenPoint(gem.transform.position);
         inHandGem.rectTransform.anchoredPosition = gemInHandOffset - mousePosition;
-        inHandGem.rectTransform.rotation = firstGem.transform.rotation;
+        inHandGem.rectTransform.rotation = gem.transform.rotation;
         
         inHandGem.gameObject.SetActive(true);
         enabled = true;

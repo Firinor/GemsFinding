@@ -40,9 +40,8 @@ public class FindObjectManager : MonoBehaviour
         Gem.box = GemBox;
         Gem.riverZone = spawnZone;
         
-        GemBox.Initialize(player.Stats.InBoxGemCount);
+        GemBox.Initialize(player.Stats.InBoxGemCount, player.Stats.InRiverGemCount);
         GemBox.OnFull += ToSortState;   
-        canvas.Recipe.gameObject.SetActive(false);
         canvas.Recipe.RecipeIsComplete += SuccessfullySolvePuzzle;
         canvas.ToCachButton.gameObject.SetActive(false);
         StartPuzzle();
@@ -52,7 +51,6 @@ public class FindObjectManager : MonoBehaviour
     {
         GemBox.ToCachMode();
         cameraController.ToCach();
-        canvas.Recipe.gameObject.SetActive(false);
         canvas.ToCachButton.gameObject.SetActive(false);
     }
     
@@ -61,8 +59,8 @@ public class FindObjectManager : MonoBehaviour
         GemBox.ToSotrMode();
         StartCoroutine(GemBox.MoveToSortPoint(onComplete: () =>
         {
-            canvas.Recipe.gameObject.SetActive(true);
-            canvas.ToCachButton.gameObject.SetActive(true);
+            if(GemBox.Limit > 0)
+                canvas.ToCachButton.gameObject.SetActive(true);
         }));
         cameraController.ToSort();
     }

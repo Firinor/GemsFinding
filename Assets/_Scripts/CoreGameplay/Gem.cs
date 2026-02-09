@@ -235,4 +235,12 @@ public class Gem : MonoBehaviour
         UpdateBehaviour = SortUpdate;
         SetSortRandomImpulse(ERROR_FORCE);
     }
+
+    public void RemoveDirt()
+    {
+        if(dirt == null)
+            return;
+        
+        Destroy(dirt.gameObject);
+    }
 }

@@ -7,15 +7,13 @@ using UnityEngine.InputSystem;
 
 public class GemBox : MonoBehaviour
 {
-    [SerializeField] 
-    private TextMeshProUGUI capacityText;
-    [SerializeField] 
-    private GemPool pool;
-    [SerializeField] 
-    private BoxCacher cacher;
+    [SerializeField] private TextMeshProUGUI capacityText;
+    [SerializeField] private GemPool pool;
+    [SerializeField] private BoxCacher cacher;
     private int capacity;
-    [SerializeField] 
-    private GameObject[] Borders;
+    private int limit;
+    public int Limit => limit;
+    [SerializeField] private GameObject[] Borders;
     public float Speed;
     public BoxCollider2D boxZone;
     public BoxCollider2D boxOutZone;
@@ -32,17 +30,19 @@ public class GemBox : MonoBehaviour
 
     private float offset = 4;
 
-    public void Initialize(int capacity)
+    public void Initialize(int capacity, int limit)
     {
         gems = new HashSet<Gem>(capacity);
         _camera = Camera.main;
         this.capacity = capacity;
+        this.limit = limit;
         capacityText.gameObject.SetActive(true);
         capacityText.text = $"{gems.Count}/{capacity}";
         foreach (var go in Borders)
         {
             go.SetActive(true);
         }
+
         IsSortMode = false;
         enabled = true;
     }
@@ -51,10 +51,12 @@ public class GemBox : MonoBehaviour
     {
         if (gems.Count >= capacity)
             return true;
-        
+
         gems.Add(gem);
+        limit--;
         capacityText.text = $"{gems.Count}/{capacity}";
-        bool isFull = gems.Count == capacity;
+        bool isFull = gems.Count == capacity
+                      || limit == 0;
 
         if (isFull)
         {
@@ -68,6 +70,7 @@ public class GemBox : MonoBehaviour
     public void RemoveGem(Gem gem)
     {
         gems.Remove(gem);
+        limit++;
         capacityText.text = $"{gems.Count}/{capacity}";
     }
     
@@ -116,7 +119,7 @@ public class GemBox : MonoBehaviour
     
     public IEnumerator MoveToSortPoint(Action onComplete)
     {
-        capacityText.text = "FULL";
+        capacityText.text = limit == 0?"EMPTY":"FULL";
         while (true)
         {
             float speed = 2;
@@ -134,7 +137,8 @@ public class GemBox : MonoBehaviour
         {
             gem.Unfreeze();
         }
-        capacityText.gameObject.SetActive(false);
+        if(limit > 0)
+            capacityText.gameObject.SetActive(false);
         onComplete.Invoke();
     }
     
@@ -145,7 +149,7 @@ public class GemBox : MonoBehaviour
         worldPoint.z = 0;
         worldPoint.x += offset;
 
-        Vector3 delta = (worldPoint - transform.position) * Time.deltaTime;
+        Vector3 delta = (worldPoint - transform.position) * Speed * Time.deltaTime;
 
         transform.position += delta;
         

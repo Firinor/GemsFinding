@@ -58,7 +58,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -101,7 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3183162015828345241}
   - component: {fileID: 3929304121011744850}
-  - component: {fileID: 8455584675609609423}
+  - component: {fileID: 7701738811533296471}
   - component: {fileID: 3415702480693677285}
   - component: {fileID: 4162706281588474278}
   - component: {fileID: 4869101894445904184}
@@ -155,7 +155,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4cbf1914eab0e2547b559b8c13462cbf, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -188,7 +188,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &8455584675609609423
+--- !u!114 &7701738811533296471
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -199,15 +199,13 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ccd1e5479c9b3444ebb07d3dc8294a58, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  mass: 10
-  rotationSpeed: 3
+  m_EditorClassIdentifier: Assembly-CSharp::Gem
+  rotationSpeed: 0
   spriteRenderer: {fileID: 3929304121011744850}
   trailRenderer: {fileID: 3415702480693677285}
   Light2D: {fileID: 4162706281588474278}
   dirt: {fileID: 7395522316763733370}
   rigidbody2D: {fileID: 1107754780322328879}
-  id: 0
 --- !u!96 &3415702480693677285
 TrailRenderer:
   serializedVersion: 4

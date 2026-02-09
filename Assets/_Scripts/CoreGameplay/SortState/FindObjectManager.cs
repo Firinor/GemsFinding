@@ -1,11 +1,7 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 using FirMath;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using TMPro;
-using Unity.Mathematics;
 using Random = UnityEngine.Random;
 
 public class FindObjectManager : MonoBehaviour
@@ -14,18 +10,13 @@ public class FindObjectManager : MonoBehaviour
     [SerializeField]
     private FindObjectPuzzleConfig puzzleConfig;
     
-    [SerializeField]
-    private GemPool pool;
-    
     private List<Gem> allIngredients;
     [SerializeField]
-    private Recipe recipe;
-    [SerializeField]
-    private GameObject winScreen;
+    private GemPool pool;
     [SerializeField] 
-    private TextMeshProUGUI rewardText;
-    [SerializeField]
-    private TextMeshProUGUI rewardInfoText;
+    private CameraController cameraController;
+    [SerializeField] 
+    private CanvasView canvas;
     [SerializeField] 
     private GemBox GemBox;
     [SerializeField]
@@ -46,36 +37,57 @@ public class FindObjectManager : MonoBehaviour
         this.player = player;
         contex = player.Stats;
         
-        recipe.RecipeIsComplete += SuccessfullySolvePuzzle;
+        Gem.box = GemBox;
+        Gem.riverZone = spawnZone;
+        
+        GemBox.Initialize(player.Stats.InBoxGemCount, player.Stats.InRiverGemCount);
+        GemBox.OnFull += ToSortState;   
+        canvas.Recipe.RecipeIsComplete += SuccessfullySolvePuzzle;
+        canvas.ToCachButton.gameObject.SetActive(false);
         StartPuzzle();
+    }
+
+    public void ToCachState()
+    {
+        GemBox.ToCachMode();
+        cameraController.ToCach();
+        canvas.ToCachButton.gameObject.SetActive(false);
+    }
+    
+    private void ToSortState()
+    {
+        GemBox.ToSotrMode();
+        StartCoroutine(GemBox.MoveToSortPoint(onComplete: () =>
+        {
+            if(GemBox.Limit > 0)
+                canvas.ToCachButton.gameObject.SetActive(true);
+        }));
+        cameraController.ToSort();
     }
 
     private void CreateNewRecipe()
     {
-        recipe.Clear();
+        canvas.Recipe.Clear();
 
-        int DeckLenght = Math.Min(contex.InBoxGemCount, contex.ShapeCount * contex.ColorCount);
+        int DeckLenght = Math.Min(contex.InRiverGemCount, contex.ShapeCount * contex.ColorCount);
         List<int> recipeIntList = GameMath.AFewCardsFromTheDeck(contex.RecipeGemCount, DeckLenght);
 
         List<Gem> recipeGems = new();
         foreach (var i in recipeIntList)
             recipeGems.Add(allIngredients[i]);
         
-        recipe.SetResipe(recipeGems);
+        canvas.Recipe.SetResipe(recipeGems);
     }
 
     [ContextMenu("StartPuzzle")]
     public void StartPuzzle()
     {
-        Gem.box = GemBox;
-        Gem.riverZone = spawnZone;
-        
-        winScreen.SetActive(false);
+        canvas.WinScreen.SetActive(false);
         pool.ClearAll();
         
         allIngredients = new List<Gem>();
         
-        for (int i = 0; i < contex.InBoxGemCount; i++)
+        for (int i = 0; i < contex.InRiverGemCount; i++)
         {
             Gem newGem = pool.Get();
             newGem.OnEdge += Respawn;
@@ -105,24 +117,25 @@ public class FindObjectManager : MonoBehaviour
         y += spawnZone.bounds.min.y;
         gem.transform.localPosition = new Vector3(x, y, 0);
         gem.ResetTail();
+        gem.ResetPhysics();
         gem.SetRandomImpulse(forceToIngredient);
     }
 
     private void SuccessfullySolvePuzzle()
     {
         int reward = player.Stats.ShapeCount * player.Stats.ColorCount * player.Stats.RecipeGemCount + player.Stats.InBoxGemCount;
-        rewardInfoText.text = $"Формы: {player.Stats.ShapeCount}" +
+        canvas.RewardInfoText.text = $"Формы: {player.Stats.ShapeCount}" +
                               $"\nЦвета: {player.Stats.ColorCount}" +
                               $"\nРецепт: {player.Stats.RecipeGemCount}" +
                               $"\nКоличество: {player.Stats.InBoxGemCount}" +
                               "\n" +
                               $"\nИтого: {player.Stats.ShapeCount}*{player.Stats.ColorCount}*{player.Stats.RecipeGemCount} + {player.Stats.InBoxGemCount} = {reward}$";
 
-        rewardText.text = $"ПОЗДРАВЛЯЮ!\nТВОЙ ПРИЗ\n{reward}$";
+        canvas.RewardText.text = $"ПОЗДРАВЛЯЮ!\nТВОЙ ПРИЗ\n{reward}$";
         
         player.AddGold(reward);
         SaveLoadSystem<ProgressData>.Save(player);
-        winScreen.SetActive(true);
+        canvas.WinScreen.SetActive(true);
     }
 
     private void HarvestAllIngredients()
@@ -155,7 +168,7 @@ public class FindObjectManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        recipe.RecipeIsComplete -= SuccessfullySolvePuzzle;
+        canvas.Recipe.RecipeIsComplete -= SuccessfullySolvePuzzle;
 
         foreach (Gem gem in allIngredients)
         {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GemPool : MonoBehaviour
@@ -75,5 +76,17 @@ public class GemPool : MonoBehaviour
         {
             ingredientParent.GetChild(i).GetComponent<Gem>().OnBoundTink -= sound.PlayGemTink;
         }
+    }
+
+    public List<Gem> GetAllActiveGems()
+    {
+        List<Gem> result = new();
+        for (int i = ingredientParent.childCount - 1; i >= 0; i--)
+        {
+            Gem g = ingredientParent.GetChild(i).GetComponent<Gem>();
+            if(g.isActiveAndEnabled)
+                result.Add(g);
+        }
+        return result;
     }
 }

@@ -1,0 +1,1092 @@
+fileFormatVersion: 2
+guid: 010f5776d013a0f488472629bfda6262
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8858553810519384181
+    second: Colbs-PhotoRoom_0
+  - first:
+      213: 4764959595609532281
+    second: Colbs-PhotoRoom_1
+  - first:
+      213: -5567679395636042044
+    second: Colbs-PhotoRoom_2
+  - first:
+      213: -7103025725346413366
+    second: Colbs-PhotoRoom_3
+  - first:
+      213: -8864710997485713342
+    second: Colbs-PhotoRoom_4
+  - first:
+      213: 5431714342945742666
+    second: Colbs-PhotoRoom_5
+  - first:
+      213: -4969575566685903488
+    second: Colbs-PhotoRoom_6
+  - first:
+      213: 4461074947002852452
+    second: Colbs-PhotoRoom_7
+  - first:
+      213: -4198349191180150736
+    second: Colbs-PhotoRoom_8
+  - first:
+      213: -8072550692469041198
+    second: Colbs-PhotoRoom_9
+  - first:
+      213: 4281757995687816473
+    second: Colbs-PhotoRoom_10
+  - first:
+      213: 1521724181784517411
+    second: Colbs-PhotoRoom_11
+  - first:
+      213: -3093603832246869566
+    second: Colbs-PhotoRoom_12
+  - first:
+      213: 5352907696896088036
+    second: Colbs-PhotoRoom_13
+  - first:
+      213: 2747332106251816961
+    second: Colbs-PhotoRoom_14
+  - first:
+      213: -2514830084118820432
+    second: Colbs-PhotoRoom_15
+  - first:
+      213: 3373071586561039849
+    second: Colbs-PhotoRoom_16
+  - first:
+      213: -2236874576819418553
+    second: Colbs-PhotoRoom_17
+  - first:
+      213: -2743204043347511052
+    second: Colbs-PhotoRoom_18
+  - first:
+      213: 1049399023512264791
+    second: Colbs-PhotoRoom_19
+  - first:
+      213: -7240462816583295502
+    second: Colbs-PhotoRoom_20
+  - first:
+      213: -1023854161038456844
+    second: Colbs-PhotoRoom_21
+  - first:
+      213: -7034300586464931057
+    second: Colbs-PhotoRoom_22
+  - first:
+      213: -8753921607000408720
+    second: Colbs-PhotoRoom_23
+  - first:
+      213: -8278700593831103308
+    second: Colbs-PhotoRoom_24
+  - first:
+      213: 6312475480866079850
+    second: Colbs-PhotoRoom_25
+  - first:
+      213: 8489794057492724773
+    second: Colbs-PhotoRoom_26
+  - first:
+      213: 2966482174728377624
+    second: Colbs-PhotoRoom_27
+  - first:
+      213: 723497931707494334
+    second: Colbs-PhotoRoom_28
+  - first:
+      213: -7952140718159148974
+    second: Colbs-PhotoRoom_29
+  - first:
+      213: -7213512905412072133
+    second: Colbs-PhotoRoom_30
+  - first:
+      213: -334323000835778923
+    second: Colbs-PhotoRoom_31
+  - first:
+      213: 340572908693573698
+    second: Colbs-PhotoRoom_32
+  - first:
+      213: 7517400140613795142
+    second: Colbs-PhotoRoom_33
+  - first:
+      213: 8122636283009824058
+    second: Colbs-PhotoRoom_34
+  - first:
+      213: 3057319275023549859
+    second: Colbs-PhotoRoom_35
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_0
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 330
+        width: 60
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8f1f447e38101580800000000000000
+      internalID: -8858553810519384181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_1
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 328
+        width: 44
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9772561a189802240800000000000000
+      internalID: 4764959595609532281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_2
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 323
+        width: 54
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c62ad7a611abb2b0800000000000000
+      internalID: -5567679395636042044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_3
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 325
+        width: 70
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac4044a7cbbfc6d90800000000000000
+      internalID: -7103025725346413366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_4
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 320
+        width: 45
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2488d56a0583af480800000000000000
+      internalID: -8864710997485713342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_5
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 317
+        width: 63
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4fdcac9a63516b40800000000000000
+      internalID: 5431714342945742666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_6
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 320
+        width: 60
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 085e93f1a55880bb0800000000000000
+      internalID: -4969575566685903488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_7
+      rect:
+        serializedVersion: 2
+        x: 597
+        y: 319
+        width: 67
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 464ef7c470ce8ed30800000000000000
+      internalID: 4461074947002852452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_8
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 316
+        width: 85
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03898a887a77cb5c0800000000000000
+      internalID: -4198349191180150736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_9
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 227
+        width: 58
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d79c085ae988ff80800000000000000
+      internalID: -8072550692469041198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_10
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 226
+        width: 44
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91d292b163cdb6b30800000000000000
+      internalID: 4281757995687816473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_11
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 220
+        width: 54
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32b5365b4104e1510800000000000000
+      internalID: 1521724181784517411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_12
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 222
+        width: 70
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c1632784bf4115d0800000000000000
+      internalID: -3093603832246869566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_13
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 217
+        width: 44
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e712fc7039594a40800000000000000
+      internalID: 5352907696896088036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_14
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 215
+        width: 63
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1005a21aefb702620800000000000000
+      internalID: 2747332106251816961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_15
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 218
+        width: 60
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b9c1a5dc57891dd0800000000000000
+      internalID: -2514830084118820432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_16
+      rect:
+        serializedVersion: 2
+        x: 596
+        y: 217
+        width: 68
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ed1fe69cbe8fce20800000000000000
+      internalID: 3373071586561039849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_17
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 214
+        width: 85
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74a83918c6605f0e0800000000000000
+      internalID: -2236874576819418553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_18
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 122
+        width: 59
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f83bd9e47e2ee9d0800000000000000
+      internalID: -2743204043347511052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_19
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 121
+        width: 44
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75027181ad6309e00800000000000000
+      internalID: 1049399023512264791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_20
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 116
+        width: 54
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fdd0201e65b48b90800000000000000
+      internalID: -7240462816583295502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_21
+      rect:
+        serializedVersion: 2
+        x: 267
+        y: 118
+        width: 70
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f74f7da01a8ac1f0800000000000000
+      internalID: -1023854161038456844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_22
+      rect:
+        serializedVersion: 2
+        x: 355
+        y: 113
+        width: 45
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f039f6cc2e4216e90800000000000000
+      internalID: -7034300586464931057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_23
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 110
+        width: 63
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07dbf1fbda2d38680800000000000000
+      internalID: -8753921607000408720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_24
+      rect:
+        serializedVersion: 2
+        x: 514
+        y: 114
+        width: 60
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b4b1ee1ca52c1d80800000000000000
+      internalID: -8278700593831103308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_25
+      rect:
+        serializedVersion: 2
+        x: 598
+        y: 114
+        width: 67
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a64c262410b6a9750800000000000000
+      internalID: 6312475480866079850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_26
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 109
+        width: 85
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52c7315e6bec1d570800000000000000
+      internalID: 8489794057492724773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_27
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 15
+        width: 40
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 815963122df0b2920800000000000000
+      internalID: 2966482174728377624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_28
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 15
+        width: 40
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebfa72f19816a0a00800000000000000
+      internalID: 723497931707494334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_29
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 15
+        width: 40
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 258443a262254a190800000000000000
+      internalID: -7952140718159148974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_30
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 15
+        width: 40
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3da73a3b3474eb90800000000000000
+      internalID: -7213512905412072133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_31
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 15
+        width: 40
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 596d0f6800f3c5bf0800000000000000
+      internalID: -334323000835778923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_32
+      rect:
+        serializedVersion: 2
+        x: 439
+        y: 16
+        width: 40
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2405dca8145f9b400800000000000000
+      internalID: 340572908693573698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_33
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 16
+        width: 50
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64db1c7599b235860800000000000000
+      internalID: 7517400140613795142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_34
+      rect:
+        serializedVersion: 2
+        x: 610
+        y: 16
+        width: 42
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a35ff70f9a669b070800000000000000
+      internalID: 8122636283009824058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colbs-PhotoRoom_35
+      rect:
+        serializedVersion: 2
+        x: 703
+        y: 16
+        width: 41
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a5cbb8aea7cd6a20800000000000000
+      internalID: 3057319275023549859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Colbs-PhotoRoom_0: -8858553810519384181
+      Colbs-PhotoRoom_1: 4764959595609532281
+      Colbs-PhotoRoom_10: 4281757995687816473
+      Colbs-PhotoRoom_11: 1521724181784517411
+      Colbs-PhotoRoom_12: -3093603832246869566
+      Colbs-PhotoRoom_13: 5352907696896088036
+      Colbs-PhotoRoom_14: 2747332106251816961
+      Colbs-PhotoRoom_15: -2514830084118820432
+      Colbs-PhotoRoom_16: 3373071586561039849
+      Colbs-PhotoRoom_17: -2236874576819418553
+      Colbs-PhotoRoom_18: -2743204043347511052
+      Colbs-PhotoRoom_19: 1049399023512264791
+      Colbs-PhotoRoom_2: -5567679395636042044
+      Colbs-PhotoRoom_20: -7240462816583295502
+      Colbs-PhotoRoom_21: -1023854161038456844
+      Colbs-PhotoRoom_22: -7034300586464931057
+      Colbs-PhotoRoom_23: -8753921607000408720
+      Colbs-PhotoRoom_24: -8278700593831103308
+      Colbs-PhotoRoom_25: 6312475480866079850
+      Colbs-PhotoRoom_26: 8489794057492724773
+      Colbs-PhotoRoom_27: 2966482174728377624
+      Colbs-PhotoRoom_28: 723497931707494334
+      Colbs-PhotoRoom_29: -7952140718159148974
+      Colbs-PhotoRoom_3: -7103025725346413366
+      Colbs-PhotoRoom_30: -7213512905412072133
+      Colbs-PhotoRoom_31: -334323000835778923
+      Colbs-PhotoRoom_32: 340572908693573698
+      Colbs-PhotoRoom_33: 7517400140613795142
+      Colbs-PhotoRoom_34: 8122636283009824058
+      Colbs-PhotoRoom_35: 3057319275023549859
+      Colbs-PhotoRoom_4: -8864710997485713342
+      Colbs-PhotoRoom_5: 5431714342945742666
+      Colbs-PhotoRoom_6: -4969575566685903488
+      Colbs-PhotoRoom_7: 4461074947002852452
+      Colbs-PhotoRoom_8: -4198349191180150736
+      Colbs-PhotoRoom_9: -8072550692469041198
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

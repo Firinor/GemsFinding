@@ -5,15 +5,15 @@ using UnityEngine.UI;
 
 public class MetaPointView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public RectTransform InfoAncor;
+    //public RectTransform InfoAncor;
     public Image Frame;
     public Image Icon;
     public Image Plus;
-    [SerializeField] private Sprite LevelFrame;
-    [SerializeField] private Sprite MaxFrame;
+    //[SerializeField] private Sprite LevelFrame;
+    //[SerializeField] private Sprite MaxFrame;
     
     public Button Button;
-    public event Action<MetaPointData, RectTransform> OnPointerEnterAction;
+    public event Action<MetaPointData> OnPointerEnterAction;
     public event Action OnPointerExitAction;
     public MetaPointData Data;
 
@@ -27,18 +27,18 @@ public class MetaPointView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void ToLevelFrame()
     {
-        Frame.sprite = LevelFrame;
+        //Frame.sprite = LevelFrame;
     }
 
     public void ToMaxFrame()
     {
         Plus.enabled = false;
-        Frame.sprite = MaxFrame;
+        //Frame.sprite = MaxFrame;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        OnPointerEnterAction?.Invoke(Data, InfoAncor);
+        OnPointerEnterAction?.Invoke(Data);
     }
 
     public void OnPointerExit(PointerEventData eventData)

@@ -1,6 +1,7 @@
 ﻿public enum MetaPointType
 {
     RecipeCount,
+    InRiverGemsCount,
     InBoxGemsCount,
     GemShapeCount,
     GemColorCount,

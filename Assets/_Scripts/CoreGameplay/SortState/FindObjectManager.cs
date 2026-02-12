@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using FirMath;
 using System.Collections.Generic;
@@ -21,6 +22,8 @@ public class FindObjectManager : MonoBehaviour
     private GemBox GemBox;
     [SerializeField]
     private float forceToIngredient;
+    [SerializeField]
+    private float spawnTotalTime = 5f;
     [SerializeField]
     private BoxCollider2D spawnZone;
 
@@ -80,15 +83,27 @@ public class FindObjectManager : MonoBehaviour
     }
 
     [ContextMenu("StartPuzzle")]
-    public void StartPuzzle()
+    public IEnumerator StartPuzzle()
     {
         canvas.WinScreen.SetActive(false);
         pool.ClearAll();
         
         allIngredients = new List<Gem>();
         
+        float timer = 0;
+        float yieldDelay = spawnTotalTime/contex.InRiverGemCount;
+        
+        //TODO random dirt
+        
         for (int i = 0; i < contex.InRiverGemCount; i++)
         {
+            timer -= yieldDelay;
+            while (timer < 0)
+            {
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            
             Gem newGem = pool.Get();
             newGem.OnEdge += Respawn;
             

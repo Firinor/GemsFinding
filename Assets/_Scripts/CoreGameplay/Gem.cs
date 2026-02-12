@@ -211,9 +211,13 @@ public class Gem : MonoBehaviour
     public void BoxMove(Vector3 delta)
     {
         rigidbody2D.AddForce(delta * BOX_MOVE_COEFFICIENT, ForceMode2D.Impulse);
+        
+        if(dirt == null)
+            return;
+        
         dirt.localScale *= (1 - CLEANING_SPEED * Time.deltaTime);
-        if (dirt.localScale.x <= 0.05f)
-            dirt.localScale = Vector3.zero;
+        if (dirt.localScale.x <= 0.25f)
+            RemoveDirt();
     }
 
     public void Freeze()
@@ -242,5 +246,19 @@ public class Gem : MonoBehaviour
             return;
         
         Destroy(dirt.gameObject);
+    }
+
+    public void RemoveTail()
+    {
+        if(trailRenderer == null)
+            return;
+        Destroy(trailRenderer);
+    }
+
+    public void RemoveLight2D()
+    {
+        if(Light2D == null)
+            return;
+        Destroy(Light2D);
     }
 }

@@ -23,10 +23,12 @@ public class CoreBootstrup : MonoBehaviour
 
     private void LoadPlayerData(out ProgressData data)
     {
-        MetaPointData[] pointsData = Resources.LoadAll("Points", typeof(MetaPointData)).Cast<MetaPointData>().ToArray();
         data = SaveLoadSystem<ProgressData>.Load(Default: new());
-        if(!isDebugMode)
+        if (!isDebugMode)
+        {
+            MetaPointData[] pointsData = Resources.LoadAll("Points", typeof(MetaPointData)).Cast<MetaPointData>().ToArray();
             data.InitializeStats(pointsData);
+        }
         else
             data.Stats = stats;
     }

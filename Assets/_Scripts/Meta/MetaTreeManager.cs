@@ -103,16 +103,26 @@ public class MetaTreeManager : MonoBehaviour
             MetaPointType.RecipeCount => player.Stats.RecipeGemCount.ToString(),
             MetaPointType.InRiverGemsCount => player.Stats.InRiverGemCount.ToString(),
             MetaPointType.InBoxGemsCount => player.Stats.InBoxGemCount.ToString(),
+            
             MetaPointType.GemShapeCount => player.Stats.ShapeCount.ToString(),
             MetaPointType.GemColorCount => player.Stats.ColorCount.ToString(),
             MetaPointType.GemSpoilCount => player.Stats.SpoilCount.ToString(),
             MetaPointType.GemDuoColorCount => player.Stats.DuoColorCount.ToString(),
             MetaPointType.GemDuoShapeCount => player.Stats.DuoShapeCount.ToString(),
+            
+            MetaPointType.NoGem => player.Stats.EmptyDirt.ToString(format: "F0"),
+            MetaPointType.NoDirt => player.Stats.NoDirt.ToString(),
+            MetaPointType.Light2D => player.Stats.WithLight2D.ToString(),
+            MetaPointType.Tail => player.Stats.WithTail.ToString(),
+            MetaPointType.NoBlinks => player.Stats.NoBlink.ToString(),
+            
             MetaPointType.Invisible => player.Stats.InvisibleCount.ToString(),
             MetaPointType.Moveble => player.Stats.MovebleCount.ToString(),
             MetaPointType.Jumpble => player.Stats.JumpbleCount.ToString(),
             MetaPointType.ChangingColor => player.Stats.ChangingColor.ToString(),
+            
             MetaPointType.Light => player.Stats.LightRadius.ToString(),
+            
             _ => throw new ArgumentOutOfRangeException()
         };
 

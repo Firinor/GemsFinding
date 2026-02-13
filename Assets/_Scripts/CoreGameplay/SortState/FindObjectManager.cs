@@ -47,7 +47,7 @@ public class FindObjectManager : MonoBehaviour
         GemBox.OnFull += ToSortState;   
         canvas.Recipe.RecipeIsComplete += SuccessfullySolvePuzzle;
         canvas.ToCachButton.gameObject.SetActive(false);
-        StartPuzzle();
+        StartCoroutine(StartPuzzle());
     }
 
     public void ToCachState()
@@ -68,12 +68,11 @@ public class FindObjectManager : MonoBehaviour
         cameraController.ToSort();
     }
 
-    private void CreateNewRecipe()
+    private void CreateNewRecipe(int gemCount)
     {
         canvas.Recipe.Clear();
-
-        int DeckLenght = Math.Min(contex.InRiverGemCount, contex.ShapeCount * contex.ColorCount);
-        List<int> recipeIntList = GameMath.AFewCardsFromTheDeck(contex.RecipeGemCount, DeckLenght);
+        
+        List<int> recipeIntList = GameMath.AFewCardsFromTheDeck(contex.RecipeGemCount, gemCount);
 
         List<Gem> recipeGems = new();
         foreach (var i in recipeIntList)
@@ -93,7 +92,23 @@ public class FindObjectManager : MonoBehaviour
         float timer = 0;
         float yieldDelay = spawnTotalTime/contex.InRiverGemCount;
         
-        //TODO random dirt
+        int gemCount = (int)(contex.InRiverGemCount * contex.EmptyDirt / 100);
+        
+        List<int> gemAtlas = GameMath.AFewCardsFromTheDeck(gemCount, contex.ColorCount * contex.ShapeCount);
+        
+        List<int> noDirtIndexes = GameMath.AFewCardsFromTheDeck(contex.NoDirt, gemCount);
+        List<int> emptyDirtIndexes = GameMath.AFewCardsFromTheDeck(gemCount - contex.NoDirt, contex.InRiverGemCount - gemCount);
+        List<int> tailIndexes = GameMath.AFewCardsFromTheDeck(contex.WithTail,  gemCount);
+        List<int> light2DIndexes = GameMath.AFewCardsFromTheDeck(contex.WithLight2D, gemCount);
+        noDirtIndexes.Sort();
+        emptyDirtIndexes.Sort();
+        tailIndexes.Sort();
+        light2DIndexes.Sort();
+        int gemAtlasIndex = 0;
+        int noDirtIndex = 0;
+        int emptyDirtIndex = 0;
+        int tailIndex = 0;
+        int light2DIndex = 0;
         
         for (int i = 0; i < contex.InRiverGemCount; i++)
         {
@@ -109,19 +124,27 @@ public class FindObjectManager : MonoBehaviour
             
             int colorIndex;
             int spriteIndex = i / contex.ColorCount;
-            if (contex.ColorCount < 3)
-                colorIndex = i % puzzleConfig.GemsColors.Length;
-            else
-                colorIndex = i % contex.ColorCount;
             
-            newGem.SetView(puzzleConfig.GemsSprites[spriteIndex], puzzleConfig.GemsColors[colorIndex]);
+            //if (contex.ColorCount < 3)
+            //    colorIndex = i % puzzleConfig.GemsColors.Length;
+            //else
+            colorIndex = i % contex.ColorCount;
+
+            GemBuilder builder = new GemBuilder().New(newGem)
+                .SetView(puzzleConfig.GemsSprites[spriteIndex], puzzleConfig.GemsColors[colorIndex]);
+            if (true)
+                builder.NoGem();
+            if (true)
+                builder.NoTail();
+            if (true)
+                builder.NoLight2D();
 
             Respawn(newGem);
             
             allIngredients.Add(newGem);
         }
         
-        CreateNewRecipe();
+        CreateNewRecipe(gemCount);
     }
 
     private void Respawn(Gem gem)

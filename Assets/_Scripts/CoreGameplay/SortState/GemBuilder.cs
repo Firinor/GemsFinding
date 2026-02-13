@@ -37,9 +37,4 @@ public class GemBuilder
         gem.RemoveLight2D();
         return this;
     }
-    
-    public Gem Build()
-    {
-        return gem;
-    }
 }

@@ -105,7 +105,7 @@ public class Stats
     public int DuoColorCount;
     public int DuoShapeCount;
     [Space]
-    public float EmptyDirt = 100;
+    public float EmptyDirt = 90;
     public int NoDirt;
     public int WithTail;
     public int WithLight2D;

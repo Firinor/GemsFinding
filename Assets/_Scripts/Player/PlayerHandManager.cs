@@ -59,6 +59,8 @@ public class PlayerHandManager : MonoBehaviour
 
     public void WashHand()
     {
+        if (gem is not null)
+            gem.enabled = true;
         gem = null;
         mouseImpulse = Vector2.zero;
         Vector2 mousePosition = Mouse.current.position.ReadValue();
@@ -113,7 +115,8 @@ public class PlayerHandManager : MonoBehaviour
         
         if(gem == null)
             return;
-        
+
+        gem.enabled = false;
         gem.RemoveDirt();
         
         gemData.Sprite = gem.Sprite.sprite;

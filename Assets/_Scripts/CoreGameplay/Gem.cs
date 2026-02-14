@@ -120,10 +120,16 @@ public class Gem : MonoBehaviour
             rigidbody2D.AddForce(Vector3.up * (ERROR_FORCE * Time.deltaTime), ForceMode2D.Impulse);
     }
     
+    public void NoGravity()
+    {
+        rigidbody2D.gravityScale = 0;
+    }
+    
     public void ResetPhysics()
     {
         UpdateBehaviour = box.IsSortMode ? SortUpdate : CachUpdate;
         impulse = Vector3.zero;
+        rigidbody2D.gravityScale = 1;
         rigidbody2D.linearVelocity = Vector2.zero;
         rigidbody2D.angularVelocity = 0;
         rigidbody2D.totalForce = Vector2.zero;
@@ -177,34 +183,43 @@ public class Gem : MonoBehaviour
     {
         spriteRenderer.sprite = sprite;
         spriteRenderer.color = color;
-        Light2D.color = color;
+        if(Light2D != null)
+            Light2D.color = color;
         
-        Gradient gradient = new Gradient();
+        if (trailRenderer != null)
+        {
+            Gradient gradient = new Gradient();
+            
+            GradientAlphaKey[] alphaKeys = new GradientAlphaKey[3];
+            alphaKeys[0].alpha = 0f;
+            alphaKeys[0].time = 0f;
+            alphaKeys[1].alpha = 1f;
+            alphaKeys[1].time = 0.25f;
+            alphaKeys[2].alpha = 0f;
+            alphaKeys[2].time = 1f;
+            
+            GradientColorKey[] colorKeys = new GradientColorKey[3];
+            colorKeys[0].color = Color.white;
+            colorKeys[0].time = 0f;
+            colorKeys[1].color = color;
+            colorKeys[1].time = 0.25f;
+            colorKeys[2].color = Color.white;
+            colorKeys[2].time = 1f;
+            
+            gradient.SetKeys(colorKeys, alphaKeys);
+            
+            trailRenderer.colorGradient = gradient;
+        }
         
-        GradientAlphaKey[] alphaKeys = new GradientAlphaKey[3];
-        alphaKeys[0].alpha = 0f;
-        alphaKeys[0].time = 0f;
-        alphaKeys[1].alpha = 1f;
-        alphaKeys[1].time = 0.25f;
-        alphaKeys[2].alpha = 0f;
-        alphaKeys[2].time = 1f;
-        
-        GradientColorKey[] colorKeys = new GradientColorKey[3];
-        colorKeys[0].color = Color.white;
-        colorKeys[0].time = 0f;
-        colorKeys[1].color = color;
-        colorKeys[1].time = 0.25f;
-        colorKeys[2].color = Color.white;
-        colorKeys[2].time = 1f;
-        
-        gradient.SetKeys(colorKeys, alphaKeys);
-
-        dirt.localScale = Vector3.one;
-        trailRenderer.colorGradient = gradient;
+        if(dirt != null)
+            dirt.localScale = Vector3.one;
     }
 
     public void ResetTail()
     {
+        if (trailRenderer == null)
+            return;
+        
         trailRenderer.Clear();
     }
 

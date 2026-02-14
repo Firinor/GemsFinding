@@ -60,8 +60,6 @@ public class GemBox : MonoBehaviour
 
         if (isFull)
         {
-            IsSortMode = true;
-            cacher.enabled = false;
             OnFull?.Invoke();
         }
         
@@ -73,9 +71,15 @@ public class GemBox : MonoBehaviour
         limit++;
         capacityText.text = $"{gems.Count}/{capacity}";
     }
-    
-    public void ToSotrMode()
+
+    public bool ToSotrMode()
     {
+        if (gems.Count <= 0)
+            return false;
+        
+        IsSortMode = true;
+        cacher.enabled = false;
+        
         enabled = false;
         foreach (var go in Borders)
         {
@@ -91,6 +95,7 @@ public class GemBox : MonoBehaviour
         {
             pool.Return(gem);
         }
+        return true;
     }
     public void ToCachMode()
     {
@@ -119,7 +124,11 @@ public class GemBox : MonoBehaviour
     
     public IEnumerator MoveToSortPoint(Action onComplete)
     {
-        capacityText.text = limit == 0?"EMPTY":"FULL";
+        if (limit == 0)
+            capacityText.text = "EMPTY";
+        else if (gems.Count == capacity)
+            capacityText.text = "FULL";
+        
         while (true)
         {
             float speed = 2;

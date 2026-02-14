@@ -47,6 +47,7 @@ public class FindObjectManager : MonoBehaviour
         GemBox.OnFull += ToSortState;   
         canvas.Recipe.RecipeIsComplete += SuccessfullySolvePuzzle;
         canvas.ToCachButton.gameObject.SetActive(false);
+        canvas.ToSortButton.gameObject.SetActive(true);
         StartCoroutine(StartPuzzle());
     }
 
@@ -55,17 +56,22 @@ public class FindObjectManager : MonoBehaviour
         GemBox.ToCachMode();
         cameraController.ToCach();
         canvas.ToCachButton.gameObject.SetActive(false);
+        canvas.ToSortButton.gameObject.SetActive(true);
     }
     
-    private void ToSortState()
+    public void ToSortState()
     {
-        GemBox.ToSotrMode();
+        bool toSort = GemBox.ToSotrMode();
+        if(!toSort)    
+            return;
+        
         StartCoroutine(GemBox.MoveToSortPoint(onComplete: () =>
         {
             if(GemBox.Limit > 0)
                 canvas.ToCachButton.gameObject.SetActive(true);
         }));
         cameraController.ToSort();
+        canvas.ToSortButton.gameObject.SetActive(false);
     }
 
     private void CreateNewRecipe(int gemCount)
@@ -96,20 +102,94 @@ public class FindObjectManager : MonoBehaviour
         
         List<int> gemAtlas = GameMath.AFewCardsFromTheDeck(gemCount, contex.ColorCount * contex.ShapeCount);
         
+        List<int> emptyDirtIndexes = GameMath.AFewCardsFromTheDeck(contex.InRiverGemCount - gemCount, contex.InRiverGemCount);
         List<int> noDirtIndexes = GameMath.AFewCardsFromTheDeck(contex.NoDirt, gemCount);
-        List<int> emptyDirtIndexes = GameMath.AFewCardsFromTheDeck(gemCount - contex.NoDirt, contex.InRiverGemCount - gemCount);
         List<int> tailIndexes = GameMath.AFewCardsFromTheDeck(contex.WithTail,  gemCount);
         List<int> light2DIndexes = GameMath.AFewCardsFromTheDeck(contex.WithLight2D, gemCount);
-        noDirtIndexes.Sort();
-        emptyDirtIndexes.Sort();
-        tailIndexes.Sort();
-        light2DIndexes.Sort();
+        emptyDirtIndexes?.Sort();
+        noDirtIndexes?.Sort();
+        tailIndexes?.Sort();
+        light2DIndexes?.Sort();
         int gemAtlasIndex = 0;
-        int noDirtIndex = 0;
         int emptyDirtIndex = 0;
+        int gemIndex = 0; 
+        int noDirtIndex = 0;
         int tailIndex = 0;
         int light2DIndex = 0;
+
+        List<Gem> allEntity = new(contex.InRiverGemCount);
         
+        for (int i = 0; i < contex.InRiverGemCount; i++)
+        {
+            Gem newGem = pool.Get();
+            newGem.transform.localPosition = spawnZone.bounds.center;
+            newGem.NoGravity();
+            newGem.OnEdge += Respawn;
+
+            if (emptyDirtIndexes is not null 
+                && i == emptyDirtIndexes[emptyDirtIndex])
+            {
+                //NoGem
+                newGem.Sprite.enabled = false;
+                newGem.RemoveTail();
+                newGem.RemoveLight2D();
+                emptyDirtIndex++;
+                if (emptyDirtIndex >= emptyDirtIndexes.Count)
+                    emptyDirtIndexes = null;
+                allEntity.Add(newGem);
+                continue;
+            }
+            
+            int s = gemAtlas[gemAtlasIndex++];
+            int spriteIndex = s / contex.ColorCount;
+            int colorIndex = s % contex.ColorCount;
+            
+            newGem.SetView(puzzleConfig.GemsSprites[spriteIndex], puzzleConfig.GemsColors[colorIndex]);
+            //NoDirt
+            if (noDirtIndexes is not null
+                && gemIndex == noDirtIndexes[noDirtIndex])
+            {
+                noDirtIndex++;
+                if (noDirtIndex >= noDirtIndexes.Count)
+                    noDirtIndexes = null;
+                newGem.RemoveDirt();
+            }
+            gemIndex++;
+            //Tail
+            if (tailIndexes is not null)
+            {
+                if(i != tailIndexes[tailIndex])
+                    newGem.RemoveTail();
+                else
+                {
+                    tailIndex++;
+                    if (tailIndex >= tailIndexes.Count)
+                        tailIndexes = null;
+                }
+            }
+            else
+                newGem.RemoveTail();
+            //Light2D
+            if (light2DIndexes is not null)
+            {
+                if(i != light2DIndexes[light2DIndex])
+                    newGem.RemoveLight2D();
+                else
+                {
+                    light2DIndex++;
+                    if (light2DIndex >= light2DIndexes.Count)
+                        light2DIndexes = null;
+                }
+            }
+            else 
+                newGem.RemoveLight2D();
+            
+            allEntity.Add(newGem);
+            allIngredients.Add(newGem);
+        }
+        
+        CreateNewRecipe(gemCount);
+
         for (int i = 0; i < contex.InRiverGemCount; i++)
         {
             timer -= yieldDelay;
@@ -118,33 +198,9 @@ public class FindObjectManager : MonoBehaviour
                 timer += Time.deltaTime;
                 yield return null;
             }
-            
-            Gem newGem = pool.Get();
-            newGem.OnEdge += Respawn;
-            
-            int colorIndex;
-            int spriteIndex = i / contex.ColorCount;
-            
-            //if (contex.ColorCount < 3)
-            //    colorIndex = i % puzzleConfig.GemsColors.Length;
-            //else
-            colorIndex = i % contex.ColorCount;
 
-            GemBuilder builder = new GemBuilder().New(newGem)
-                .SetView(puzzleConfig.GemsSprites[spriteIndex], puzzleConfig.GemsColors[colorIndex]);
-            if (true)
-                builder.NoGem();
-            if (true)
-                builder.NoTail();
-            if (true)
-                builder.NoLight2D();
-
-            Respawn(newGem);
-            
-            allIngredients.Add(newGem);
+            Respawn(allEntity[i]);
         }
-        
-        CreateNewRecipe(gemCount);
     }
 
     private void Respawn(Gem gem)
@@ -161,15 +217,18 @@ public class FindObjectManager : MonoBehaviour
 
     private void SuccessfullySolvePuzzle()
     {
-        int reward = player.Stats.ShapeCount * player.Stats.ColorCount * player.Stats.RecipeGemCount + player.Stats.InBoxGemCount;
+        canvas.ToCachButton.gameObject.SetActive(false);
+        
+        int reward = player.Stats.ShapeCount * player.Stats.ColorCount * player.Stats.RecipeGemCount + player.Stats.InRiverGemCount;
+        canvas.RewardText.text = $"ПОЗДРАВЛЯЮ!";
+        canvas.RewardCurrencyText.text = $"ТВОЙ ПРИЗ {reward}";
         canvas.RewardInfoText.text = $"Формы: {player.Stats.ShapeCount}" +
-                              $"\nЦвета: {player.Stats.ColorCount}" +
-                              $"\nРецепт: {player.Stats.RecipeGemCount}" +
-                              $"\nКоличество: {player.Stats.InBoxGemCount}" +
-                              "\n" +
-                              $"\nИтого: {player.Stats.ShapeCount}*{player.Stats.ColorCount}*{player.Stats.RecipeGemCount} + {player.Stats.InBoxGemCount} = {reward}$";
+                                     $"\nЦвета: {player.Stats.ColorCount}" +
+                                     $"\nРецепт: {player.Stats.RecipeGemCount}" +
+                                     $"\nКоличество: {player.Stats.InRiverGemCount}";
+        canvas.RewardFormulaText.text 
+            = $"Итого: {player.Stats.ShapeCount}*{player.Stats.ColorCount}*{player.Stats.RecipeGemCount} + {player.Stats.InRiverGemCount} = {reward}";
 
-        canvas.RewardText.text = $"ПОЗДРАВЛЯЮ!\nТВОЙ ПРИЗ\n{reward}$";
         
         player.AddGold(reward);
         SaveLoadSystem<ProgressData>.Save(player);

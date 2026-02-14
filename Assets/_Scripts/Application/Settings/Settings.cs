@@ -10,6 +10,11 @@ public class Settings : MonoBehaviour
     public SettingsData data;
 
     [SerializeField] private AudioMixer mixer;
+
+    [SerializeField] private Sprite MusicOnSprite;
+    [SerializeField] private Sprite MusicOffSprite;
+    [SerializeField] private Sprite SoundOnSprite;
+    [SerializeField] private Sprite SoundOffSprite;
     
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Toggle musicToggle;
@@ -38,6 +43,7 @@ public class Settings : MonoBehaviour
             else
                 mixer.SetFloat("MusicVolume", -80);
 
+            //musicToggle.GetComponent<Image>().sprite = v ? MusicOnSprite : MusicOffSprite;
             data.IsMusicOn = v;
             SaveLoadSystem<SettingsData>.Save(data);
         });
@@ -58,6 +64,7 @@ public class Settings : MonoBehaviour
             else
                 mixer.SetFloat("SFXVolume", -80);
             
+            //sfxToggle.GetComponent<Image>().sprite = v ? SoundOnSprite : SoundOffSprite;
             data.IsSFXOn = v;
             SaveLoadSystem<SettingsData>.Save(data);
         });
@@ -107,8 +114,10 @@ public class Settings : MonoBehaviour
     {
         musicSlider.value = data.MusicValue;
         musicToggle.isOn = data.IsMusicOn;
+        //musicToggle.GetComponent<Image>().sprite = data.IsMusicOn ? MusicOnSprite : MusicOffSprite;
         sfxSlider.value = data.SFXValue;
         sfxToggle.isOn = data.IsSFXOn;
+        //sfxToggle.GetComponent<Image>().sprite = data.IsSFXOn ? SoundOnSprite : SoundOffSprite;
     }
 
     public void DeleteSaves()

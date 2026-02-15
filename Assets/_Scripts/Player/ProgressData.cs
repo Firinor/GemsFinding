@@ -32,7 +32,7 @@ public class ProgressData
     public void InitializeStats(IEnumerable<MetaPointData> points)
     {
         Stats = new Stats();
-    
+        
         foreach (MetaPointData point in points)
         {
             PlayerDataMetaPoint playerPoint = MetaPoints.FirstOrDefault(p => p.ID == point.ID);
@@ -40,56 +40,71 @@ public class ProgressData
             if(playerPoint is null)
                 continue;
             
-            switch(point.Type)
-            {
-                case MetaPointType.RecipeCount:
-                    Stats.RecipeGemCount += point.Value * playerPoint.Level;
-                    break;
-                case MetaPointType.InRiverGemsCount:
-                    Stats.InRiverGemCount += point.Value * playerPoint.Level;
-                    break;
-                case MetaPointType.InBoxGemsCount:
-                    Stats.InBoxGemCount += point.Value * playerPoint.Level;
-                    break;
-                case MetaPointType.GemShapeCount:
-                    Stats.ShapeCount += point.Value * playerPoint.Level;
-                    break;
-                case MetaPointType.GemColorCount:
-                    Stats.ColorCount += point.Value * playerPoint.Level;
-                    break;
-                case MetaPointType.GemSpoilCount:
-                    Stats.SpoilCount += point.Value * playerPoint.Level;
-                    break;
-                case MetaPointType.GemDuoColorCount:
-                    Stats.DuoColorCount += point.Value * playerPoint.Level;
-                    break;
-                case MetaPointType.GemDuoShapeCount:
-                    Stats.DuoShapeCount += point.Value * playerPoint.Level;
-                    break;
-                case MetaPointType.Invisible:
-                    Stats.InvisibleCount += point.Value * playerPoint.Level;
-                    break;
-                case MetaPointType.Moveble:
-                    Stats.MovebleCount += point.Value * playerPoint.Level;
-                    break;
-                case MetaPointType.Jumpble:
-                    Stats.JumpbleCount += point.Value * playerPoint.Level;
-                    break;
-                case MetaPointType.ChangingColor:
-                    Stats.ChangingColor += point.Value * playerPoint.Level;
-                    break;
-                case MetaPointType.Light:
-                    Stats.LightRadius += point.Value * playerPoint.Level;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            };
+            AddStat(point, playerPoint);
         }
-
-        if (Stats.InBoxGemCount > Stats.ColorCount * Stats.ShapeCount)
-            Stats.InBoxGemCount = Stats.ColorCount * Stats.ShapeCount;
     }
-#endregion
+
+    private void AddStat(MetaPointData point, PlayerDataMetaPoint playerPoint)
+    {
+        switch(point.Type)
+        {
+            case MetaPointType.RecipeCount:
+                Stats.RecipeGemCount += point.Value * playerPoint.Level;
+                break;
+            case MetaPointType.InRiverGemsCount:
+                Stats.InRiverGemCount += point.Value * playerPoint.Level;
+                break;
+            case MetaPointType.InBoxGemsCount:
+                Stats.InBoxGemCount += point.Value * playerPoint.Level;
+                break;
+            case MetaPointType.GemShapeCount:
+                Stats.ShapeCount += point.Value * playerPoint.Level;
+                break;
+            case MetaPointType.GemColorCount:
+                Stats.ColorCount += point.Value * playerPoint.Level;
+                break;
+            case MetaPointType.GemSpoilCount:
+                Stats.SpoilCount += point.Value * playerPoint.Level;
+                break;
+            case MetaPointType.GemDuoColorCount:
+                Stats.DuoColorCount += point.Value * playerPoint.Level;
+                break;
+            case MetaPointType.GemDuoShapeCount:
+                Stats.DuoShapeCount += point.Value * playerPoint.Level;
+                break;
+            case MetaPointType.Invisible:
+                Stats.InvisibleCount += point.Value * playerPoint.Level;
+                break;
+            case MetaPointType.Moveble:
+                Stats.MovebleCount += point.Value * playerPoint.Level;
+                break;
+            case MetaPointType.Jumpble:
+                Stats.JumpbleCount += point.Value * playerPoint.Level;
+                break;
+            case MetaPointType.ChangingColor:
+                Stats.ChangingColor += point.Value * playerPoint.Level;
+                break;
+            case MetaPointType.Light:
+                Stats.LightRadius += point.Value * playerPoint.Level;
+                break;
+            case MetaPointType.NoGem:
+                Stats.EmptyDirt += point.Value * playerPoint.Level;
+                break;
+            case MetaPointType.NoDirt:
+                Stats.NoDirt += point.Value * playerPoint.Level;
+                break;
+            case MetaPointType.Tail:
+                Stats.WithTail += point.Value * playerPoint.Level;
+                break;
+            case MetaPointType.Light2D:
+                Stats.WithLight2D += point.Value * playerPoint.Level;
+                break;
+            case MetaPointType.NoBlinks:
+            default:
+                throw new ArgumentOutOfRangeException();
+        };
+    }
+    #endregion
 }
 
 [Serializable]

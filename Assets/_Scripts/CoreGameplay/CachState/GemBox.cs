@@ -19,7 +19,6 @@ public class GemBox : MonoBehaviour
     public BoxCollider2D boxOutZone;
     public event Action<Vector3> OnMove;
     public event Action<Vector3> OnMoveToSort;
-    public event Action<Gem> OnСatch;
     public event Action OnFull;
 
     private HashSet<Gem> gems = new();

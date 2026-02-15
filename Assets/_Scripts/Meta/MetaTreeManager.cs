@@ -2,19 +2,33 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MetaTreeManager : MonoBehaviour
 {
     public int AllProgressCount;
-    public event Action OnNewPointLearned; 
+    //public event Action OnNewPointLearned; 
     
     [SerializeField] 
     private List<MetaPointView> points;
     public List<MetaPointView> PointsData => points;
     [SerializeField] 
     private InfoPanel infoPanel;
+    private MetaPointView selectedPoint;
     
     private ProgressData player;
+    
+    [SerializeField] 
+    private Sprite LevelFrame;
+    [SerializeField] 
+    private Sprite MaxFrame;
+    [SerializeField] 
+    private Image AimFrame;
+    
+    [SerializeField] 
+    private Button UpLevelButton;
+    [SerializeField] 
+    private Button DeLevelButton;
 
     [ContextMenu(nameof(CalculateAllProgress))]
     private void CalculateAllProgress()
@@ -26,13 +40,14 @@ public class MetaTreeManager : MonoBehaviour
         }
     }
     
-    public void Initialize(MetaContext metaContex)
+    public void Initialize(ProgressData player)
     {
-        player = metaContex.Player;
+        this.player = player;
         
         DisableAllPoints();
         EnablePointsBy();
         SubscribeButtons();
+        AimFrame.enabled = false;
     }
 
     private void SubscribeButtons()
@@ -45,18 +60,13 @@ public class MetaTreeManager : MonoBehaviour
             PlayerDataMetaPoint playerPoint = player.MetaPoints.FirstOrDefault(p => p.ID == point.Data.ID);
             int level = playerPoint is not null ? playerPoint.Level : 0;
             
+            point.Button.onClick.AddListener(() => PointClick(point));
             if (level == 0)
-                point.Button.onClick.AddListener(() => PointClick(point));
+                point.ToDisableFrame();
             else if(level < point.Data.MaxLevel)
-            {
-                point.Button.onClick.AddListener(() => PointClick(point));
-                point.ToLevelFrame();
-            }
+                point.ToLevelFrame(LevelFrame);
             else
-                point.ToMaxFrame();
-            
-            point.OnPointerEnterAction += ShowInfo;
-            point.OnPointerExitAction += HideInfo;
+                point.ToMaxFrame(MaxFrame);
         }
     }
 
@@ -130,21 +140,45 @@ public class MetaTreeManager : MonoBehaviour
         
         if(level < pointData.MaxLevel)
             info.Cost = pointData.Cost[Int32.Parse(info.Level)].ToString();
-        
+
+        SetUpButtonsSubscription(pointData);
+        RefreshInfoView();
         infoPanel.Show(info);
     }
 
-    private void HideInfo()
+    private void SetUpButtonsSubscription(MetaPointData pointData)
     {
-        infoPanel.Hide();
+        PlayerDataMetaPoint playerPointData = player.MetaPoints.FirstOrDefault(p => p.ID == pointData.ID);
+        
+        int level = 0;
+        if (playerPointData is not null)
+        {
+            level = playerPointData.Level;
+        }
+        
+        UpLevelButton.interactable = level < pointData.MaxLevel;
+        DeLevelButton.interactable = level > 0;
+        
+        UpLevelButton.onClick.RemoveAllListeners();
+        DeLevelButton.onClick.RemoveAllListeners();
+        
+        UpLevelButton.onClick.AddListener(() => AddPointLevel(pointData));
+        DeLevelButton.onClick.AddListener(() => RemovePointLevel(pointData));
     }
-
+    
     private void PointClick(MetaPointView point)
     {
-        PlayerDataMetaPoint playerPoint = player.MetaPoints.FirstOrDefault(p => p.ID == point.Data.ID);
-        int level = playerPoint is not null ? playerPoint.Level : 0;
+        selectedPoint = point;
+        AimFrame.enabled = true;
+        AimFrame.transform.localPosition = point.transform.localPosition;
+        ShowInfo(point.Data);
+    }
 
-        int pointCost = point.Data.Cost[level];
+    private void AddPointLevel(MetaPointData point)
+    {
+        PlayerDataMetaPoint playerPoint = player.MetaPoints.FirstOrDefault(p => p.ID == point.ID);
+        int level = playerPoint is not null ? playerPoint.Level : 0;
+        int pointCost = point.Cost[level];
         if(!player.TrySpendGold(pointCost))
         {
             //Audio.Error;
@@ -159,35 +193,69 @@ public class MetaTreeManager : MonoBehaviour
         {
             player.MetaPoints.Add(new()
             {
-                ID = point.Data.ID,
+                ID = point.ID,
                 Level = 1
             });
         }
         level++;
         
         SaveLoadSystem<ProgressData>.Save(player);
-
-        if (level >= point.Data.MaxLevel)
-        {
-            point.ToMaxFrame();
-            point.Button.onClick.RemoveAllListeners();
-        }
-        else
-        {
-            point.ToLevelFrame();
-            point.ShowPlus(point.Data.Cost[level] <= player.GoldCoins);
-        }
         
-        foreach (MetaPointData unlock in point.Data.Unlocks)
+        foreach (MetaPointData unlock in point.Unlocks)
         {
             MetaPointView unlockPoint = points.First(p => p.Data.ID == unlock.ID);
             unlockPoint.gameObject.SetActive(true);
             unlockPoint.Initialize();
         }
         
-        OnNewPointLearned?.Invoke();
+        player.InitializeStats(PointsData.Select(p => p.Data));
+        //OnNewPointLearned?.Invoke();
         
-        ShowInfo(point.Data);
+        ShowInfo(point);
+    }
+    private void RemovePointLevel(MetaPointData point)
+    {
+        PlayerDataMetaPoint playerPoint = player.MetaPoints.FirstOrDefault(p => p.ID == point.ID);
+        int level = playerPoint.Level;
+        if(level <= 0)
+            return;
+        
+        int pointCost = point.Cost[level-1];
+
+        player.AddGold(pointCost);
+        playerPoint.Level--;
+        
+        SaveLoadSystem<ProgressData>.Save(player);
+
+        player.InitializeStats(PointsData.Select(p => p.Data));
+        
+        ShowInfo(point);
+    }
+
+    private void RefreshInfoView()
+    {
+        PlayerDataMetaPoint playerPoint = player.MetaPoints.FirstOrDefault(p => p.ID == selectedPoint.Data.ID);
+        int level = 0;
+        if(playerPoint is not null)
+            level = playerPoint.Level;
+        
+        UpLevelButton.interactable = level < selectedPoint.Data.MaxLevel;
+        DeLevelButton.interactable = level > 0;
+        
+        if (level >= selectedPoint.Data.MaxLevel)
+        {
+            selectedPoint.ToMaxFrame(MaxFrame);
+        }
+        else if (level == 0)
+        {
+            selectedPoint.ToDisableFrame();
+            selectedPoint.ShowPlus(selectedPoint.Data.Cost[level] <= player.GoldCoins);
+        }
+        else
+        {
+            selectedPoint.ToLevelFrame(LevelFrame);
+            selectedPoint.ShowPlus(selectedPoint.Data.Cost[level] <= player.GoldCoins);
+        }
     }
 
     private void EnablePointsBy()
@@ -215,13 +283,16 @@ public class MetaTreeManager : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        infoPanel.Hide();
+    }
+
     private void OnDestroy()
     {
         player.OnGoldChange -= PointsShowPlus;
         foreach (var point in points)
         {
-            point.OnPointerEnterAction -= ShowInfo;
-            point.OnPointerExitAction -= HideInfo;
             point.Button.onClick.RemoveAllListeners();
         }
     }

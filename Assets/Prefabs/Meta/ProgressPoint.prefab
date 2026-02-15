@@ -182,10 +182,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 932766147629149897}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 130, y: 130}
+  m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2589320101179457575
 CanvasRenderer:
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -290945653669175874, guid: aba0be9babd3b1f49a9b886b1cdcc88a, type: 3}
+  m_Sprite: {fileID: 779381162402838803, guid: cd5b73c0fcc137a468c5bc87af1840d3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -361,11 +361,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6f185ab400e466d9764fbda5eb3b27c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MetaTreePoint
-  InfoAncor: {fileID: 0}
   Frame: {fileID: 4808806359821032800}
   Icon: {fileID: 986302312222044961}
   Plus: {fileID: 6167480640413699073}
-  LevelFrame: {fileID: 8422623979430180281, guid: aba0be9babd3b1f49a9b886b1cdcc88a, type: 3}
-  MaxFrame: {fileID: -261694043397450350, guid: aba0be9babd3b1f49a9b886b1cdcc88a, type: 3}
   Button: {fileID: 7374868290311606656}
   Data: {fileID: 0}

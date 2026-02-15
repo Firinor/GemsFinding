@@ -126,20 +126,28 @@ public class FindObjectManager : MonoBehaviour
             newGem.NoGravity();
             newGem.OnEdge += Respawn;
 
+            if (gemAtlas.Count <= gemAtlasIndex)
+            {
+                ToNoGem();
+                continue;
+            }
             if (emptyDirtIndexes is not null 
-                && i == emptyDirtIndexes[emptyDirtIndex])
+                 && i == emptyDirtIndexes[emptyDirtIndex])
+            {
+                ToNoGem();
+                emptyDirtIndex++;
+                if (emptyDirtIndex >= emptyDirtIndexes.Count)
+                    emptyDirtIndexes = null;
+                continue;
+            }
+            void ToNoGem()
             {
                 //NoGem
                 newGem.Sprite.enabled = false;
                 newGem.RemoveTail();
                 newGem.RemoveLight2D();
-                emptyDirtIndex++;
-                if (emptyDirtIndex >= emptyDirtIndexes.Count)
-                    emptyDirtIndexes = null;
                 allEntity.Add(newGem);
-                continue;
             }
-            
             int s = gemAtlas[gemAtlasIndex++];
             int spriteIndex = s / contex.ColorCount;
             int colorIndex = s % contex.ColorCount;

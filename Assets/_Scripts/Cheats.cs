@@ -4,9 +4,9 @@ public class Cheats : MonoBehaviour
 {
    private ProgressData player;
 
-   public void Initialize(MetaContext metaContext)
+   public void Initialize(ProgressData player)
    {
-      player = metaContext.Player;
+      this.player = player;
    }
 
    [ContextMenu(nameof(AddGold))]

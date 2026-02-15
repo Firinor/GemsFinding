@@ -13,6 +13,8 @@ public class MetaBootstrup : MonoBehaviour
     private MetaTreeManager MetaTree;
     
     [SerializeField] 
+    private RectTransform playerGoldRect;
+    [SerializeField] 
     private TextMeshProUGUI playerGold;
     
     [SerializeField] 
@@ -26,33 +28,31 @@ public class MetaBootstrup : MonoBehaviour
     
     [SerializeField] 
     private Cheats cheats;
-
-    private MetaContext MetaContext;
+    
+    private ProgressData player;
     
     void Awake()
     {
-        MetaContext = new();
-
         settings.Initialize();
         
         LoadPlayerData();
         SubscribeToGold();
         SubscribeToProgress();
-        MetaTree.Initialize(MetaContext);
-        cheats.Initialize(MetaContext);
+        MetaTree.Initialize(player);
+        cheats.Initialize(player);
     }
 
     private void SubscribeToProgress()
     {
         progressSlider.maxValue = MetaTree.AllProgressCount;
-        progressSlider.value = MetaContext.Player.GetPointsLevel();
-        MetaTree.OnNewPointLearned += SetProgressBar;
+        progressSlider.value = player.GetPointsLevel();
+        //MetaTree.OnNewPointLearned += SetProgressBar;
         SetProgressBar();
     }
 
     private void SetProgressBar()
     {
-        progressSlider.value = MetaContext.Player.GetPointsLevel();
+        progressSlider.value = player.GetPointsLevel();
         textSlider.text = $"{(int)(progressSlider.value/progressSlider.maxValue * 100)}%";
         if(progressSlider.value >= progressSlider.maxValue)
             endButton.onClick.AddListener(() =>
@@ -60,24 +60,26 @@ public class MetaBootstrup : MonoBehaviour
                 endScreen.SetActive(true);
             });
         
-        MetaContext.Player.InitializeStats(MetaTree.PointsData.Select(p => p.Data));
+        player.InitializeStats(MetaTree.PointsData.Select(p => p.Data));
     }
 
     private void SubscribeToGold()
     {
-        MetaContext.Player.OnGoldChange += GoldText;
-        GoldText(MetaContext.Player.GoldCoins);
+        player.OnGoldChange += GoldText;
+        GoldText(player.GoldCoins);
     }
 
     private void GoldText(int count)
     {
         playerGold.text = count.ToString();
+        float imageBorder = 160;
+        playerGoldRect.sizeDelta = new Vector2(playerGold.preferredWidth + imageBorder, playerGoldRect.sizeDelta.y);
     }
 
     private void LoadPlayerData()
     {
-        MetaContext.Player = SaveLoadSystem<ProgressData>.Load(Default: new());
-        MetaContext.Player.InitializeStats(MetaTree.PointsData.Select(p => p.Data));
+        player = SaveLoadSystem<ProgressData>.Load(Default: new());
+        player.InitializeStats(MetaTree.PointsData.Select(p => p.Data));
     }
     private void LoadSettingsData()
     {
@@ -87,7 +89,7 @@ public class MetaBootstrup : MonoBehaviour
     private void OnDestroy()
     {
         endButton.onClick.RemoveAllListeners();
-        MetaTree.OnNewPointLearned -= SetProgressBar;
-        MetaContext.Player.OnGoldChange -= GoldText;
+        //MetaTree.OnNewPointLearned -= SetProgressBar;
+        player.OnGoldChange -= GoldText;
     }
 }

@@ -281,9 +281,9 @@ public class MetaTreeManager : MonoBehaviour
         {
             point.gameObject.SetActive(false);
         }
-    }
-
-    private void OnDisable()
+    }    
+    
+    public void HideInfo()
     {
         infoPanel.Hide();
     }

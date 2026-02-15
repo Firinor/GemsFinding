@@ -196,7 +196,7 @@ public class FindObjectManager : MonoBehaviour
             allIngredients.Add(newGem);
         }
         
-        CreateNewRecipe(gemCount);
+        CreateNewRecipe(gemAtlas.Count);
 
         for (int i = 0; i < contex.InRiverGemCount; i++)
         {

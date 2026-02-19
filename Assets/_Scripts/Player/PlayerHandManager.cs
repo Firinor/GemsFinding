@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
+// ReSharper disable All
 
 public class PlayerHandManager : MonoBehaviour
 {
@@ -23,19 +23,18 @@ public class PlayerHandManager : MonoBehaviour
 
     private Vector2 gemInHandOffset;
     
-    private void Start()
+    public void Initialize()
     {
         action = InputSystem.actions;
         action.FindAction("Click").performed += FindGem;
         action.FindAction("Look").performed += MoveImage;
-        enabled = false;
     }
 
     private void MoveImage(InputAction.CallbackContext obj)
     {
         var mousePosition = Mouse.current.position.ReadValue();
         Vector3 position = Camera.main!.ScreenToWorldPoint(mousePosition);
-        position.z = 0;
+        position.y = Gem.centerZone.position.y;
         spotLight.position = position;
         if(gem != null)
             gem.transform.position = position;
@@ -96,17 +95,15 @@ public class PlayerHandManager : MonoBehaviour
     private void FindGem()
     {
         Vector2 mousePosition = Mouse.current.position.ReadValue();
-        Vector2 worldMousePosition = Camera.main!.ScreenToWorldPoint(mousePosition);
-        
-        int index = 0;
+        Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
         
         WashHand();
         for (int i = pool.GemParent.childCount - 1; i >= 0; i--)
         {
             Gem checkedGem = pool.GemParent.GetChild(i).GetComponent<Gem>();
             if(!checkedGem.gameObject.activeSelf
-               || !checkedGem.Sprite.bounds.Contains(worldMousePosition)
-               || !isGemOnPoint(checkedGem, worldMousePosition, ref index))
+               //|| !checkedGem.Sprite.bounds.Contains(worldMousePosition)
+               || !isGemOnPoint(checkedGem, worldMousePosition))
                 continue;
 
             gem = checkedGem;
@@ -119,18 +116,33 @@ public class PlayerHandManager : MonoBehaviour
         gem.enabled = false;
         
         gemData.Sprite = gem.Sprite.sprite;
-        gemData.Color = gem.Sprite.color;
  
         gemInHandOffset = Camera.main!.WorldToScreenPoint(gem.transform.position);
 
         enabled = true;
     }
 
-    private bool isGemOnPoint(Gem gem, Vector3 mousePosition, ref int index)
+    private bool isGemOnPoint(Gem gem, Vector3 mousePosition)
     {
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+        float denominator = ray.direction.y;
+        //if (Mathf.Approximately(denominator, 0))return false;
+
+        float t = (gem.transform.position.y - ray.origin.y) / denominator;
+        //if (t < 0) return false;
+
+        Vector3 hitPoint = ray.origin + ray.direction * t;
+
+        Debug.DrawLine(ray.origin, hitPoint, Color.yellow, 0.5f);
+        float cross = 0.05f;
+        Debug.DrawLine(hitPoint - Vector3.right * cross, hitPoint + Vector3.right * cross, Color.red, 0.5f);
+        Debug.DrawLine(hitPoint - Vector3.forward * cross, hitPoint + Vector3.forward * cross, Color.red, 0.5f);
+
         Sprite gemSprite = gem.Sprite.sprite;
 
-        Vector2 localPos = gem.transform.InverseTransformPoint(mousePosition);
+        Vector3 localMousePosition = gem.transform.InverseTransformPoint(hitPoint);
+        Vector2 localPos = new Vector2(localMousePosition.x, localMousePosition.z);
         localPos *= 100; // Texture scale
         localPos += gemSprite.pivot;
 

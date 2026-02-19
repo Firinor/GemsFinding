@@ -50,7 +50,7 @@ public class GemPool : MonoBehaviour
             currentLayerStep++;
         }
         
-        result.enabled = true;
+        result.enabled = false;
         result.gameObject.SetActive(true);
         
         return result;

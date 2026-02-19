@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using FirMath;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using Random = UnityEngine.Random;
 
 public class FindObjectManager : MonoBehaviour
@@ -10,6 +11,8 @@ public class FindObjectManager : MonoBehaviour
     #region Fields
     [SerializeField]
     private FindObjectPuzzleConfig puzzleConfig;
+    [SerializeField]
+    private PlayerHandManager playerHandManager;
     
     private List<Gem> allIngredients;
     [SerializeField]
@@ -21,8 +24,10 @@ public class FindObjectManager : MonoBehaviour
     [SerializeField]
     private float spawnTotalTime = 5f;
     [SerializeField]
-    private BoxCollider2D spawnZone;
-
+    private Transform spawnZone;
+    [SerializeField]
+    private float spawnDistance = 20f;
+    
     private ProgressData player;
     private Stats contex;
     
@@ -59,6 +64,8 @@ public class FindObjectManager : MonoBehaviour
         pool.ClearAll();
         
         allIngredients = new List<Gem>();
+
+        Gem.centerZone = spawnZone;
         
         float timer = 0;
         float yieldDelay = spawnTotalTime/contex.InBoxGemCount;
@@ -68,13 +75,19 @@ public class FindObjectManager : MonoBehaviour
         for (int i = 0; i < contex.InBoxGemCount; i++)
         {
             Gem newGem = pool.Get();
-            newGem.transform.localPosition = spawnZone.bounds.center;
+            
+            float direction = Random.value * 360 * Mathf.Deg2Rad;
+            newGem.transform.position = spawnZone.position
+                                        + new Vector3(math.cos(direction), 0, math.sin(direction)) * spawnDistance;
+            
             newGem.SetView(puzzleConfig.GemsSprites[i]);
+            newGem.SetRandomImpulse(forceToIngredient);
             
             allIngredients.Add(newGem);
         }
         
         CreateNewRecipe(gemAtlas.Count);
+        playerHandManager.Initialize();
 
         for (int i = 0; i < contex.InBoxGemCount; i++)
         {
@@ -85,17 +98,8 @@ public class FindObjectManager : MonoBehaviour
                 yield return null;
             }
 
-            Respawn(allIngredients[i]);
+            allIngredients[i].enabled = true;
         }
-    }
-
-    private void Respawn(Gem gem)
-    {
-        float x = (spawnZone.bounds.max.x - spawnZone.bounds.min.x) * Random.value;
-        x += spawnZone.bounds.min.x;
-        float y = (spawnZone.bounds.max.y - spawnZone.bounds.min.y) * Random.value;
-        y += spawnZone.bounds.min.y;
-        gem.transform.localPosition = new Vector3(x, y, 0);
     }
 
     private void SuccessfullySolvePuzzle()

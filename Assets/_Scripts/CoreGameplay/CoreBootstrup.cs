@@ -14,7 +14,7 @@ public class CoreBootstrup : MonoBehaviour
     [SerializeField]
     private Stats stats;
     
-    void Awake()
+    public void StartPuzzle()
     {
         settings.Initialize();
         LoadPlayerData(out ProgressData player);
@@ -24,12 +24,6 @@ public class CoreBootstrup : MonoBehaviour
     private void LoadPlayerData(out ProgressData data)
     {
         data = SaveLoadSystem<ProgressData>.Load(Default: new());
-        if (!isDebugMode)
-        {
-            MetaPointData[] pointsData = Resources.LoadAll("Points", typeof(MetaPointData)).Cast<MetaPointData>().ToArray();
-            data.InitializeStats(pointsData);
-        }
-        else
-            data.Stats = stats;
+        data.Stats = stats;
     }
 }

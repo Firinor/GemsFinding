@@ -1,17 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 
 [Serializable]
 public class ProgressData
 {
     public int GoldCoins;
-    public List<PlayerDataMetaPoint> MetaPoints = new();
-    
+    public int Level;
     [NonSerialized] public Stats Stats;
-
-#region Methods
+    
     public event Action<int> OnGoldChange;
     
     public void AddGold(int count)
@@ -28,108 +23,16 @@ public class ProgressData
         OnGoldChange?.Invoke(GoldCoins);
         return true;
     }
-    public int GetPointsLevel() => MetaPoints.Sum(point => point.Level);
-    public void InitializeStats(IEnumerable<MetaPointData> points)
+    
+    public void InitializeStats()
     {
         Stats = new Stats();
-        
-        foreach (MetaPointData point in points)
-        {
-            PlayerDataMetaPoint playerPoint = MetaPoints.FirstOrDefault(p => p.ID == point.ID);
-            
-            if(playerPoint is null)
-                continue;
-            
-            AddStat(point, playerPoint);
-        }
     }
-
-    private void AddStat(MetaPointData point, PlayerDataMetaPoint playerPoint)
-    {
-        switch(point.Type)
-        {
-            case MetaPointType.RecipeCount:
-                Stats.RecipeGemCount += point.Value * playerPoint.Level;
-                break;
-            case MetaPointType.InRiverGemsCount:
-                Stats.InRiverGemCount += point.Value * playerPoint.Level;
-                break;
-            case MetaPointType.InBoxGemsCount:
-                Stats.InBoxGemCount += point.Value * playerPoint.Level;
-                break;
-            case MetaPointType.GemShapeCount:
-                Stats.ShapeCount += point.Value * playerPoint.Level;
-                break;
-            case MetaPointType.GemColorCount:
-                Stats.ColorCount += point.Value * playerPoint.Level;
-                break;
-            case MetaPointType.GemSpoilCount:
-                Stats.SpoilCount += point.Value * playerPoint.Level;
-                break;
-            case MetaPointType.GemDuoColorCount:
-                Stats.DuoColorCount += point.Value * playerPoint.Level;
-                break;
-            case MetaPointType.GemDuoShapeCount:
-                Stats.DuoShapeCount += point.Value * playerPoint.Level;
-                break;
-            case MetaPointType.Invisible:
-                Stats.InvisibleCount += point.Value * playerPoint.Level;
-                break;
-            case MetaPointType.Moveble:
-                Stats.MovebleCount += point.Value * playerPoint.Level;
-                break;
-            case MetaPointType.Jumpble:
-                Stats.JumpbleCount += point.Value * playerPoint.Level;
-                break;
-            case MetaPointType.ChangingColor:
-                Stats.ChangingColor += point.Value * playerPoint.Level;
-                break;
-            case MetaPointType.Light:
-                Stats.LightRadius += point.Value * playerPoint.Level;
-                break;
-            case MetaPointType.NoGem:
-                Stats.EmptyDirt += point.Value * playerPoint.Level;
-                break;
-            case MetaPointType.NoDirt:
-                Stats.NoDirt += point.Value * playerPoint.Level;
-                break;
-            case MetaPointType.Tail:
-                Stats.WithTail += point.Value * playerPoint.Level;
-                break;
-            case MetaPointType.Light2D:
-                Stats.WithLight2D += point.Value * playerPoint.Level;
-                break;
-            case MetaPointType.NoBlinks:
-            default:
-                throw new ArgumentOutOfRangeException();
-        };
-    }
-    #endregion
 }
 
 [Serializable]
 public class Stats
 {
-    public int InRiverGemCount = 20;
     public int InBoxGemCount = 7;
     public int RecipeGemCount = 1;
-    [Space]
-    public int ColorCount = 1;
-    public int ShapeCount = 7;
-    public int SpoilCount;
-    public int DuoColorCount;
-    public int DuoShapeCount;
-    [Space]
-    public float EmptyDirt = 90;
-    public int NoDirt;
-    public int WithTail;
-    public int WithLight2D;
-    public int NoBlink;
-    [Space]
-    public int InvisibleCount;
-    public int MovebleCount;
-    public int JumpbleCount;
-    public int ChangingColor;
-    [Space]
-    public float LightRadius = 4;
 }

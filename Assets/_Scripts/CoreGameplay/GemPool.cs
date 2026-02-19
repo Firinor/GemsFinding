@@ -49,8 +49,7 @@ public class GemPool : MonoBehaviour
             result.OnBoundTink += sound.PlayGemTink;
             currentLayerStep++;
         }
-
-        result.ResetPhysics();
+        
         result.enabled = true;
         result.gameObject.SetActive(true);
         

@@ -15,11 +15,7 @@ public class FindObjectManager : MonoBehaviour
     [SerializeField]
     private GemPool pool;
     [SerializeField] 
-    private CameraController cameraController;
-    [SerializeField] 
     private CanvasView canvas;
-    [SerializeField] 
-    private GemBox GemBox;
     [SerializeField]
     private float forceToIngredient;
     [SerializeField]
@@ -40,38 +36,7 @@ public class FindObjectManager : MonoBehaviour
         this.player = player;
         contex = player.Stats;
         
-        Gem.box = GemBox;
-        Gem.riverZone = spawnZone;
-        
-        GemBox.Initialize(player.Stats.InBoxGemCount, player.Stats.InRiverGemCount);
-        GemBox.OnFull += ToSortState;   
-        canvas.Recipe.RecipeIsComplete += SuccessfullySolvePuzzle;
-        canvas.ToCachButton.gameObject.SetActive(false);
-        canvas.ToSortButton.gameObject.SetActive(true);
         StartCoroutine(StartPuzzle());
-    }
-
-    public void ToCachState()
-    {
-        GemBox.ToCachMode();
-        cameraController.ToCach();
-        canvas.ToCachButton.gameObject.SetActive(false);
-        canvas.ToSortButton.gameObject.SetActive(true);
-    }
-    
-    public void ToSortState()
-    {
-        bool toSort = GemBox.ToSotrMode();
-        if(!toSort)    
-            return;
-        
-        StartCoroutine(GemBox.MoveToSortPoint(onComplete: () =>
-        {
-            if(GemBox.Limit > 0)
-                canvas.ToCachButton.gameObject.SetActive(true);
-        }));
-        cameraController.ToSort();
-        canvas.ToSortButton.gameObject.SetActive(false);
     }
 
     private void CreateNewRecipe(int gemCount)
@@ -96,109 +61,22 @@ public class FindObjectManager : MonoBehaviour
         allIngredients = new List<Gem>();
         
         float timer = 0;
-        float yieldDelay = spawnTotalTime/contex.InRiverGemCount;
+        float yieldDelay = spawnTotalTime/contex.InBoxGemCount;
         
-        int gemCount = (int)(contex.InRiverGemCount * contex.EmptyDirt / 100);
+        List<int> gemAtlas = GameMath.AFewCardsFromTheDeck(contex.InBoxGemCount, contex.RecipeGemCount);
         
-        List<int> gemAtlas = GameMath.AFewCardsFromTheDeck(gemCount, contex.ColorCount * contex.ShapeCount);
-        
-        List<int> emptyDirtIndexes = GameMath.AFewCardsFromTheDeck(contex.InRiverGemCount - gemCount, contex.InRiverGemCount);
-        List<int> noDirtIndexes = GameMath.AFewCardsFromTheDeck(contex.NoDirt, gemCount);
-        List<int> tailIndexes = GameMath.AFewCardsFromTheDeck(contex.WithTail,  gemCount);
-        List<int> light2DIndexes = GameMath.AFewCardsFromTheDeck(contex.WithLight2D, gemCount);
-        emptyDirtIndexes?.Sort();
-        noDirtIndexes?.Sort();
-        tailIndexes?.Sort();
-        light2DIndexes?.Sort();
-        int gemAtlasIndex = 0;
-        int emptyDirtIndex = 0;
-        int gemIndex = 0; 
-        int noDirtIndex = 0;
-        int tailIndex = 0;
-        int light2DIndex = 0;
-
-        List<Gem> allEntity = new(contex.InRiverGemCount);
-        
-        for (int i = 0; i < contex.InRiverGemCount; i++)
+        for (int i = 0; i < contex.InBoxGemCount; i++)
         {
             Gem newGem = pool.Get();
             newGem.transform.localPosition = spawnZone.bounds.center;
-            newGem.NoGravity();
-            newGem.OnEdge += Respawn;
-
-            if (gemAtlas.Count <= gemAtlasIndex)
-            {
-                ToNoGem();
-                continue;
-            }
-            if (emptyDirtIndexes is not null 
-                 && i == emptyDirtIndexes[emptyDirtIndex])
-            {
-                ToNoGem();
-                emptyDirtIndex++;
-                if (emptyDirtIndex >= emptyDirtIndexes.Count)
-                    emptyDirtIndexes = null;
-                continue;
-            }
-            void ToNoGem()
-            {
-                //NoGem
-                newGem.Sprite.enabled = false;
-                newGem.RemoveTail();
-                newGem.RemoveLight2D();
-                allEntity.Add(newGem);
-            }
-            int s = gemAtlas[gemAtlasIndex++];
-            int spriteIndex = s / contex.ColorCount;
-            int colorIndex = s % contex.ColorCount;
+            newGem.SetView(puzzleConfig.GemsSprites[i]);
             
-            newGem.SetView(puzzleConfig.GemsSprites[spriteIndex], puzzleConfig.GemsColors[colorIndex]);
-            //NoDirt
-            if (noDirtIndexes is not null
-                && gemIndex == noDirtIndexes[noDirtIndex])
-            {
-                noDirtIndex++;
-                if (noDirtIndex >= noDirtIndexes.Count)
-                    noDirtIndexes = null;
-                newGem.RemoveDirt();
-            }
-            gemIndex++;
-            //Tail
-            if (tailIndexes is not null)
-            {
-                if(i != tailIndexes[tailIndex])
-                    newGem.RemoveTail();
-                else
-                {
-                    tailIndex++;
-                    if (tailIndex >= tailIndexes.Count)
-                        tailIndexes = null;
-                }
-            }
-            else
-                newGem.RemoveTail();
-            //Light2D
-            if (light2DIndexes is not null)
-            {
-                if(i != light2DIndexes[light2DIndex])
-                    newGem.RemoveLight2D();
-                else
-                {
-                    light2DIndex++;
-                    if (light2DIndex >= light2DIndexes.Count)
-                        light2DIndexes = null;
-                }
-            }
-            else 
-                newGem.RemoveLight2D();
-            
-            allEntity.Add(newGem);
             allIngredients.Add(newGem);
         }
         
         CreateNewRecipe(gemAtlas.Count);
 
-        for (int i = 0; i < contex.InRiverGemCount; i++)
+        for (int i = 0; i < contex.InBoxGemCount; i++)
         {
             timer -= yieldDelay;
             while (timer < 0)
@@ -207,7 +85,7 @@ public class FindObjectManager : MonoBehaviour
                 yield return null;
             }
 
-            Respawn(allEntity[i]);
+            Respawn(allIngredients[i]);
         }
     }
 
@@ -218,27 +96,15 @@ public class FindObjectManager : MonoBehaviour
         float y = (spawnZone.bounds.max.y - spawnZone.bounds.min.y) * Random.value;
         y += spawnZone.bounds.min.y;
         gem.transform.localPosition = new Vector3(x, y, 0);
-        gem.ResetTail();
-        gem.ResetPhysics();
-        gem.SetRandomImpulse(forceToIngredient);
     }
 
     private void SuccessfullySolvePuzzle()
     {
         canvas.ToCachButton.gameObject.SetActive(false);
-        
-        int reward = player.Stats.ShapeCount * player.Stats.ColorCount * player.Stats.RecipeGemCount + player.Stats.InRiverGemCount;
-        canvas.RewardText.text = $"ПОЗДРАВЛЯЮ!";
-        canvas.RewardCurrencyText.text = $"ТВОЙ ПРИЗ {reward}";
-        canvas.RewardInfoText.text = $"Формы: {player.Stats.ShapeCount}" +
-                                     $"\nЦвета: {player.Stats.ColorCount}" +
-                                     $"\nРецепт: {player.Stats.RecipeGemCount}" +
-                                     $"\nКоличество: {player.Stats.InRiverGemCount}";
-        canvas.RewardFormulaText.text 
-            = $"Итого: {player.Stats.ShapeCount}*{player.Stats.ColorCount}*{player.Stats.RecipeGemCount} + {player.Stats.InRiverGemCount} = {reward}";
 
+        canvas.RewardText.text = $"ПОЗДРАВЛЯЮ!";
         
-        player.AddGold(reward);
+        player.AddGold(100500);
         SaveLoadSystem<ProgressData>.Save(player);
         canvas.WinScreen.SetActive(true);
     }
@@ -274,10 +140,5 @@ public class FindObjectManager : MonoBehaviour
     private void OnDestroy()
     {
         canvas.Recipe.RecipeIsComplete -= SuccessfullySolvePuzzle;
-
-        foreach (Gem gem in allIngredients)
-        {
-            gem.OnEdge -= Respawn;
-        }
     }
 }

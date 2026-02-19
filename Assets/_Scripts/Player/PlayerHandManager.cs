@@ -117,7 +117,6 @@ public class PlayerHandManager : MonoBehaviour
             return;
 
         gem.enabled = false;
-        gem.RemoveDirt();
         
         gemData.Sprite = gem.Sprite.sprite;
         gemData.Color = gem.Sprite.color;

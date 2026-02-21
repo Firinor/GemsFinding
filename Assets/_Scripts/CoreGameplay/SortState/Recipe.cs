@@ -22,6 +22,9 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private bool isPlayerHandOwerRecipe;
     
+    public ParticleSystem successParticleSystem;
+    public ParticleSystem errorParticleSystem;
+    
     public event Action RecipeIsComplete;
 
     void Awake()
@@ -65,12 +68,23 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             gems.Remove(gem);
             if(gems.Count == 0)
                 RecipeIsComplete?.Invoke();
+            Particles(gem.transform.position, success: true);
             return true;
         }
-        
+
+        Particles(playerGem.Position, false);
         return false;
     }
 
+    internal void Particles(Vector3 position, bool success)
+    {
+        ParticleSystem particleSystem = success ? successParticleSystem : errorParticleSystem;
+
+        Instantiate(particleSystem, position, Quaternion.identity, transform);
+
+        particleSystem.Play();
+    }
+    
     public void Clear()
     {
         gems = new();

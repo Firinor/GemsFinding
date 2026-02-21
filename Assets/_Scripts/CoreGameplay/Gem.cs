@@ -15,8 +15,8 @@ public class Gem : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     public SpriteRenderer Sprite => spriteRenderer;
     
-    private const float EDGE_RADIUS = 3;
-    private const float BREAKING_FACTOR = 2;
+    private const float EDGE_RADIUS = 3.5f;
+    private const float BREAKING_FACTOR = 3;
     private const int ERROR_FORCE = 8;
 
     private Vector3 impulse;
@@ -38,6 +38,7 @@ public class Gem : MonoBehaviour
     private void GravityForce()
     {
         Vector3 direction = (centerZone.position - transform.position).normalized;
+        direction.y = 0;
         impulse += direction * 10 * Time.deltaTime;
     }
 
@@ -46,6 +47,9 @@ public class Gem : MonoBehaviour
         Vector3 pos = transform.position;
 
         pos += impulse * Time.deltaTime;
+
+        if (impulse.y != 0)
+            Debug.Log("!Y");
 
         Vector3 toEdge = pos - centerZone.position;
         if (InCircle && toEdge.magnitude > EDGE_RADIUS)
@@ -65,6 +69,7 @@ public class Gem : MonoBehaviour
             impulse = Vector3.zero;
         }
 
+        pos.y = centerZone.position.y;
         transform.position = pos;
 
         /*if(rotationFromSpeedCoefficient == 0)
@@ -84,14 +89,6 @@ public class Gem : MonoBehaviour
 
         //NewSortRotation();
     }
-
-    private void NewSortRotation()
-    {
-        rotation = rotationSpeed * Random.value;
-        rotation *= FirMath.GameMath.HeadsOrTails() ? 1 : -1;
-
-        rotationFromSpeedCoefficient = impulse.magnitude / rotation;
-    }
     public void SetSortImpulse(Vector3 impulse)
     {
         this.impulse = impulse;
@@ -100,10 +97,5 @@ public class Gem : MonoBehaviour
     public void SetView(Sprite sprite)
     {
         spriteRenderer.sprite = sprite;
-    }
-    
-    private void MoveToSort(Vector3 dir)
-    {
-        transform.localPosition += dir;
     }
 }

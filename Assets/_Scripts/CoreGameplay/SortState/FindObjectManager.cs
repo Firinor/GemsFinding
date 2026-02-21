@@ -1,16 +1,18 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using FirMath;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using UnityEngine.U2D;
 using Random = UnityEngine.Random;
 
 public class FindObjectManager : MonoBehaviour
 {
     #region Fields
     [SerializeField]
-    private FindObjectPuzzleConfig puzzleConfig;
+    private SpriteAtlas spriteAtlas;
+    private Sprite[] sprites;
+    
     [SerializeField]
     private PlayerHandManager playerHandManager;
     
@@ -31,15 +33,19 @@ public class FindObjectManager : MonoBehaviour
     private ProgressData player;
     private Stats contex;
     
-    //public ParticleSystem successParticleSystem;
-    //public ParticleSystem errorParticleSystem;
-    
+    public ParticleSystem completeParticleSystem;
     #endregion
 
     public void Initialize(ProgressData player)
     {
         this.player = player;
         contex = player.Stats;
+        
+        int spriteCount = spriteAtlas.spriteCount;
+        sprites = new Sprite[spriteCount];
+        spriteAtlas.GetSprites(sprites);
+        
+        canvas.Recipe.RecipeIsComplete += SuccessfullySolvePuzzle;
         
         StartCoroutine(StartPuzzle());
     }
@@ -70,8 +76,7 @@ public class FindObjectManager : MonoBehaviour
         float timer = 0;
         float yieldDelay = spawnTotalTime/contex.InBoxGemCount;
         
-        List<int> gemAtlas = GameMath.AFewCardsFromTheDeck(contex.InBoxGemCount, contex.RecipeGemCount);
-        
+        List<int> gemAtlas = GameMath.AFewCardsFromTheDeck(contex.InBoxGemCount, spriteAtlas.spriteCount);
         for (int i = 0; i < contex.InBoxGemCount; i++)
         {
             Gem newGem = pool.Get();
@@ -80,7 +85,7 @@ public class FindObjectManager : MonoBehaviour
             newGem.transform.position = spawnZone.position
                                         + new Vector3(math.cos(direction), 0, math.sin(direction)) * spawnDistance;
             
-            newGem.SetView(puzzleConfig.GemsSprites[i]);
+            newGem.SetView(sprites[gemAtlas[i]]);
             newGem.SetRandomImpulse(forceToIngredient);
             
             allIngredients.Add(newGem);
@@ -104,9 +109,7 @@ public class FindObjectManager : MonoBehaviour
 
     private void SuccessfullySolvePuzzle()
     {
-        canvas.ToCachButton.gameObject.SetActive(false);
-
-        canvas.RewardText.text = $"ПОЗДРАВЛЯЮ!";
+        Instantiate(completeParticleSystem, spawnZone.position, Quaternion.identity).Play();
         
         player.AddGold(100500);
         SaveLoadSystem<ProgressData>.Save(player);
@@ -125,16 +128,6 @@ public class FindObjectManager : MonoBehaviour
             Destroy(ingredient.gameObject);
         }*/
     }
-
-    /*internal void Particles(Vector3 position, bool success)
-    {
-        ParticleSystem particleSystem = success ? successParticleSystem : errorParticleSystem;
-
-        RectTransform rectTransform = particleSystem.GetComponent<RectTransform>();
-        rectTransform.localPosition = position;
-
-        particleSystem.Play();
-    }*/
 
     internal void RemoveIngredient(Gem gem)
     {

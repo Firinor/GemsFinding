@@ -21,6 +21,7 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private List<GemInRecipe> gems = new();
 
     private bool isPlayerHandOwerRecipe;
+    public bool IsPlayerOnRecipe => isPlayerHandOwerRecipe;
     
     public ParticleSystem successParticleSystem;
     public ParticleSystem errorParticleSystem;

@@ -80,15 +80,16 @@ public class PlayerHandManager : MonoBehaviour
             return;
 
         gemData.Position = gem.transform.position;
-        bool isCorrectGem = recipe.CheckGem(gemData);
 
-        if (!isCorrectGem)
+        if (!recipe.IsPlayerOnRecipe)
         {
             gem.SetSortImpulse(new Vector3(-mouseImpulse.y, 0, mouseImpulse.x) * impulseCoefficient);
         }
         else
         {
-            pool.Return(gem);
+            bool isCorrectGem = recipe.CheckGem(gemData);
+            if (isCorrectGem)
+                pool.Return(gem);
         }
         
         WashHand();
@@ -169,7 +170,7 @@ public class PlayerHandManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        action.FindAction("Click").performed -= FindGem;
-        action.FindAction("Look").performed -= MoveImage;
+        InputSystem.actions.FindAction("Click").performed -= FindGem;
+        InputSystem.actions.FindAction("Look").performed -= MoveImage;
     }
 }

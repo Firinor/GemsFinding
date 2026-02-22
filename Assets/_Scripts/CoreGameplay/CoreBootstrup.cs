@@ -27,11 +27,15 @@ public class CoreBootstrup : MonoBehaviour
         {
             data = new()
             {
-                Stats = stats
+                Stats = stats,
             };
+            data.Stats.isDebug = true;
             return;
         }
 #endif
-        data = SaveLoadSystem<ProgressData>.Load(Default: new());
+        data = SaveLoadSystem<ProgressData>.Load(Default: new()
+        {
+            Stats = new(),
+        });
     }
 }

@@ -12,6 +12,10 @@ public class CanvasView
     public TextMeshProUGUI LevelText;
     public FirAnimation RecipeAnim;
     public FirAnimation LevelAnim;
-    public CFXR_ParticleText OnCompleteParticalText;
+    public FirAnimation WinAnim;
+    public FirAnimation InfoLeftAnim;
+    public FirAnimation InfoRightAnim;
+    public FirAnimation ContinueAnim;
+    public TextMeshProUGUI LevelInfoText;
     public Recipe Recipe;
 }

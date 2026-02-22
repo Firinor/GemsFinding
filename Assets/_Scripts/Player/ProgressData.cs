@@ -4,8 +4,7 @@ using System;
 public class ProgressData
 {
     public int GoldCoins;
-    public int Level;
-    [NonSerialized] public Stats Stats;
+    public Stats Stats;
     
     public event Action<int> OnGoldChange;
     
@@ -23,11 +22,6 @@ public class ProgressData
         OnGoldChange?.Invoke(GoldCoins);
         return true;
     }
-    
-    public void InitializeStats()
-    {
-        Stats = new Stats();
-    }
 }
 
 [Serializable]
@@ -38,4 +32,6 @@ public class Stats
     public int InPoolCount = 60;
     public int InBoxGemCount = 30;
     public int RecipeGemCount = 1;
+
+    public bool isDebug;
 }

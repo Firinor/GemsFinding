@@ -46,8 +46,17 @@ public class FindObjectManager : MonoBehaviour
         spriteAtlas.GetSprites(sprites);
         
         canvas.Recipe.RecipeIsComplete += SuccessfullySolvePuzzle;
+        canvas.Recipe.WrongIngridient += WrongIngridient;
         
         StartCoroutine(StartPuzzle());
+    }
+
+    private void WrongIngridient()
+    {
+        for (int i = 0; i < allIngredients.Count; i++)
+        {
+            allIngredients[i].SetRandomImpulse(forceToIngredient);
+        }
     }
 
     private void CreateNewRecipe(int gemCount)
@@ -92,6 +101,9 @@ public class FindObjectManager : MonoBehaviour
         }
         
         CreateNewRecipe(gemAtlas.Count);
+        canvas.LevelText.text = contex.PlayerLevel.ToString();
+        canvas.RecipeAnim.Play();
+        canvas.LevelAnim.Play();
         playerHandManager.Initialize();
 
         for (int i = 0; i < contex.InBoxGemCount; i++)

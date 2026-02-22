@@ -26,6 +26,7 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public ParticleSystem errorParticleSystem;
     
     public event Action RecipeIsComplete;
+    public event Action WrongIngridient;
 
     void Awake()
     {
@@ -72,6 +73,7 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             return true;
         }
 
+        WrongIngridient?.Invoke();
         Particles(playerGem.Position, false);
         return false;
     }

@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 
 [DefaultExecutionOrder(-1)]
@@ -23,7 +22,16 @@ public class CoreBootstrup : MonoBehaviour
 
     private void LoadPlayerData(out ProgressData data)
     {
+#if UNITY_EDITOR
+        if (isDebugMode)
+        {
+            data = new()
+            {
+                Stats = stats
+            };
+            return;
+        }
+#endif
         data = SaveLoadSystem<ProgressData>.Load(Default: new());
-        data.Stats = stats;
     }
 }

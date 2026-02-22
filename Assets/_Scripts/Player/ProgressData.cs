@@ -33,6 +33,9 @@ public class ProgressData
 [Serializable]
 public class Stats
 {
-    public int InBoxGemCount = 7;
+    public int PlayerLevel = 1;
+    
+    public int InPoolCount = 60;
+    public int InBoxGemCount = 30;
     public int RecipeGemCount = 1;
 }

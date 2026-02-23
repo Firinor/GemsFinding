@@ -22,4 +22,23 @@ MonoBehaviour:
     - {fileID: 8300000, guid: f73ce253571303148899bdf403aea91f, type: 3}
     - {fileID: 8300000, guid: 31fcdb5686b53f54f9288519ed78cb59, type: 3}
     - {fileID: 8300000, guid: f930781ba889f204782fe629172ca168, type: 3}
+    Volume: 0.6
+  correctGem:
+    Clips:
+    - {fileID: 8300000, guid: 5588dd7d002f3dc45a121a0f192690cb, type: 3}
+    Volume: 1
+  errorGem:
+    Clips:
+    - {fileID: 8300000, guid: 82a93c4c5f956d0498d4181b7c614c3e, type: 3}
+    Volume: 1
+  buttonClick:
+    Clips:
+    - {fileID: 8300000, guid: 7f66e143d8655b94d9654f09ce43bdf4, type: 3}
+    Volume: 1
+  mouseClick:
+    Clips: []
+    Volume: 1
+  victory:
+    Clips:
+    - {fileID: 8300000, guid: 146d527065e2a294fa38ee6d16618086, type: 3}
     Volume: 1

@@ -13,6 +13,8 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private GemInRecipe recipeIngredientPrefab;
     [SerializeField]
     private RectTransform recipeParent;
+    [SerializeField]
+    private SoundManager sound;
     
     [SerializeField]
     private Image image;
@@ -68,12 +70,16 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             
             Destroy(gem.gameObject);
             gems.Remove(gem);
-            if(gems.Count == 0)
+            if (gems.Count == 0)
+            {
                 RecipeIsComplete?.Invoke();
+            }
             Particles(gem.transform.position, success: true);
+            sound.PlayCurrectGem();
             return true;
         }
 
+        sound.PlayErrorGem();
         WrongIngridient?.Invoke();
         Particles(playerGem.Position, false);
         return false;

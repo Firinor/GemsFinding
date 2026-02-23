@@ -20,6 +20,8 @@ public class GemPool : MonoBehaviour
     
     private void Start()
     {
+        sound = SoundManager.Instance;
+        
         for (int i = 0; i < ingredientParent.childCount - 1; i++)
         {
             Transform child = ingredientParent.GetChild(i);

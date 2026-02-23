@@ -3,8 +3,7 @@ using UnityEngine;
 
 public static class SaveLoadSystem<T>
 {
-    private static string key => nameof(T);
-    public static T Load(T Default = default)
+    public static T Load(string key, T Default = default)
     {
         if (!PlayerPrefs.HasKey(key))
             return Default;
@@ -14,7 +13,7 @@ public static class SaveLoadSystem<T>
         return JsonUtility.FromJson<T>(value);
     }
     
-    public static void Save(T data)
+    public static void Save(string key, T data)
     {
         string value = JsonUtility.ToJson(data);
         PlayerPrefs.SetString(key, value);

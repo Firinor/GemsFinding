@@ -160,9 +160,11 @@ public class FindObjectManager : MonoBehaviour
 
         player.Stats.PlayerLevel++;
         //player.AddGold(100500);
-        SaveLoadSystem<ProgressData>.Save(player);
+        SaveLoadSystem<ProgressData>.Save("Player", player);
         canvas.WinScreen.SetActive(true);
-        await Task.Delay(1000);//1sec
+        await Task.Delay(500);
+        SoundManager.Instance.PlayVictory();
+        await Task.Delay(500);//1sec
         canvas.WinAnim.Play();
         await Task.Delay(1000);//1sec
         canvas.ContinueAnim.Play();

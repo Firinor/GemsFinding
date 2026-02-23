@@ -1,7 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using FirMath;
-// ReSharper disable All
+using UnityEngine.InputSystem.EnhancedTouch;
+using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
+using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 public class PlayerHandManager : MonoBehaviour
 {
@@ -29,8 +31,12 @@ public class PlayerHandManager : MonoBehaviour
     public void Initialize()
     {
         action = InputSystem.actions;
+        EnhancedTouchSupport.Enable();
         action.FindAction("Click").performed += FindGem;
-        action.FindAction("Look").performed += MoveImage;
+        if (SystemInfo.deviceType == DeviceType.Handheld)
+            action.FindAction("TouchLook").performed += MoveImage; 
+        else
+            action.FindAction("Look").performed += MoveImage;
     }
 
     private void MoveImage(InputAction.CallbackContext obj)
@@ -52,7 +58,12 @@ public class PlayerHandManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 currentMousePosition = Mouse.current.position.ReadValue();
+        Vector2 currentMousePosition;
+        if (Touch.activeTouches.Count > 0)
+            currentMousePosition = Touch.activeTouches[0].screenPosition;
+        else
+            currentMousePosition = Mouse.current.position.ReadValue();
+        
         lastMousePosition[lastPositionIndex] = currentMousePosition;
         lastPositionIndex = (lastPositionIndex+1) % lastMousePosition.Length;
         mouseImpulse = currentMousePosition - lastMousePosition[lastPositionIndex];
@@ -64,7 +75,13 @@ public class PlayerHandManager : MonoBehaviour
             gem.enabled = true;
         gem = null;
         mouseImpulse = Vector2.zero;
-        Vector2 mousePosition = Mouse.current.position.ReadValue();
+        
+        Vector2 mousePosition;
+        if (Touch.activeTouches.Count > 0)
+            mousePosition = Touch.activeTouches[0].screenPosition;
+        else
+            mousePosition = Mouse.current.position.ReadValue();
+        
         lastMousePosition = new Vector2[]
         {
             mousePosition,
@@ -150,7 +167,13 @@ public class PlayerHandManager : MonoBehaviour
 
     private static Vector3 GetRayHitPoint()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        Vector2 position;
+        if (Touch.activeTouches.Count > 0)
+            position = Touch.activeTouches[0].screenPosition;
+        else
+            position = Mouse.current.position.ReadValue();
+        
+        Ray ray = Camera.main.ScreenPointToRay(position);
 
         float denominator = ray.direction.y;
         //if (Mathf.Approximately(denominator, 0))return false;
@@ -172,5 +195,6 @@ public class PlayerHandManager : MonoBehaviour
     {
         InputSystem.actions.FindAction("Click").performed -= FindGem;
         InputSystem.actions.FindAction("Look").performed -= MoveImage;
+        InputSystem.actions.FindAction("TouchLook").performed -= MoveImage;
     }
 }

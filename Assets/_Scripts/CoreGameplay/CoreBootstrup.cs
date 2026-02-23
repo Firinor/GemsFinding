@@ -3,6 +3,9 @@ using UnityEngine;
 [DefaultExecutionOrder(-1)]
 public class CoreBootstrup : MonoBehaviour
 {
+    [SerializeField]
+    private Animation StartAnimation;
+    
     [SerializeField] 
     private Settings settings;
     [SerializeField] 
@@ -12,11 +15,29 @@ public class CoreBootstrup : MonoBehaviour
     private bool isDebugMode;
     [SerializeField]
     private Stats stats;
+
+    private static bool isSkipStartAnimations;
     
-    public void StartPuzzle()
+    private ProgressData player;
+
+    private void Awake()
     {
         settings.Initialize();
-        LoadPlayerData(out ProgressData player);
+        LoadPlayerData(out player);
+        if (isSkipStartAnimations)
+        {
+            
+            mainManager.Initialize(player);
+        }
+        else
+        {
+            StartAnimation.enabled = true;
+        }
+    }
+
+    public void StartPuzzle()
+    {
+        isSkipStartAnimations = true;
         mainManager.Initialize(player);
     }
 
@@ -33,7 +54,7 @@ public class CoreBootstrup : MonoBehaviour
             return;
         }
 #endif
-        data = SaveLoadSystem<ProgressData>.Load(Default: new()
+        data = SaveLoadSystem<ProgressData>.Load("Player", Default: new()
         {
             Stats = new(),
         });

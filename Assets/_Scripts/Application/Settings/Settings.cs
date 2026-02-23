@@ -26,7 +26,7 @@ public class Settings : MonoBehaviour
     
     public void Initialize()
     {
-        data = SaveLoadSystem<SettingsData>.Load(new ());
+        data = SaveLoadSystem<SettingsData>.Load("Settings", new ());
 
         SetSounds();
         SetLanguage();
@@ -45,7 +45,7 @@ public class Settings : MonoBehaviour
 
             //musicToggle.GetComponent<Image>().sprite = v ? MusicOnSprite : MusicOffSprite;
             data.IsMusicOn = v;
-            SaveLoadSystem<SettingsData>.Save(data);
+            SaveLoadSystem<SettingsData>.Save("Settings", data);
         });
         musicSlider.onValueChanged.AddListener(value =>
         {
@@ -55,7 +55,7 @@ public class Settings : MonoBehaviour
                 mixer.SetFloat("MusicVolume", -80);
 
             data.MusicValue = value;
-            SaveLoadSystem<SettingsData>.Save(data);
+            SaveLoadSystem<SettingsData>.Save("Settings", data);
         });
         sfxToggle.onValueChanged.AddListener(v =>
         {
@@ -66,7 +66,7 @@ public class Settings : MonoBehaviour
             
             //sfxToggle.GetComponent<Image>().sprite = v ? SoundOnSprite : SoundOffSprite;
             data.IsSFXOn = v;
-            SaveLoadSystem<SettingsData>.Save(data);
+            SaveLoadSystem<SettingsData>.Save("Settings", data);
         });
         sfxSlider.onValueChanged.AddListener(value =>
         {
@@ -76,7 +76,7 @@ public class Settings : MonoBehaviour
                 mixer.SetFloat("SFXVolume", -80);
 
             data.SFXValue = value;
-            SaveLoadSystem<SettingsData>.Save(data);
+            SaveLoadSystem<SettingsData>.Save("Settings", data);
         });
         
         ruLanguageToggle.onValueChanged.AddListener(v =>
@@ -87,7 +87,7 @@ public class Settings : MonoBehaviour
             LocalizationSettings.SelectedLocale = locale;
 
             data.Language = "ru-RU";
-            SaveLoadSystem<SettingsData>.Save(data);
+            SaveLoadSystem<SettingsData>.Save("Settings", data);
         });
         
         enLanguageToggle.onValueChanged.AddListener(v =>
@@ -98,32 +98,28 @@ public class Settings : MonoBehaviour
             LocalizationSettings.SelectedLocale = locale;
             
             data.Language = "en";
-            SaveLoadSystem<SettingsData>.Save(data);
+            SaveLoadSystem<SettingsData>.Save("Settings", data);
         });
     }
 
     private void SetLanguage()
     {
         if (data.Language == "ru")
-            ruLanguageToggle.isOn = true;
+            ruLanguageToggle.SetIsOnWithoutNotify(true);
         else
-            enLanguageToggle.isOn = true;
+            enLanguageToggle.SetIsOnWithoutNotify(true);
     }
 
     private void SetSounds()
     {
         musicSlider.value = data.MusicValue;
-        musicToggle.isOn = data.IsMusicOn;
+        musicToggle.SetIsOnWithoutNotify(data.IsMusicOn);
         //musicToggle.GetComponent<Image>().sprite = data.IsMusicOn ? MusicOnSprite : MusicOffSprite;
         sfxSlider.value = data.SFXValue;
-        sfxToggle.isOn = data.IsSFXOn;
+        sfxToggle.SetIsOnWithoutNotify(data.IsSFXOn);
         //sfxToggle.GetComponent<Image>().sprite = data.IsSFXOn ? SoundOnSprite : SoundOffSprite;
     }
-
-    public void DeleteSaves()
-    {
-        PlayerPrefs.DeleteAll();
-    }
+    
     private void OnDestroy()
     {
         musicToggle.onValueChanged.RemoveAllListeners();

@@ -22,8 +22,40 @@ MonoBehaviour:
     m_Localized: Start
     m_Metadata:
       m_Items: []
-  - m_Id: 8485777104896
-    m_Localized: Cheat money
+  - m_Id: 7938679489880064
+    m_Localized: "CONGRATS\t!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7938845479460864
+    m_Localized: 'Time spent
+
+      Total items
+
+      Recipe complexity'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7939364566523904
+    m_Localized: CONTINUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7939668104110080
+    m_Localized: No ads
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7939767790133248
+    m_Localized: Skip the intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7940463721635840
+    m_Localized: Music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7940494985977856
+    m_Localized: Sound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7940518138535936
+    m_Localized: Language
     m_Metadata:
       m_Items: []
   references:

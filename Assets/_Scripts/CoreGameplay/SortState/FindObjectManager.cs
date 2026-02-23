@@ -148,7 +148,7 @@ public class FindObjectManager : MonoBehaviour
         
         contex.InPoolCount = (int)Mathf.Min(40f + contex.PlayerLevel*2, spriteAtlas.spriteCount);
         contex.InBoxGemCount = (int)Mathf.Min(30f + contex.PlayerLevel*2, spriteAtlas.spriteCount);
-        contex.RecipeGemCount = (int)Mathf.Min(2.7f + contex.PlayerLevel/5f, spriteAtlas.spriteCount);
+        contex.RecipeGemCount = (int)Mathf.Min(2.7f + contex.PlayerLevel/6f, spriteAtlas.spriteCount);
 
         //Debug.Log("pool: " + contex.InPoolCount + " box: " + contex.InBoxGemCount + " recipe: " + contex.RecipeGemCount);
     }

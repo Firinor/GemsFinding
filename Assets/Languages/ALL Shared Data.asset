@@ -19,8 +19,36 @@ MonoBehaviour:
     m_Key: Start
     m_Metadata:
       m_Items: []
-  - m_Id: 8485777104896
-    m_Key: Cheat
+  - m_Id: 7938679489880064
+    m_Key: CONGRATS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7938845479460864
+    m_Key: Info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7939364566523904
+    m_Key: Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7939668104110080
+    m_Key: NoAds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7939767790133248
+    m_Key: FastLevel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7940463721635840
+    m_Key: Music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7940494985977856
+    m_Key: Sound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7940518138535936
+    m_Key: Language
     m_Metadata:
       m_Items: []
   m_Metadata:

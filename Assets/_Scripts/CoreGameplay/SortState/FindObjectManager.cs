@@ -153,7 +153,12 @@ public class FindObjectManager : MonoBehaviour
         //Debug.Log("pool: " + contex.InPoolCount + " box: " + contex.InBoxGemCount + " recipe: " + contex.RecipeGemCount);
     }
 
-    private async void SuccessfullySolvePuzzle()
+    private void SuccessfullySolvePuzzle()
+    {
+        StartCoroutine(SuccessfullySolvePuzzleCoroutine());
+    }
+
+    private IEnumerator SuccessfullySolvePuzzleCoroutine()
     {
         completeParticleSystem.gameObject.SetActive(true);
         completeParticleSystem.Play();
@@ -162,11 +167,11 @@ public class FindObjectManager : MonoBehaviour
         //player.AddGold(100500);
         SaveLoadSystem<ProgressData>.Save("Player", player);
         canvas.WinScreen.SetActive(true);
-        await Task.Delay(500);
+        yield return new WaitForSeconds(0.5f);
         SoundManager.Instance.PlayVictory();
-        await Task.Delay(500);//1sec
+        yield return new WaitForSeconds(0.5f);
         canvas.WinAnim.Play();
-        await Task.Delay(1000);//1sec
+        yield return new WaitForSeconds(1f);
         canvas.ContinueAnim.Play();
         enabled = false;
         TimeSpan timer = TimeSpan.FromSeconds(levelTime);

@@ -28,10 +28,10 @@ public class Settings : MonoBehaviour
     {
         data = SaveLoadSystem<SettingsData>.Load("Settings", new ());
 
+        Subscribe();
+
         SetSounds();
         SetLanguage();
-
-        Subscribe();
     }
 
     private void Subscribe()

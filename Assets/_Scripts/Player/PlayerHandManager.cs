@@ -33,10 +33,10 @@ public class PlayerHandManager : MonoBehaviour
         action = InputSystem.actions;
         EnhancedTouchSupport.Enable();
         action.FindAction("Click").performed += FindGem;
-        if (SystemInfo.deviceType == DeviceType.Handheld)
-            action.FindAction("TouchLook").performed += MoveImage; 
-        else
+        if (SystemInfo.deviceType == DeviceType.Desktop)
             action.FindAction("Look").performed += MoveImage;
+        else
+            action.FindAction("TouchLook").performed += MoveImage; 
     }
 
     private void MoveImage(InputAction.CallbackContext obj)

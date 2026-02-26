@@ -58,5 +58,6 @@ public class CoreBootstrup : MonoBehaviour
         {
             Stats = new(),
         });
+        data.Stats.isDebug = false;
     }
 }

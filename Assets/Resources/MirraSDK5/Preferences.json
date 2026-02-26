@@ -27,6 +27,28 @@
                     }
                 ]
             }
+        },
+        {
+            "key": "MirraWebConfiguration",
+            "group": {
+                "boolCollection": [
+                    {
+                        "key": "Y8_PropertyGroup.Visible",
+                        "value": true
+                    },
+                    {
+                        "key": "IAds.Visible",
+                        "value": true
+                    },
+                    {
+                        "key": "IAchievements.Visible",
+                        "value": true
+                    }
+                ],
+                "intCollection": [],
+                "floatCollection": [],
+                "stringCollection": []
+            }
         }
     ]
 }

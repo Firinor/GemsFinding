@@ -489,7 +489,7 @@
                     "path": "<Touchscreen>/delta",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Touch",
+                    "groups": ";Touch;Keyboard&Mouse",
                     "action": "TouchLook",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -500,7 +500,7 @@
                     "path": "<Pen>/delta",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Touch",
+                    "groups": ";Touch;Keyboard&Mouse",
                     "action": "TouchLook",
                     "isComposite": false,
                     "isPartOfComposite": false

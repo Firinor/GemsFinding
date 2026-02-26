@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Localization;
@@ -31,7 +33,7 @@ public class Settings : MonoBehaviour
         Subscribe();
 
         SetSounds();
-        SetLanguage();
+        StartCoroutine(SetLanguage());
     }
 
     private void Subscribe()
@@ -102,21 +104,28 @@ public class Settings : MonoBehaviour
         });
     }
 
-    private void SetLanguage()
+    private IEnumerator SetLanguage()
     {
+        yield return LocalizationSettings.InitializationOperation;
+        
         if (data.Language == "ru")
-            ruLanguageToggle.SetIsOnWithoutNotify(true);
+            ruLanguageToggle.isOn = true;
         else
-            enLanguageToggle.SetIsOnWithoutNotify(true);
+            enLanguageToggle.isOn = true;
+
+        ruLanguageToggle.AddComponent<ButtonClick>();
+        enLanguageToggle.AddComponent<ButtonClick>();
     }
 
     private void SetSounds()
     {
         musicSlider.value = data.MusicValue;
-        musicToggle.SetIsOnWithoutNotify(data.IsMusicOn);
+        musicToggle.isOn = data.IsMusicOn;
+        musicToggle.AddComponent<ButtonClick>();
         //musicToggle.GetComponent<Image>().sprite = data.IsMusicOn ? MusicOnSprite : MusicOffSprite;
         sfxSlider.value = data.SFXValue;
-        sfxToggle.SetIsOnWithoutNotify(data.IsSFXOn);
+        sfxToggle.isOn = data.IsSFXOn;
+        sfxToggle.AddComponent<ButtonClick>();
         //sfxToggle.GetComponent<Image>().sprite = data.IsSFXOn ? SoundOnSprite : SoundOffSprite;
     }
     

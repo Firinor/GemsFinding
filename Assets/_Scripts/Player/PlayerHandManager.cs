@@ -1,15 +1,16 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using FirMath;
+using MirraGames.SDK;
 using UnityEngine.InputSystem.EnhancedTouch;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
-using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 public class PlayerHandManager : MonoBehaviour
 {
     private Gem gem;
     [SerializeField]
-    private bool isGemOn;
+    private bool isMouseClickOn;
     private InputActionAsset action;
     [SerializeField] 
     private GemPool pool;
@@ -17,26 +18,38 @@ public class PlayerHandManager : MonoBehaviour
     private Recipe recipe;
     [SerializeField] 
     private Transform spotLight;
-    [SerializeField] 
+    [SerializeField]
     private float impulseCoefficient;
+    [SerializeField] 
+    private Camera _camera;
+    [SerializeField] 
+    private float sencivity;
+    [SerializeField] 
+    private Vector3[] cameraBorder;//[0] min - [1] max
+    [SerializeField]
+    private float zoomSpeed = 0.01f;
 
     private GemData gemData;
 
     private int lastPositionIndex;
     private Vector2[] lastMousePosition = new Vector2[5];
     private Vector2 mouseImpulse;
+    private Vector3 cameraStartPosition;
 
     private Vector3 gemInHandOffset;
+
+    private float previousPinchDistance;
+    private bool isPinching;
     
     public void Initialize()
     {
         action = InputSystem.actions;
         EnhancedTouchSupport.Enable();
         action.FindAction("Click").performed += FindGem;
-        if (SystemInfo.deviceType == DeviceType.Desktop)
-            action.FindAction("Look").performed += MoveImage;
-        else
+        if (MirraSDK.Device.IsMobile)
             action.FindAction("TouchLook").performed += MoveImage; 
+        else
+            action.FindAction("Look").performed += MoveImage;
     }
 
     private void MoveImage(InputAction.CallbackContext obj)
@@ -44,15 +57,24 @@ public class PlayerHandManager : MonoBehaviour
         Vector3 hitPoint = GetRayHitPoint();
         
         spotLight.position = hitPoint;
-        if(gem != null)
+        if (gem != null)
             gem.transform.position = hitPoint + gemInHandOffset;
+        else if(isMouseClickOn)
+        {
+            Vector2 mouseDelta = obj.ReadValue<Vector2>();
+            Vector3 delta = new Vector3(mouseDelta.y, 0, -mouseDelta.x);
+            Vector3 newCameraPosition = _camera.transform.position + delta * sencivity;
+            newCameraPosition.x = Mathf.Clamp(newCameraPosition.x, cameraBorder[0].x, cameraBorder[1].x);
+            newCameraPosition.z = Mathf.Clamp(newCameraPosition.z, cameraBorder[0].z, cameraBorder[1].z);
+            _camera.transform.position = newCameraPosition;
+        }
     }
 
     private void FindGem(InputAction.CallbackContext obj)
     {
-        if (!isGemOn && obj.control.IsPressed())
+        if (!isMouseClickOn && obj.control.IsPressed())
             FindGem();
-        else if(isGemOn && !obj.control.IsPressed())
+        else if(isMouseClickOn && !obj.control.IsPressed())
             ReleaseGem();
     }
 
@@ -63,16 +85,51 @@ public class PlayerHandManager : MonoBehaviour
             currentMousePosition = Touch.activeTouches[0].screenPosition;
         else
             currentMousePosition = Mouse.current.position.ReadValue();
-        
+
         lastMousePosition[lastPositionIndex] = currentMousePosition;
-        lastPositionIndex = (lastPositionIndex+1) % lastMousePosition.Length;
+        lastPositionIndex = (lastPositionIndex + 1) % lastMousePosition.Length;
         mouseImpulse = currentMousePosition - lastMousePosition[lastPositionIndex];
     }
 
-    public void WashHand()
+    private void Update()
+    {
+        if (Mouse.current != null)
+        {
+            float scroll = Mouse.current.scroll.ReadValue().y;
+            if (scroll != 0)
+                ZoomCamera(scroll * zoomSpeed);
+        }
+        
+        if (Touch.activeTouches.Count == 2)
+        {
+            float currentDistance = Vector2.Distance(
+                Touch.activeTouches[0].screenPosition,
+                Touch.activeTouches[1].screenPosition);
+            if (isPinching)
+                ZoomCamera((currentDistance - previousPinchDistance) * zoomSpeed);
+            isPinching = true;
+            previousPinchDistance = currentDistance;
+        }
+        else
+        {
+            isPinching = false;
+        }
+    }
+
+    private void ZoomCamera(float delta)
+    {
+        Vector3 pos = _camera.transform.position;
+        pos.y = Mathf.Clamp(pos.y - delta, cameraBorder[0].y, cameraBorder[1].y);
+        _camera.transform.position = pos;
+    }
+
+    private void WashHand()
     {
         if (gem is not null)
+        {
             gem.enabled = true;
+            gem.GetComponent<SpriteRenderer>().sortingLayerID = SortingLayer.NameToID("Gems");
+        }
         gem = null;
         mouseImpulse = Vector2.zero;
         
@@ -93,6 +150,8 @@ public class PlayerHandManager : MonoBehaviour
     }
     private void ReleaseGem()
     {
+        isMouseClickOn = false;
+        
         if (gem is null)
             return;
 
@@ -110,13 +169,13 @@ public class PlayerHandManager : MonoBehaviour
         }
         
         WashHand();
-        isGemOn = false;
-        enabled = false;
     }
 
     private void FindGem()
     {
         WashHand();
+        
+        isMouseClickOn = true;
         
         Vector3 hitPoint = GetRayHitPoint();
         
@@ -135,13 +194,11 @@ public class PlayerHandManager : MonoBehaviour
             return;
 
         gem.enabled = false;
+        gem.GetComponent<SpriteRenderer>().sortingLayerID = SortingLayer.NameToID("VFX");
         
         gemData.Sprite = gem.Sprite.sprite;
  
         gemInHandOffset = gem.transform.position - hitPoint;
-
-        isGemOn = true;
-        enabled = true;
     }
 
     private bool isGemOnPoint(Gem gem, Vector3 hitPoint)

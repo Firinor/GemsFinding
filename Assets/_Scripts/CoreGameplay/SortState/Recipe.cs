@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,6 +14,9 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private GemInRecipe recipeIngredientPrefab;
     [SerializeField]
     private RectTransform recipeParent;
+    [SerializeField] 
+    private AnimationCurve curve;
+    private float animationTimer;
     [SerializeField]
     private SoundManager sound;
     
@@ -24,6 +28,9 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private bool isPlayerHandOwerRecipe;
     public bool IsPlayerOnRecipe => isPlayerHandOwerRecipe;
+
+    private Vector3 normalScale;
+    private Vector3 targetScale;
     
     public ParticleSystem successParticleSystem;
     public ParticleSystem errorParticleSystem;
@@ -40,13 +47,40 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         isPlayerHandOwerRecipe = true;
         image.color = Color.white;
+        StopAllCoroutines();
+        StartCoroutine(ToMaxSize());
+    }
+
+    private IEnumerator ToMaxSize()
+    {
+        while (animationTimer < 1)
+        {
+            yield return null;
+            animationTimer += Time.deltaTime;
+            float curveValue = curve.Evaluate(animationTimer);
+            recipeParent.localScale = Vector3.one + Vector3.one*curveValue;
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         isPlayerHandOwerRecipe = false;
         image.color = grey;
+        StopAllCoroutines();
+        StartCoroutine(ToMinSize());
     }
+
+    private IEnumerator ToMinSize()
+    {
+        while (animationTimer > 0)
+        {
+            yield return null;
+            animationTimer -= Time.deltaTime;
+            float curveValue = curve.Evaluate(animationTimer);
+            recipeParent.localScale = Vector3.one + Vector3.one*curveValue;
+        }
+    }
+
     internal void SetResipe(List<Gem> gems)
     {
         foreach (Gem gem in gems)

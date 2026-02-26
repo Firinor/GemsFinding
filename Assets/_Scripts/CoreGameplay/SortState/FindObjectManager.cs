@@ -4,6 +4,7 @@ using UnityEngine;
 using FirMath;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MirraGames.SDK;
 using Unity.Mathematics;
 using UnityEngine.U2D;
 using Random = UnityEngine.Random;
@@ -54,8 +55,18 @@ public class FindObjectManager : MonoBehaviour
         
         canvas.Recipe.RecipeIsComplete += SuccessfullySolvePuzzle;
         canvas.Recipe.WrongIngridient += WrongIngridient;
+
+        if (MirraSDK.IsInitialized)
+        {
+            StartCoroutine(StartPuzzle());
+            return;
+        }
         
-        StartCoroutine(StartPuzzle());
+        MirraSDK.WaitForProviders(() =>
+        {
+            MirraSDK.Analytics.GameIsReady();
+            StartCoroutine(StartPuzzle());
+        });
     }
 
     private void WrongIngridient()
@@ -146,9 +157,25 @@ public class FindObjectManager : MonoBehaviour
             return;
         }
         
-        contex.InPoolCount = (int)Mathf.Min(40f + contex.PlayerLevel*2, spriteAtlas.spriteCount);
-        contex.InBoxGemCount = (int)Mathf.Min(30f + contex.PlayerLevel*2, spriteAtlas.spriteCount);
-        contex.RecipeGemCount = (int)Mathf.Min(2.7f + contex.PlayerLevel/6f, spriteAtlas.spriteCount);
+        if (contex.PlayerLevel == 2)
+        {
+            contex.InPoolCount = 16;
+            contex.InBoxGemCount = 16;
+            contex.RecipeGemCount = 3;
+            return;
+        }
+        
+        if (contex.PlayerLevel == 3)
+        {
+            contex.InPoolCount = 32;
+            contex.InBoxGemCount = 32;
+            contex.RecipeGemCount = 4;
+            return;
+        }
+        
+        contex.InPoolCount = (int)Mathf.Min(70f + contex.PlayerLevel*2, spriteAtlas.spriteCount);
+        contex.InBoxGemCount = (int)Mathf.Min(60f + contex.PlayerLevel*2, spriteAtlas.spriteCount);
+        contex.RecipeGemCount = (int)Mathf.Min(4.7f + contex.PlayerLevel/6f, spriteAtlas.spriteCount);
 
         //Debug.Log("pool: " + contex.InPoolCount + " box: " + contex.InBoxGemCount + " recipe: " + contex.RecipeGemCount);
     }

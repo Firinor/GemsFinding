@@ -859,28 +859,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 694bc4a1ffb2a0034f9baa632b34a247-no-bg-preview (carve.photos)_25
-      rect:
-        serializedVersion: 2
-        x: 271
-        y: 249
-        width: 63
-        height: 60
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d229c8c9220c86b40800000000000000
-      internalID: 5433804205310382637
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: 694bc4a1ffb2a0034f9baa632b34a247-no-bg-preview (carve.photos)_26
       rect:
         serializedVersion: 2
@@ -986,28 +964,6 @@ TextureImporter:
       bones: []
       spriteID: 7b3fbded92e988290800000000000000
       internalID: -7887880844669619273
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 694bc4a1ffb2a0034f9baa632b34a247-no-bg-preview (carve.photos)_31
-      rect:
-        serializedVersion: 2
-        x: 663
-        y: 247
-        width: 68
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 07db9263949c7ca10800000000000000
-      internalID: 1929732281630047600
       vertices: []
       indices: 
       edges: []

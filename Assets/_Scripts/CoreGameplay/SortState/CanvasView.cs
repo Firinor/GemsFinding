@@ -16,6 +16,7 @@ public class CanvasView
     public FirAnimation InfoLeftAnim;
     public FirAnimation InfoRightAnim;
     public FirAnimation ContinueAnim;
+    public FirAnimation NoAdsButtonAnim;
     public TextMeshProUGUI LevelInfoText;
     public Recipe Recipe;
 }

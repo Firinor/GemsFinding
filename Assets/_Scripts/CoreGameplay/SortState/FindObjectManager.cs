@@ -31,6 +31,8 @@ public class FindObjectManager : MonoBehaviour
     [SerializeField]
     private Transform spawnZone;
     [SerializeField]
+    private ADSManager adsManager;
+    [SerializeField]
     private float spawnDistance = 20f;
     
     private ProgressData player;
@@ -55,18 +57,10 @@ public class FindObjectManager : MonoBehaviour
         
         canvas.Recipe.RecipeIsComplete += SuccessfullySolvePuzzle;
         canvas.Recipe.WrongIngridient += WrongIngridient;
-
-        if (MirraSDK.IsInitialized)
-        {
-            StartCoroutine(StartPuzzle());
-            return;
-        }
         
-        MirraSDK.WaitForProviders(() =>
-        {
-            MirraSDK.Analytics.GameIsReady();
-            StartCoroutine(StartPuzzle());
-        });
+        StartCoroutine(StartPuzzle());
+        adsManager.Initialize();
+        MirraSDK.Analytics.GameIsReady();
     }
 
     private void WrongIngridient()
@@ -127,6 +121,7 @@ public class FindObjectManager : MonoBehaviour
         
         CreateNewRecipe(gemAtlas.Count);
         canvas.LevelText.text = contex.PlayerLevel.ToString();
+        canvas.NoAdsButtonAnim.Play();
         canvas.RecipeAnim.Play();
         canvas.LevelAnim.Play();
         playerHandManager.Initialize();
@@ -192,7 +187,7 @@ public class FindObjectManager : MonoBehaviour
 
         player.Stats.PlayerLevel++;
         //player.AddGold(100500);
-        SaveLoadSystem<ProgressData>.Save("Player", player);
+        MirraSaveLoadSystem<ProgressData>.Save("Player", player);
         canvas.WinScreen.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         SoundManager.Instance.PlayVictory();

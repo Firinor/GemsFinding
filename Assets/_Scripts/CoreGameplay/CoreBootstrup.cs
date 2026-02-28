@@ -1,3 +1,4 @@
+using MirraGames.SDK;
 using UnityEngine;
 
 [DefaultExecutionOrder(-1)]
@@ -22,6 +23,11 @@ public class CoreBootstrup : MonoBehaviour
 
     private void Awake()
     {
+        MirraSDK.WaitForProviders(AwakeAfterMirra);
+    }
+
+    private void AwakeAfterMirra()
+    {
         settings.Initialize();
         LoadPlayerData(out player);
         if (isSkipStartAnimations)
@@ -34,7 +40,7 @@ public class CoreBootstrup : MonoBehaviour
             StartAnimation.enabled = true;
         }
     }
-
+    
     public void StartPuzzle()
     {
         isSkipStartAnimations = true;
@@ -54,7 +60,7 @@ public class CoreBootstrup : MonoBehaviour
             return;
         }
 #endif
-        data = SaveLoadSystem<ProgressData>.Load("Player", Default: new()
+        data = MirraSaveLoadSystem<ProgressData>.Load("Player", Default: new()
         {
             Stats = new(),
         });

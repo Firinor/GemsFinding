@@ -58,7 +58,7 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             yield return null;
             animationTimer += Time.deltaTime;
             float curveValue = curve.Evaluate(animationTimer);
-            recipeParent.localScale = Vector3.one + Vector3.one*curveValue;
+            recipeParent.localScale = Vector3.one + Vector3.one/2*curveValue;
         }
     }
 
@@ -77,7 +77,7 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             yield return null;
             animationTimer -= Time.deltaTime;
             float curveValue = curve.Evaluate(animationTimer);
-            recipeParent.localScale = Vector3.one + Vector3.one*curveValue;
+            recipeParent.localScale = Vector3.one + Vector3.one/2*curveValue;
         }
     }
 

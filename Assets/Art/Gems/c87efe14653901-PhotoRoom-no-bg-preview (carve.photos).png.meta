@@ -883,12 +883,12 @@ TextureImporter:
       name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_22
       rect:
         serializedVersion: 2
-        x: 562
-        y: 364
-        width: 74
-        height: 57
+        x: 330
+        y: 198
+        width: 63
+        height: 75
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2129,6 +2129,160 @@ TextureImporter:
       bones: []
       spriteID: 0786ee860447de3e0800000000000000
       internalID: -2022832837632300944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_11
+      rect:
+        serializedVersion: 2
+        x: 638
+        y: 201
+        width: 75
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42485bcd0a2edc34f89bf058847dd89c
+      internalID: 5294704227960421224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_29
+      rect:
+        serializedVersion: 2
+        x: 801
+        y: 122
+        width: 71
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2a731d5eb7d9974f85fc8b3ac91adda
+      internalID: -4807740098882102830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_49
+      rect:
+        serializedVersion: 2
+        x: 878
+        y: 127
+        width: 74
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e259a217eb4b20d4a9b3d1d3258f7b87
+      internalID: -4775062443887188231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_53
+      rect:
+        serializedVersion: 2
+        x: 1035
+        y: 198
+        width: 71
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03e83dcc58cea05438a94dc0bfbd0c0a
+      internalID: -5581895337610135616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_58
+      rect:
+        serializedVersion: 2
+        x: 1111
+        y: 361
+        width: 76
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fdc2c62300654048bc4aea94281a4f7
+      internalID: 1120297031628138618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_70
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 433
+        width: 74
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee7f8afdd3ce5b149b29b7c604d4d452
+      internalID: -3837599226488148894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_71
+      rect:
+        serializedVersion: 2
+        x: 1038
+        y: 120
+        width: 66
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69755beacb5de5247ae3df91bd1eaef9
+      internalID: 2753935542483659887
       vertices: []
       indices: 
       edges: []

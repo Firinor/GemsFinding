@@ -1,5 +1,4 @@
 using System.Collections;
-using MirraGames.SDK;
 using UnityEngine;
 
 [DefaultExecutionOrder(-1)]
@@ -36,10 +35,10 @@ public class CoreBootstrup : MonoBehaviour
         else
         {
             StartAnimation.enabled = true;
-            if(MirraSDK.IsInitialized)
+            //if(MirraSDK.IsInitialized)
                 AwakeAfterMirra();
-            else
-                MirraSDK.WaitForProviders(AwakeAfterMirra);
+            //else
+            //    MirraSDK.WaitForProviders(AwakeAfterMirra);
         }
     }
 
@@ -47,17 +46,17 @@ public class CoreBootstrup : MonoBehaviour
     {
         settings.Initialize();
         LoadPlayerData(out player);
-        adsManager.Initialize();
+        //adsManager.Initialize();
         startBlackScreen.SetActive(false);
     }
     
     public void StartPuzzle()
     {
         isSkipStartAnimations = true;
-        if(MirraSDK.IsInitialized)
+        //if(MirraSDK.IsInitialized)
             StartCoroutine(AwaitPlayer());
-        else
-            MirraSDK.WaitForProviders(()=>StartCoroutine(AwaitPlayer()));
+        //else
+        //    MirraSDK.WaitForProviders(()=>StartCoroutine(AwaitPlayer()));
     }
 
     private IEnumerator AwaitPlayer()
@@ -82,7 +81,7 @@ public class CoreBootstrup : MonoBehaviour
             return;
         }
 #endif
-        data = MirraSaveLoadSystem<ProgressData>.Load("Player", Default: new()
+        data = SaveLoadSystem<ProgressData>.Load("Player", Default: new()
         {
             Stats = new(),
         });

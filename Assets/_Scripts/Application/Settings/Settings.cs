@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections;
-using MirraGames.SDK;
-using MirraGames.SDK.Common;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -30,7 +28,7 @@ public class Settings : MonoBehaviour
     
     public void Initialize()
     {
-        data = MirraSaveLoadSystem<SettingsData>.Load("Settings", new ());
+        data = SaveLoadSystem<SettingsData>.Load("Settings", new ());
         
         Subscribe();
 
@@ -49,7 +47,7 @@ public class Settings : MonoBehaviour
 
             //musicToggle.GetComponent<Image>().sprite = v ? MusicOnSprite : MusicOffSprite;
             data.IsMusicOn = v;
-            MirraSaveLoadSystem<SettingsData>.Save("Settings", data);
+            SaveLoadSystem<SettingsData>.Save("Settings", data);
         });
         musicSlider.onValueChanged.AddListener(value =>
         {
@@ -59,7 +57,7 @@ public class Settings : MonoBehaviour
                 mixer.SetFloat("MusicVolume", -80);
 
             data.MusicValue = value;
-            MirraSaveLoadSystem<SettingsData>.Save("Settings", data);
+            SaveLoadSystem<SettingsData>.Save("Settings", data);
         });
         sfxToggle.onValueChanged.AddListener(v =>
         {
@@ -70,7 +68,7 @@ public class Settings : MonoBehaviour
             
             //sfxToggle.GetComponent<Image>().sprite = v ? SoundOnSprite : SoundOffSprite;
             data.IsSFXOn = v;
-            MirraSaveLoadSystem<SettingsData>.Save("Settings", data);
+            SaveLoadSystem<SettingsData>.Save("Settings", data);
         });
         sfxSlider.onValueChanged.AddListener(value =>
         {
@@ -80,7 +78,7 @@ public class Settings : MonoBehaviour
                 mixer.SetFloat("SFXVolume", -80);
 
             data.SFXValue = value;
-            MirraSaveLoadSystem<SettingsData>.Save("Settings", data);
+            SaveLoadSystem<SettingsData>.Save("Settings", data);
         });
         
         ruLanguageToggle.onValueChanged.AddListener(v =>
@@ -91,7 +89,7 @@ public class Settings : MonoBehaviour
             LocalizationSettings.SelectedLocale = locale;
 
             data.Language = "ru-RU";
-            MirraSaveLoadSystem<SettingsData>.Save("Settings", data);
+            SaveLoadSystem<SettingsData>.Save("Settings", data);
         });
         
         enLanguageToggle.onValueChanged.AddListener(v =>
@@ -102,15 +100,15 @@ public class Settings : MonoBehaviour
             LocalizationSettings.SelectedLocale = locale;
             
             data.Language = "en";
-            MirraSaveLoadSystem<SettingsData>.Save("Settings", data);
+            SaveLoadSystem<SettingsData>.Save("Settings", data);
         });
     }
 
     private IEnumerator SetLanguage()
     {
-        LanguageType languageType = MirraSDK.Language.Current;
+        //LanguageType languageType = MirraSDK.Language.Current;
 
-        data.Language = languageType == LanguageType.Russian ? "ru" : "en";
+        data.Language = "en";
         
         yield return LocalizationSettings.InitializationOperation;
         

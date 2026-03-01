@@ -1,10 +1,9 @@
 ﻿using System;
-using MirraGames.SDK;
 using UnityEngine;
 
 public static class MirraSaveLoadSystem<T>
 {
-    public static T Load(string key, T Default = default)
+    /*public static T Load(string key, T Default = default)
     {
         if (!MirraSDK.Data.HasKey(key))
             return Default;
@@ -19,5 +18,5 @@ public static class MirraSaveLoadSystem<T>
         string value = JsonUtility.ToJson(data);
         MirraSDK.Data.SetString(key, value);
         MirraSDK.Data.Save();
-    }
+    }*/
 }

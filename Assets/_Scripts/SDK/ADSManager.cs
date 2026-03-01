@@ -1,7 +1,5 @@
 using System;
 using System.Linq;
-using MirraGames.SDK;
-using MirraGames.SDK.Common;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,7 +7,7 @@ using UnityEngine.UI;
 
 public class ADSManager : MonoBehaviour
 {
-    public float adsInterval = 60;
+    /*public float adsInterval = 60;
     private static float timer = 20;
     private bool isReadyForAds;
 
@@ -111,5 +109,5 @@ public class ADSManager : MonoBehaviour
     public void DeleteAllSaves()
     {
         MirraSDK.Data.DeleteAll();
-    }
+    }*/
 }

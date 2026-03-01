@@ -3,8 +3,6 @@ using System.Collections;
 using UnityEngine;
 using FirMath;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using MirraGames.SDK;
 using Unity.Mathematics;
 using UnityEngine.U2D;
 using Random = UnityEngine.Random;
@@ -59,7 +57,7 @@ public class FindObjectManager : MonoBehaviour
         canvas.Recipe.WrongIngridient += WrongIngridient;
         
         StartCoroutine(StartPuzzle());
-        MirraSDK.Analytics.GameIsReady();
+        //MirraSDK.Analytics.GameIsReady();
     }
 
     private void WrongIngridient()
@@ -187,8 +185,8 @@ public class FindObjectManager : MonoBehaviour
 
         player.Stats.PlayerLevel++;
         //player.AddGold(100500);
-        MirraSDK.Achievements.SetScore("BestPlayers", player.Stats.PlayerLevel);
-        MirraSaveLoadSystem<ProgressData>.Save("Player", player);
+        //MirraSDK.Achievements.SetScore("BestPlayers", player.Stats.PlayerLevel);
+        SaveLoadSystem<ProgressData>.Save("Player", player);
         canvas.WinScreen.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         SoundManager.Instance.PlayVictory();

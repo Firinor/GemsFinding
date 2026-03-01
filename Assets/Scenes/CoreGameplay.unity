@@ -249,8 +249,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d4a131eee341e48bb741300ac00c2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ADSManager
-  adsInterval: 60
-  NoAds: {fileID: 2245813040125583361}
 --- !u!1001 &62830694
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7144,7 +7142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2245813040125583360
 MonoBehaviour:
   m_ObjectHideFlags: 0

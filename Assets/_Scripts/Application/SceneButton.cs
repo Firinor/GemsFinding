@@ -8,9 +8,9 @@ public class SceneButton : MonoBehaviour
 
     public void SwitchToScene()
     {
-        if (AdsManager != null)
+        /*if (AdsManager != null)
             AdsManager.ShowAdsInterstitial(callback: () => SceneManager.LoadScene(SceneName));
-        else
+        else*/
             SceneManager.LoadScene(SceneName);
     }
 }

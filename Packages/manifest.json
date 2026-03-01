@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.romanlee17.mirrasdk5": "https://github.com/MirraSDK/SDK5.git",
     "com.unity.2d.animation": "13.0.2",
     "com.unity.2d.common": "12.0.1",
     "com.unity.2d.psdimporter": "12.0.1",

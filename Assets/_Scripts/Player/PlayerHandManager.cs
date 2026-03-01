@@ -1,13 +1,26 @@
-using System;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using FirMath;
-using MirraGames.SDK;
 using UnityEngine.InputSystem.EnhancedTouch;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 public class PlayerHandManager : MonoBehaviour
 {
+#if UNITY_WEBGL && !UNITY_EDITOR
+    [DllImport("__Internal")]
+    private static extern bool IsMobileBrowser();
+#endif
+
+    private static bool IsMobile()
+    {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        return IsMobileBrowser();
+#else
+        return SystemInfo.deviceType == DeviceType.Handheld;
+#endif
+    }
+    
     private Gem gem;
     [SerializeField]
     private bool isMouseClickOn;
@@ -46,7 +59,7 @@ public class PlayerHandManager : MonoBehaviour
         action = InputSystem.actions;
         EnhancedTouchSupport.Enable();
         action.FindAction("Click").performed += FindGem;
-        if (MirraSDK.Device.IsMobile)
+        if (IsMobile())
             action.FindAction("TouchLook").performed += MoveImage; 
         else
             action.FindAction("Look").performed += MoveImage;

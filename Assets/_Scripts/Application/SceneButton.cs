@@ -1,4 +1,3 @@
-using MirraGames.SDK;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +8,9 @@ public class SceneButton : MonoBehaviour
 
     public void SwitchToScene()
     {
-        AdsManager.ShowAdsInterstitial(callback: () => SceneManager.LoadScene(SceneName));
+        if (AdsManager != null)
+            AdsManager.ShowAdsInterstitial(callback: () => SceneManager.LoadScene(SceneName));
+        else
+            SceneManager.LoadScene(SceneName);
     }
 }

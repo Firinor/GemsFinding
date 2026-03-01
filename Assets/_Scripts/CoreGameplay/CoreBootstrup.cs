@@ -1,3 +1,4 @@
+using System.Collections;
 using MirraGames.SDK;
 using UnityEngine;
 
@@ -11,6 +12,10 @@ public class CoreBootstrup : MonoBehaviour
     private Settings settings;
     [SerializeField] 
     private FindObjectManager mainManager;
+    [SerializeField] 
+    private ADSManager adsManager;
+    [SerializeField] 
+    private GameObject startBlackScreen;
 
     [SerializeField]
     private bool isDebugMode;
@@ -23,30 +28,47 @@ public class CoreBootstrup : MonoBehaviour
 
     private void Awake()
     {
-        MirraSDK.WaitForProviders(AwakeAfterMirra);
+        if (isSkipStartAnimations)
+        {
+            AwakeAfterMirra();
+            mainManager.Initialize(player);
+        }
+        else
+        {
+            StartAnimation.enabled = true;
+            if(MirraSDK.IsInitialized)
+                AwakeAfterMirra();
+            else
+                MirraSDK.WaitForProviders(AwakeAfterMirra);
+        }
     }
 
     private void AwakeAfterMirra()
     {
         settings.Initialize();
         LoadPlayerData(out player);
-        if (isSkipStartAnimations)
-        {
-            
-            mainManager.Initialize(player);
-        }
-        else
-        {
-            StartAnimation.enabled = true;
-        }
+        adsManager.Initialize();
+        startBlackScreen.SetActive(false);
     }
     
     public void StartPuzzle()
     {
         isSkipStartAnimations = true;
-        mainManager.Initialize(player);
+        if(MirraSDK.IsInitialized)
+            StartCoroutine(AwaitPlayer());
+        else
+            MirraSDK.WaitForProviders(()=>StartCoroutine(AwaitPlayer()));
     }
 
+    private IEnumerator AwaitPlayer()
+    {
+        while (player is null)
+        {
+            yield return null;
+        }
+        mainManager.Initialize(player);
+    }
+    
     private void LoadPlayerData(out ProgressData data)
     {
 #if UNITY_EDITOR

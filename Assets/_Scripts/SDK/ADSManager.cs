@@ -14,7 +14,7 @@ public class ADSManager : MonoBehaviour
     private bool isReadyForAds;
 
     public Button NoAds;
-    
+
     public void Initialize()
     {
         MirraSDK.Payments.RestorePurchases((restoreData) =>
@@ -26,7 +26,8 @@ public class ADSManager : MonoBehaviour
             if (!string.IsNullOrEmpty(noAds))
             {
                 InputSystem.actions.FindAction("Click").performed -= ShowAdsInterstitial;
-                MirraSDK.Ads.DisableBanner();
+                if(MirraSDK.Ads.IsBannerVisible)
+                    MirraSDK.Ads.DisableBanner();
                 enabled = false;
                 Destroy(NoAds.gameObject);
                 Destroy(gameObject);
@@ -48,7 +49,8 @@ public class ADSManager : MonoBehaviour
             productTag: "NoAds",
             onSuccess: () => {
                 InputSystem.actions.FindAction("Click").performed -= ShowAdsInterstitial;
-                MirraSDK.Ads.DisableBanner();
+                if(MirraSDK.Ads.IsBannerVisible)
+                    MirraSDK.Ads.DisableBanner();
                 enabled = false;
                 Destroy(NoAds.gameObject);
                 Destroy(gameObject);
@@ -78,6 +80,12 @@ public class ADSManager : MonoBehaviour
             return;
         }
         
+        if(!enabled)
+        {
+            callback?.Invoke();
+            return;
+        }
+        
         MirraSDK.Time.Scale = 0f;
         MirraSDK.Ads.InvokeInterstitial(
             onClose: (isSuccess) =>
@@ -98,5 +106,10 @@ public class ADSManager : MonoBehaviour
     private void OnDestroy()
     {
         InputSystem.actions.FindAction("Click").performed -= ShowAdsInterstitial;
+    }
+
+    public void DeleteAllSaves()
+    {
+        MirraSDK.Data.DeleteAll();
     }
 }

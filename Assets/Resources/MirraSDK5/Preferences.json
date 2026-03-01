@@ -43,6 +43,14 @@
                     {
                         "key": "IAchievements.Visible",
                         "value": true
+                    },
+                    {
+                        "key": "ILanguage.Visible",
+                        "value": true
+                    },
+                    {
+                        "key": "ILanguage.Override",
+                        "value": false
                     }
                 ],
                 "intCollection": [],

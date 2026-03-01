@@ -59,7 +59,6 @@ public class FindObjectManager : MonoBehaviour
         canvas.Recipe.WrongIngridient += WrongIngridient;
         
         StartCoroutine(StartPuzzle());
-        adsManager.Initialize();
         MirraSDK.Analytics.GameIsReady();
     }
 
@@ -121,7 +120,8 @@ public class FindObjectManager : MonoBehaviour
         
         CreateNewRecipe(gemAtlas.Count);
         canvas.LevelText.text = contex.PlayerLevel.ToString();
-        canvas.NoAdsButtonAnim.Play();
+        if(canvas.NoAdsButtonAnim != null)
+            canvas.NoAdsButtonAnim.Play();
         canvas.RecipeAnim.Play();
         canvas.LevelAnim.Play();
         playerHandManager.Initialize();
@@ -187,6 +187,7 @@ public class FindObjectManager : MonoBehaviour
 
         player.Stats.PlayerLevel++;
         //player.AddGold(100500);
+        MirraSDK.Achievements.SetScore("BestPlayers", player.Stats.PlayerLevel);
         MirraSaveLoadSystem<ProgressData>.Save("Player", player);
         canvas.WinScreen.SetActive(true);
         yield return new WaitForSeconds(0.5f);

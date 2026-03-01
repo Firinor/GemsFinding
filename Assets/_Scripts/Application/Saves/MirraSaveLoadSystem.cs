@@ -18,5 +18,6 @@ public static class MirraSaveLoadSystem<T>
     {
         string value = JsonUtility.ToJson(data);
         MirraSDK.Data.SetString(key, value);
+        MirraSDK.Data.Save();
     }
 }

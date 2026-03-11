@@ -506,28 +506,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_4
-      rect:
-        serializedVersion: 2
-        x: 327
-        y: 435
-        width: 68
-        height: 73
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ff96d4b1ddaba7520800000000000000
-      internalID: 2700676385370630655
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_5
       rect:
         serializedVersion: 2
@@ -611,50 +589,6 @@ TextureImporter:
       bones: []
       spriteID: 9f1eb23b2835ee210800000000000000
       internalID: 1364119557956690425
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_9
-      rect:
-        serializedVersion: 2
-        x: 718
-        y: 436
-        width: 75
-        height: 71
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b168bbf8d9ab50e00800000000000000
-      internalID: 1010418877298607643
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_10
-      rect:
-        serializedVersion: 2
-        x: 799
-        y: 442
-        width: 74
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 711bb4a469d355020800000000000000
-      internalID: 2329836097934962967
       vertices: []
       indices: 
       edges: []
@@ -875,28 +809,6 @@ TextureImporter:
       bones: []
       spriteID: 64c16cc22755d9c70800000000000000
       internalID: 8979427180912450630
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_22
-      rect:
-        serializedVersion: 2
-        x: 330
-        y: 198
-        width: 63
-        height: 75
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6640a36ed3e2eef10800000000000000
-      internalID: 2300827303023346790
       vertices: []
       indices: 
       edges: []
@@ -1166,50 +1078,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_36
-      rect:
-        serializedVersion: 2
-        x: 489
-        y: 278
-        width: 59
-        height: 74
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6984a80a3bbb11290800000000000000
-      internalID: -7921343889401034602
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_37
-      rect:
-        serializedVersion: 2
-        x: 561
-        y: 283
-        width: 75
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1eabad8f3bd069380800000000000000
-      internalID: -8964962941609002271
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_38
       rect:
         serializedVersion: 2
@@ -1249,28 +1117,6 @@ TextureImporter:
       bones: []
       spriteID: 35b44d6bb9fa80b70800000000000000
       internalID: 8865528949800979283
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_40
-      rect:
-        serializedVersion: 2
-        x: 799
-        y: 289
-        width: 74
-        height: 55
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4412d7642366485a0800000000000000
-      internalID: -6519973994408631996
       vertices: []
       indices: 
       edges: []
@@ -1381,28 +1227,6 @@ TextureImporter:
       bones: []
       spriteID: e6751f254522523e0800000000000000
       internalID: -2079217907397470354
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_46
-      rect:
-        serializedVersion: 2
-        x: 86
-        y: 206
-        width: 73
-        height: 61
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: da1dcbf5949f2b9e0800000000000000
-      internalID: -1606948023483706963
       vertices: []
       indices: 
       edges: []
@@ -1540,28 +1364,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_55
-      rect:
-        serializedVersion: 2
-        x: 799
-        y: 199
-        width: 69
-        height: 75
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 62013ce6c6b2a5e70800000000000000
-      internalID: 9104637341397618726
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_56
       rect:
         serializedVersion: 2
@@ -1579,28 +1381,6 @@ TextureImporter:
       bones: []
       spriteID: aff22871c14c3a020800000000000000
       internalID: 2351939055350067194
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_57
-      rect:
-        serializedVersion: 2
-        x: 954
-        y: 206
-        width: 74
-        height: 63
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: cbe673cfb9d616e80800000000000000
-      internalID: -8187142130864001348
       vertices: []
       indices: 
       edges: []
@@ -1958,28 +1738,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_78
-      rect:
-        serializedVersion: 2
-        x: 245
-        y: 50
-        width: 74
-        height: 58
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a4e14fb7482a17540800000000000000
-      internalID: 5003959350884310602
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_79
       rect:
         serializedVersion: 2
@@ -2142,7 +1900,7 @@ TextureImporter:
         width: 75
         height: 69
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2151,138 +1909,6 @@ TextureImporter:
       bones: []
       spriteID: 42485bcd0a2edc34f89bf058847dd89c
       internalID: 5294704227960421224
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_29
-      rect:
-        serializedVersion: 2
-        x: 801
-        y: 122
-        width: 71
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d2a731d5eb7d9974f85fc8b3ac91adda
-      internalID: -4807740098882102830
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_49
-      rect:
-        serializedVersion: 2
-        x: 878
-        y: 127
-        width: 74
-        height: 61
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e259a217eb4b20d4a9b3d1d3258f7b87
-      internalID: -4775062443887188231
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_53
-      rect:
-        serializedVersion: 2
-        x: 1035
-        y: 198
-        width: 71
-        height: 76
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 03e83dcc58cea05438a94dc0bfbd0c0a
-      internalID: -5581895337610135616
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_58
-      rect:
-        serializedVersion: 2
-        x: 1111
-        y: 361
-        width: 76
-        height: 69
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2fdc2c62300654048bc4aea94281a4f7
-      internalID: 1120297031628138618
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_70
-      rect:
-        serializedVersion: 2
-        x: 876
-        y: 433
-        width: 74
-        height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ee7f8afdd3ce5b149b29b7c604d4d452
-      internalID: -3837599226488148894
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: c87efe14653901-PhotoRoom-no-bg-preview (carve.photos)_71
-      rect:
-        serializedVersion: 2
-        x: 1038
-        y: 120
-        width: 66
-        height: 74
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 69755beacb5de5247ae3df91bd1eaef9
-      internalID: 2753935542483659887
       vertices: []
       indices: 
       edges: []

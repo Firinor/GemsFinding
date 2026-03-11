@@ -51,6 +51,42 @@
                     {
                         "key": "ILanguage.Override",
                         "value": false
+                    },
+                    {
+                        "key": "ITime.Visible",
+                        "value": true
+                    },
+                    {
+                        "key": "Framework_PropertyGroup.Visible",
+                        "value": true
+                    },
+                    {
+                        "key": "CrazyGames_PropertyGroup.Visible",
+                        "value": true
+                    },
+                    {
+                        "key": "Lagged_PropertyGroup.Visible",
+                        "value": true
+                    },
+                    {
+                        "key": "GameDistribution_PropertyGroup.Visible",
+                        "value": true
+                    },
+                    {
+                        "key": "IAudio.Visible",
+                        "value": true
+                    },
+                    {
+                        "key": "IDevice.Visible",
+                        "value": true
+                    },
+                    {
+                        "key": "IPause.Visible",
+                        "value": true
+                    },
+                    {
+                        "key": "IPause.Override",
+                        "value": false
                     }
                 ],
                 "intCollection": [],

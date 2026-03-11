@@ -182,6 +182,9 @@ public class FindObjectManager : MonoBehaviour
 
     private IEnumerator SuccessfullySolvePuzzleCoroutine()
     {
+        if(adsManager != null)
+            adsManager.enabled = false;
+        
         completeParticleSystem.gameObject.SetActive(true);
         completeParticleSystem.Play();
 

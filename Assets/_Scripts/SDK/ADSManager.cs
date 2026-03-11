@@ -12,6 +12,7 @@ public class ADSManager : MonoBehaviour
     public float adsInterval = 60;
     private static float timer = 20;
     private bool isReadyForAds;
+    private bool isNoAds;
 
     public Button NoAds;
 
@@ -29,6 +30,7 @@ public class ADSManager : MonoBehaviour
                 if(MirraSDK.Ads.IsBannerVisible)
                     MirraSDK.Ads.DisableBanner();
                 enabled = false;
+                isNoAds = true;
                 Destroy(NoAds.gameObject);
                 Destroy(gameObject);
             }
@@ -41,6 +43,8 @@ public class ADSManager : MonoBehaviour
         
         NoAds.onClick.AddListener(PurchaseNoAds);
         NoAds.GetComponentInChildren<TextMeshProUGUI>().text = productData.GetFullPriceFloat();
+        
+        isReadyForAds = false;
     }
 
     private void PurchaseNoAds()
@@ -52,13 +56,14 @@ public class ADSManager : MonoBehaviour
                 if(MirraSDK.Ads.IsBannerVisible)
                     MirraSDK.Ads.DisableBanner();
                 enabled = false;
+                isNoAds = true;
                 Destroy(NoAds.gameObject);
                 Destroy(gameObject);
             }
         );
     }
 
-    void Update()
+    /*void Update()
     {
         timer -= Time.deltaTime;
 
@@ -67,11 +72,22 @@ public class ADSManager : MonoBehaviour
             isReadyForAds = true;
             InputSystem.actions.FindAction("Click").performed += ShowAdsInterstitial;
         }
+    }*/
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if(!pauseStatus)
+            MirraSDK.Time.Scale = 1f;
     }
 
     public void ShowAdsInterstitial(Action callback = null)
     {
         isReadyForAds = false;
+        
+        if (MirraSDK.Ads.IsInterstitialVisible)
+        {
+            return;
+        }
         
         if (!(MirraSDK.Ads.IsInterstitialReady
               && MirraSDK.Ads.IsInterstitialAvailable))
@@ -80,7 +96,7 @@ public class ADSManager : MonoBehaviour
             return;
         }
         
-        if(!enabled)
+        if(isNoAds)
         {
             callback?.Invoke();
             return;
@@ -103,8 +119,14 @@ public class ADSManager : MonoBehaviour
         ShowAdsInterstitial();
     }
 
+    private void OnDisable()
+    {
+        InputSystem.actions.FindAction("Click").performed -= ShowAdsInterstitial;
+    }
+
     private void OnDestroy()
     {
+        isReadyForAds = false;
         InputSystem.actions.FindAction("Click").performed -= ShowAdsInterstitial;
     }
 
